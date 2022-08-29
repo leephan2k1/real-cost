@@ -6,6 +6,15 @@ module.exports = {
     ],
     theme: {
         extend: {},
+        screens: {
+            sm: '320px',
+            md: '768px',
+        },
+        fontFamily: {
+            primary: 'Nunito, sans-serif',
+            secondary: 'League Spartan, sans-serif',
+        },
     },
+
     plugins: [require('@tailwindcss/line-clamp')],
 };
