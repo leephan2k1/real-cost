@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const LogIn: NextPage = () => {
     return (
-        <main className=" relative h-screen">
+        <main id="login-page" className="relative h-screen">
             <div className="absolute-screen-center content-center font-primary">
                 <div className="page sm:w-[960px] md:w-[1600px]">
                     <div className="con sm:-top-20">
@@ -36,7 +36,7 @@ const LogIn: NextPage = () => {
                                         />
                                     </div>
 
-                                    <span className="absolute h-24 w-[330px]  py-3 text-center decoration-4 sm:-left-7 sm:text-3xl md:left-[60px] md:text-4xl">
+                                    <span className="absolute h-24 w-[330px] py-3 text-center decoration-4 sm:-left-7 sm:text-3xl md:left-[60px] md:text-4xl">
                                         Tiếp tục với Google
                                     </span>
                                 </button>
