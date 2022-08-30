@@ -1,10 +1,16 @@
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const NotFound: NextPage = () => {
+    const router = useRouter();
+
     return (
-        <div>
-            <div id="background"></div>
-            <div className="top md:pt-40">
+        <div
+            id="not-found-page"
+            className="absolute-center min-h-screen w-full flex-col"
+        >
+            <div className="absolute-center flex-col">
                 <h1>404</h1>
                 <h3>page not found</h3>
             </div>
@@ -24,10 +30,16 @@ const NotFound: NextPage = () => {
                 </div>
                 <div className="shadow"></div>
             </div>
-            <div className="bottom">
+            <div className="bottom mb-6">
                 <div className="buttons">
-                    <button className="btn">Back</button>
-                    <button className="btn">Home</button>
+                    <button className="btn" onClick={() => router.back()}>
+                        Back
+                    </button>
+                    <Link href="/">
+                        <a>
+                            <button className="btn">Home</button>
+                        </a>
+                    </Link>
                 </div>
             </div>
         </div>
