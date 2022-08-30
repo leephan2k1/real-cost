@@ -8,11 +8,11 @@ const LogIn: NextPage = () => {
                 <div className="page sm:w-[960px] md:w-[1600px]">
                     <div className="con sm:-top-20">
                         <div className="box">
-                            <span className="absolute-left-center font-secondary sm:top-24 sm:text-5xl md:top-20 md:text-7xl">
+                            <span className="flex-center h-56 font-secondary  sm:text-5xl md:text-7xl">
                                 Đăng nhập
                             </span>
                             <div className="absolute-screen-center h-[160px] ">
-                                <button className="decoration-3 button_fb absolute-left-center top-12 flex h-24 rounded-[50px] border-2 border-black bg-sky-300 p-3 hover:bg-sky-200 sm:top-6 sm:w-[250px] md:w-[420px]">
+                                <button className="decoration-3 absolute-left-center top-12 flex h-24 rounded-[50px] border-2 border-black bg-sky-300 p-3 hover:bg-sky-200 sm:top-6 sm:w-[250px] md:w-[420px]">
                                     <div className="absolute -left-1.5 w-[70px] sm:-top-1">
                                         <Image
                                             src="/fb_icon.svg"
@@ -21,7 +21,7 @@ const LogIn: NextPage = () => {
                                             height={60}
                                         />
                                     </div>
-                                    <span className="absolute h-24 w-[330px]  py-3 text-center decoration-4 sm:-left-7 sm:text-3xl  md:left-[60px] md:text-4xl">
+                                    <span className="flex-center w-full py-3 decoration-4 sm:pl-[4.7rem] sm:text-3xl md:pl-8 md:text-4xl">
                                         Tiếp tục với Facebook
                                     </span>
                                 </button>
@@ -36,7 +36,7 @@ const LogIn: NextPage = () => {
                                         />
                                     </div>
 
-                                    <span className="absolute h-24 w-[330px] py-3 text-center decoration-4 sm:-left-7 sm:text-3xl md:left-[60px] md:text-4xl">
+                                    <span className="flex-center w-full py-3 decoration-4 sm:pl-[4.7rem] sm:text-3xl md:pl-8 md:text-4xl">
                                         Tiếp tục với Google
                                     </span>
                                 </button>
@@ -44,7 +44,7 @@ const LogIn: NextPage = () => {
                         </div>
                     </div>
                 </div>
-                <span className="absolute-left-center -bottom-24 text-3xl sm:-bottom-20 sm:w-96 md:-bottom-6 md:w-[700px]">
+                <span className="absolute-left-center -bottom-24 text-justify text-3xl sm:-bottom-20 sm:w-96 md:-bottom-6 md:w-[700px]">
                     Tiếp tục đồng nghĩa với việc bạn ĐỒNG Ý với&nbsp;
                     <span className="cursor-pointer underline hover:text-red-500">
                         Điều khoản dịch vụ

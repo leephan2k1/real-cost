@@ -23,6 +23,9 @@ $body: 'Nunito', sans-serif;
     .absolute-screen-center {
         @apply absolute top-1/2  left-1/2 flex -translate-y-1/2 -translate-x-1/2;
     }
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
     .full-size {
         @apply h-full w-full;
     }
@@ -208,13 +211,13 @@ input[type='number'] {
             }
         }
     }
-    h1 {
+    .h1-404 {
         font-family: $big;
         color: #9ca3af;
         font-size: 7em;
         text-shadow: -1px 0 $gray, 0 1px $gray, 1px 0 $gray, 0 -1px $gray;
     }
-    h3 {
+    .h3-404 {
         font-family: $body;
         font-size: 2em;
         text-transform: uppercase;

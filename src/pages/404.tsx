@@ -11,8 +11,8 @@ const NotFound: NextPage = () => {
             className="absolute-center min-h-screen w-full flex-col"
         >
             <div className="absolute-center flex-col">
-                <h1>404</h1>
-                <h3>page not found</h3>
+                <h1 className="h1-404">404</h1>
+                <h3 className="h3-404">page not found</h3>
             </div>
             <div className="container">
                 <div className="ghost-copy">
