@@ -23,9 +23,6 @@ $body: 'Nunito', sans-serif;
     .absolute-screen-center {
         @apply absolute top-1/2  left-1/2 flex -translate-y-1/2 -translate-x-1/2;
     }
-    .flex-center {
-        @apply flex items-center justify-center;
-    }
     .full-size {
         @apply h-full w-full;
     }
