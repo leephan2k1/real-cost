@@ -9,10 +9,12 @@
         "postinstall": "husky install"
     },
     "dependencies": {
+        "@heroicons/react": "^2.0.10",
         "modern-normalize": "^1.1.0",
         "next": "latest",
         "react": "18.1.0",
-        "react-dom": "18.1.0"
+        "react-dom": "18.1.0",
+        "react-icons": "^4.4.0"
     },
     "devDependencies": {
         "@tailwindcss/line-clamp": "^0.4.0",
