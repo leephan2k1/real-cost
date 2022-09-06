@@ -9,12 +9,18 @@
         "postinstall": "husky install"
     },
     "dependencies": {
+        "@headlessui/react": "^1.6.6",
         "@heroicons/react": "^2.0.10",
+        "@nextui-org/react": "^1.0.0-beta.10",
+        "animate.css": "^4.1.1",
+        "framer-motion": "^7.2.1",
+        "jotai": "^1.8.2",
         "modern-normalize": "^1.1.0",
         "next": "latest",
         "react": "18.1.0",
         "react-dom": "18.1.0",
-        "react-icons": "^4.4.0"
+        "react-icons": "^4.4.0",
+        "usehooks-ts": "^2.6.0"
     },
     "devDependencies": {
         "@tailwindcss/line-clamp": "^0.4.0",
