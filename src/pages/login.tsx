@@ -1,9 +1,10 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
+import { ReactNode } from 'react';
 
 const LogIn: NextPage = () => {
     return (
-        <main id="login-page" className="relative h-screen">
+        <div id="login-page" className="relative h-screen">
             <div className="absolute-screen-center content-center font-primary">
                 <div className="page sm:w-[960px] md:w-[1600px]">
                     <div className="con sm:-top-20">
@@ -52,8 +53,12 @@ const LogIn: NextPage = () => {
                     của chúng tôi
                 </span>
             </div>
-        </main>
+        </div>
     );
 };
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+LogIn.getLayout = (page: ReactNode) => page;
 
 export default LogIn;
