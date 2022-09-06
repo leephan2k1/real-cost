@@ -45,6 +45,19 @@ body {
     font-size: 1.6rem;
     text-rendering: optimizeSpeed;
     overflow-x: hidden;
+    background-color: '#f0edf4';
+}
+
+*:focus {
+    outline: none;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-2xl;
 }
 
 /* Chrome, Safari, Edge, Opera */
