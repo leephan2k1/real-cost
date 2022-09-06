@@ -5,10 +5,13 @@ module.exports = {
         './src/components/**/*.{js,ts,jsx,tsx}',
     ],
     theme: {
-        extend: {},
-        screens: {
-            sm: '320px',
-            md: '768px',
+        extend: {
+            colors: {
+                background: '#f0edf4',
+            },
+            screens: {
+                sm: '320px',
+            },
         },
         fontFamily: {
             primary: 'Nunito, sans-serif',
