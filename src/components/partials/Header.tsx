@@ -1,16 +1,20 @@
-import { BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useSetAtom } from 'jotai';
 import Link from 'next/link';
 import { BiUser } from 'react-icons/bi';
 import { HiMenuAlt2 } from 'react-icons/hi';
+import mobileSearchState from '~/atoms/mobileSearchState';
+import sideBarState from '~/atoms/sideBarState';
+import SearchInput from '~/components/shared/SearchInput';
+import { quickList } from '~/constants';
+
+import { BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+
 import ListBoxButton from '../buttons/ListBoxButton';
 import Logo from '../icons/Logo';
-import Input from '../shared/Input';
-import sideBarState from '~/atoms/sideBarState';
-import { useSetAtom } from 'jotai';
-import { quickList } from '~/constants';
 
 const Header = () => {
     const setSideBarState = useSetAtom(sideBarState);
+    const setSearchModalState = useSetAtom(mobileSearchState);
 
     const handleSelect = (value: string) => {
         // not completed
@@ -18,7 +22,7 @@ const Header = () => {
     };
 
     return (
-        <header className="absolute-center fixed top-0 left-0 z-[500] h-[75px] w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white md:h-[90px]">
+        <header className="absolute-center fixed top-0 left-0 z-10 h-[75px] w-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white md:h-[90px]">
             <div className="w-max-[1300px] flex h-full w-[90%] items-center justify-between">
                 {/* mobile menu  */}
                 <button
@@ -49,18 +53,15 @@ const Header = () => {
                         />
                     </div>
 
-                    <button className="absolute-center rounded-xl bg-white p-3 shadow-lg md:hidden">
+                    {/* mobile search button  */}
+                    <button
+                        onClick={() => setSearchModalState(true)}
+                        className="absolute-center rounded-xl bg-white p-3 shadow-lg md:hidden"
+                    >
                         <MagnifyingGlassIcon className="h-8 w-8" />
                     </button>
 
-                    <div className="hidden h-full w-3/4 items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-xl md:flex">
-                        <MagnifyingGlassIcon className="h-8 w-8" />
-                        <Input
-                            placeHolder="Tìm kiếm sản phẩm..."
-                            style="h-12 w-full"
-                            type="text"
-                        />
-                    </div>
+                    <SearchInput styles="hidden h-full w-3/4 items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-xl md:flex" />
                 </div>
 
                 {/* menu desktop & user  */}
