@@ -29,7 +29,7 @@ const Header = () => {
 
     return (
         <ClientOnly>
-            <header className="absolute-center fixed top-0 left-0 z-10 h-[70px] w-full bg-gradient-to-r from-black/70 to-[#313132] text-white md:h-[85px]">
+            <header className="absolute-center fixed top-0 left-0 z-[80] h-[70px] w-full bg-gradient-to-r from-black/70 to-[#313132] text-white md:h-[85px]">
                 <div className="w-max-[1300px] flex h-full w-[90%] items-center justify-between">
                     {/* mobile menu  */}
                     <button

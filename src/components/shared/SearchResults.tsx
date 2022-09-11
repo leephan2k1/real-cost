@@ -36,7 +36,7 @@ function SearchResults({ styles, isMobile }: SearchResultsProps) {
             ref={ref}
             className={`${
                 result.length ? 'md:flex' : 'hidden'
-            } ${styles} smooth-effect flex-col overflow-hidden rounded-xl border-[1px] border-gray-500`}
+            } ${styles} smooth-effect z-[100] flex-col overflow-hidden rounded-xl border-[1px] border-gray-500`}
         >
             <ul className="flex w-full flex-col space-y-4 overflow-x-hidden overflow-y-scroll py-4">
                 {result &&
