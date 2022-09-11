@@ -59,7 +59,7 @@ function ListBox({
                 <ChevronDownIcon className="animate__rotateIn animate__animated animate__faster h-8 w-8" />
             )}
             {showOptions && (
-                <ul className="animate__fadeIn animate__animated animate__faster absolute top-full left-0 z-[500] w-full space-y-4 rounded-xl bg-[#f0edf4] py-4 px-2">
+                <ul className="animate__fadeIn animate__animated animate__faster absolute top-full left-0 z-[500] w-full space-y-4 rounded-lg border-[1px] border-gray-700 bg-white py-4 px-2">
                     {options.length > 0 &&
                         options.map((option, index) => {
                             return (

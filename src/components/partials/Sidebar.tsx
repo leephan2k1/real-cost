@@ -43,7 +43,7 @@ function Sidebar() {
                                     width: 0,
                                     transition: { delay: 0.7, duration: 0.3 },
                                 }}
-                                className="fixed inset-0 z-[999] flex w-[250px] min-w-[230px] flex-col items-center justify-between bg-gradient-to-br from-indigo-500 to-violet-400 p-4 text-white md:w-[40%]"
+                                className="fixed inset-0 z-[999] flex w-[250px] min-w-[230px] flex-col items-center justify-between bg-gradient-to-r from-black/70 to-[#313132] p-4 text-white md:w-[40%]"
                             >
                                 <div className="full-size">
                                     <button

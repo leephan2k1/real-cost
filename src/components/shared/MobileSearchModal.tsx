@@ -1,24 +1,27 @@
 import { useAtom } from 'jotai';
 import { Fragment, memo, useState } from 'react';
 import mobileSearchState from '~/atoms/mobileSearchState';
-
+import searchMarket from '~/atoms/marketSearch';
 import { Dialog, Transition } from '@headlessui/react';
 import {
     Square2StackIcon,
     StopIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
-
+import { Market } from 'types';
 import ListBoxButton from '../buttons/ListBoxButton';
 import SearchInput from './SearchInput';
+import SearchResults from './SearchResults';
 
 function MobileSearchModal() {
     const [zoomIn, setZoomIn] = useState(false);
+    const [market, setMarket] = useAtom(searchMarket);
     const [isOpen, setIsOpen] = useAtom(mobileSearchState);
 
     const handleSelect = (value: string) => {
-        // not completed
-        console.error(value);
+        const market = value.toLowerCase();
+
+        setMarket(market === 'tất cả' ? ('all' as Market) : (market as Market));
     };
 
     return (
@@ -61,8 +64,10 @@ function MobileSearchModal() {
                         >
                             <Dialog.Panel
                                 className={`smooth-effect ${
-                                    zoomIn ? 'h-[90vh]' : 'h-[30vh]'
-                                } w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}
+                                    zoomIn
+                                        ? 'h-[90vh]'
+                                        : 'max-h-[55vh] min-h-[30vh]'
+                                } w-full transform overflow-x-hidden overflow-y-scroll rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}
                             >
                                 <Dialog.Title
                                     as="div"
@@ -75,12 +80,16 @@ function MobileSearchModal() {
 
                                         <ListBoxButton
                                             options={[
-                                                'Tất cả',
-                                                'Lazada',
-                                                'Tiki',
-                                                'Shopee',
+                                                'tiki',
+                                                'lazada',
+                                                'shopee',
+                                                'tất cả',
                                             ]}
-                                            defaultOption="Lazada"
+                                            defaultOption={
+                                                market === 'all'
+                                                    ? 'tất cả'
+                                                    : market
+                                            }
                                             style="bg-white border-gray-500 border-[1px] w-32 p-2 rounded-lg"
                                             handleSelect={handleSelect}
                                         />
@@ -115,6 +124,8 @@ function MobileSearchModal() {
                                         styles="z-50 h-full w-[80%] mx-auto items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-lg border-2 border-gray-500 flex"
                                     />
                                 </div>
+
+                                <SearchResults isMobile />
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
