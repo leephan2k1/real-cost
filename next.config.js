@@ -20,6 +20,8 @@ module.exports = {
             'my-live-01.slatic.net',
             'sg-test-11.slatic.net',
             'my-test-11.slatic.net',
+            'my-live-02.slatic.net',
+            'my-live.slatic.net',
             'cf.shopee.vn',
         ],
     },

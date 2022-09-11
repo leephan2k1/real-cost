@@ -1,5 +1,4 @@
 import { useAtom } from 'jotai';
-import Image from 'next/image';
 import { memo, useRef } from 'react';
 import { Market } from 'types';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -10,7 +9,12 @@ import {
     ChevronRightIcon,
 } from '@heroicons/react/24/outline';
 
-function SearchResults() {
+interface SearchResultsProps {
+    styles?: string;
+    isMobile?: boolean;
+}
+
+function SearchResults({ styles, isMobile }: SearchResultsProps) {
     const [result, setResult] = useAtom(searchResult);
     const ref = useRef<HTMLDivElement | null>(null);
 
@@ -22,7 +26,9 @@ function SearchResults() {
     };
 
     useOnClickOutside(ref, () => {
-        setResult([]);
+        if (!isMobile) {
+            setResult([]);
+        }
     });
 
     return (
@@ -30,7 +36,7 @@ function SearchResults() {
             ref={ref}
             className={`${
                 result.length ? 'md:flex' : 'hidden'
-            } smooth-effect absolute top-[105%] hidden h-fit max-h-[400px] w-full flex-col overflow-hidden rounded-xl bg-white shadow-xl`}
+            } ${styles} smooth-effect flex-col overflow-hidden rounded-xl border-[1px] border-gray-500`}
         >
             <ul className="flex w-full flex-col space-y-4 overflow-x-hidden overflow-y-scroll py-4">
                 {result &&
@@ -42,11 +48,10 @@ function SearchResults() {
                                 className="absolute-center space-x-2xl flex h-[80px] w-full lg:h-[100px]"
                             >
                                 <figure className="relative h-full min-w-[20%] overflow-hidden rounded-xl p-2 lg:min-w-[15%]">
-                                    <Image
-                                        priority
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
                                         alt="search-item"
-                                        className="absolute left-0 top-0 border-2 object-contain object-center"
-                                        layout="fill"
+                                        className="full-size object-contain object-center"
                                         src={item?.img}
                                     />
                                 </figure>

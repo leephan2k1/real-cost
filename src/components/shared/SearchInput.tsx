@@ -1,4 +1,3 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ChangeEvent, memo, useEffect, useRef, useState } from 'react';
 import { useDebounce, useEffectOnce } from 'usehooks-ts';
@@ -7,6 +6,8 @@ import searchResult from '~/atoms/searchResult';
 import { MARKET_URL } from '~/constants';
 import useAxiosClient from '~/services/axiosClient';
 import { handleTikiSearch } from '~/utils/handleMarketSearch';
+
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 interface SearchInputProps {
     styles?: string;
@@ -116,12 +117,17 @@ function SearchInput({ styles, focusOnMount }: SearchInputProps) {
             <MagnifyingGlassIcon className="h-8 w-8" />
 
             <input
+                id="real-cost-search"
                 onChange={handleChange}
                 value={value}
                 type="text"
                 className="h-12 w-full"
                 placeholder="Tìm kiếm sản phẩm..."
             />
+
+            <button onClick={() => setValue('')} className="p-2">
+                <XMarkIcon className="h-8 w-8 rounded-lg border-[1px] border-gray-600" />
+            </button>
         </div>
     );
 }
