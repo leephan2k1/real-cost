@@ -3,7 +3,17 @@ export interface Navigate {
     link: string;
 }
 
-export type Market = 'tiki' | 'shopee' | 'lazada' | 'all';
+export type Market =
+    | 'tiki'
+    | 'tiki-shopee'
+    | 'tiki-lazada'
+    | 'shopee'
+    | 'shopee-tiki'
+    | 'shopee-lazada'
+    | 'lazada'
+    | 'lazada-tiki'
+    | 'lazada-shopee'
+    | 'all';
 
 export interface SearchResult {
     name: string;
