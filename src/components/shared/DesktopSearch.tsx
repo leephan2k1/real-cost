@@ -34,14 +34,14 @@ function DesktopSearch() {
             {/* mobile search button  */}
             <button
                 onClick={() => setSearchModalState(true)}
-                className="absolute-center rounded-xl bg-white p-3 shadow-lg md:hidden"
+                className="absolute-center rounded-xl border-[1px] border-gray-600 bg-white p-3 shadow-lg md:hidden"
             >
                 <MagnifyingGlassIcon className="h-8 w-8" />
             </button>
 
             <div className="relative hidden h-full w-4/5 md:block">
-                <div className="full-size absolute top-2 left-2 -z-10 rounded-xl border-2 border-dashed border-white"></div>
-                <SearchInput styles="z-[60] hidden items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-xl md:flex" />
+                <div className="full-size absolute top-2 left-2 -z-10 rounded-xl border-2 border-dashed border-gray-800"></div>
+                <SearchInput styles="z-[60] border-[1px] border-gray-800 hidden items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-xl md:flex" />
             </div>
 
             {matchesMediumScreen && (

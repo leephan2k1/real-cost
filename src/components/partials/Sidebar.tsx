@@ -43,12 +43,12 @@ function Sidebar() {
                                     width: 0,
                                     transition: { delay: 0.7, duration: 0.3 },
                                 }}
-                                className="fixed inset-0 z-[999] flex w-[250px] min-w-[230px] flex-col items-center justify-between bg-gradient-to-r from-black/70 to-[#313132] p-4 text-white md:w-[40%]"
+                                className="fixed inset-0 z-[999] flex w-[250px] min-w-[230px] flex-col items-center justify-between bg-white/90 p-4 text-gray-800 md:w-[40%]"
                             >
                                 <div className="full-size">
                                     <button
                                         onClick={() => setIsOpen(false)}
-                                        className="mt-4 rounded-2xl bg-white/30 p-2"
+                                        className="mt-4 rounded-2xl border-[1px] border-gray-800 bg-white/30 p-2"
                                     >
                                         <XMarkIcon className="h-9 w-9" />
                                     </button>
@@ -57,7 +57,7 @@ function Sidebar() {
                                         <Link href="/">
                                             <a className="full-size">
                                                 <figure className="absolute-center h-fit w-full">
-                                                    <Logo style="h-24 w-24 fill-white" />
+                                                    <Logo style="h-24 w-24 fill-gray-800" />
                                                 </figure>
 
                                                 <h1 className="text-center text-4xl">
