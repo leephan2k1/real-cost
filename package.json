@@ -13,6 +13,7 @@
         "@heroicons/react": "^2.0.10",
         "@nextui-org/react": "^1.0.0-beta.10",
         "animate.css": "^4.1.1",
+        "ariakit": "^2.0.0-next.41",
         "axios": "^0.27.2",
         "fast-querystring": "^0.7.1",
         "framer-motion": "^7.2.1",
@@ -22,6 +23,7 @@
         "react": "18.1.0",
         "react-dom": "18.1.0",
         "react-icons": "^4.4.0",
+        "react-if": "^4.1.4",
         "swr": "^1.3.0",
         "usehooks-ts": "^2.6.0"
     },

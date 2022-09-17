@@ -9,7 +9,7 @@ export function handleTikiSearch(searchResult: any): SearchResult[] | null {
             const img = product?.thumbnail_url;
             const price = handlePriceNumber(product?.price);
             const totalSales = product?.quantity_sold?.text;
-            const link = `${MARKET_URL['tiki']}/${product?.url_path}`;
+            const link = `${MARKET_URL('tiki')}/${product?.url_path}`;
             if (
                 name &&
                 img &&
