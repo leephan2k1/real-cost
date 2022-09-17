@@ -1,34 +1,32 @@
-import { useAtom } from 'jotai';
-import { Fragment, memo, useState } from 'react';
-import mobileSearchState from '~/atoms/mobileSearchState';
-import searchMarket from '~/atoms/marketSearch';
 import { Dialog, Transition } from '@headlessui/react';
 import {
     Square2StackIcon,
     StopIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Market } from 'types';
-import ListBoxButton from '../buttons/ListBoxButton';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { Fragment, memo, useState } from 'react';
+import searchMarket, { setMarketAtom } from '~/atoms/marketSearch';
+import mobileSearchState from '~/atoms/mobileSearchState';
+import SelectMultiple from '~/components/buttons/SelectMultiple';
 import SearchInput from './SearchInput';
 import SearchResults from './SearchResults';
 
 function MobileSearchModal() {
+    const market = useAtomValue(searchMarket);
+    const setMarket = useSetAtom(setMarketAtom);
     const [zoomIn, setZoomIn] = useState(false);
-    const [market, setMarket] = useAtom(searchMarket);
     const [isOpen, setIsOpen] = useAtom(mobileSearchState);
 
-    const handleSelect = (value: string) => {
-        const market = value.toLowerCase();
-
-        setMarket(market === 'tất cả' ? ('all' as Market) : (market as Market));
+    const handleSelect = (values: string[]) => {
+        setMarket(values);
     };
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog
                 as="div"
-                className="relative z-10"
+                className="relative z-[500]"
                 onClose={() => setIsOpen(false)}
             >
                 <Transition.Child
@@ -78,7 +76,21 @@ function MobileSearchModal() {
                                             tìm kiếm:
                                         </h3>
 
-                                        <ListBoxButton
+                                        <div className="w-32">
+                                            <SelectMultiple
+                                                handleSelect={handleSelect}
+                                                options={[
+                                                    'tiki',
+                                                    'lazada',
+                                                    'shopee',
+                                                ]}
+                                                defaultOption={[
+                                                    ...market.split('-'),
+                                                ]}
+                                            />
+                                        </div>
+
+                                        {/* <ListBoxButton
                                             options={[
                                                 'tiki',
                                                 'lazada',
@@ -92,7 +104,7 @@ function MobileSearchModal() {
                                             }
                                             style="bg-white border-gray-500 border-[1px] w-32 p-2 rounded-lg"
                                             handleSelect={handleSelect}
-                                        />
+                                        /> */}
                                     </div>
 
                                     <div className="space-x-6">
@@ -121,7 +133,7 @@ function MobileSearchModal() {
                                     <div className="absolute top-2 left-[52%] -z-10 h-full w-[80%] -translate-x-1/2 rounded-xl border-2 border-dashed border-gray-500"></div>
                                     <SearchInput
                                         focusOnMount
-                                        styles="z-50 h-full w-[80%] mx-auto items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-lg border-2 border-gray-500 flex"
+                                        styles="z-10 h-full w-[80%] mx-auto items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-lg border-2 border-gray-500 flex"
                                     />
                                 </div>
 

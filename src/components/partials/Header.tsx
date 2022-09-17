@@ -1,31 +1,18 @@
-import { useSetAtom, useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import Link from 'next/link';
 import { BiUser } from 'react-icons/bi';
 import { HiMenuAlt2 } from 'react-icons/hi';
-import mobileSearchState from '~/atoms/mobileSearchState';
 import sideBarState from '~/atoms/sideBarState';
-import SearchInput from '~/components/shared/SearchInput';
 import { quickList } from '~/constants';
-import SearchResults from '../shared/SearchResults';
-import { BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import searchMarket from '~/atoms/marketSearch';
-import { Market } from 'types';
-import { useMediaQuery } from 'usehooks-ts';
-import ListBoxButton from '../buttons/ListBoxButton';
+
+import { BellIcon } from '@heroicons/react/24/outline';
+
 import Logo from '../icons/Logo';
 import ClientOnly from '../shared/ClientOnly';
+import DesktopSearch from '../shared/DesktopSearch';
 
 const Header = () => {
     const setSideBarState = useSetAtom(sideBarState);
-    const [market, setMarket] = useAtom(searchMarket);
-    const matchesMediumScreen = useMediaQuery('(min-width: 768px)');
-    const setSearchModalState = useSetAtom(mobileSearchState);
-
-    const handleSelect = (value: string) => {
-        const market = value.toLowerCase();
-
-        setMarket(market === 'tất cả' ? ('all' as Market) : (market as Market));
-    };
 
     return (
         <ClientOnly>
@@ -50,34 +37,7 @@ const Header = () => {
 
                     {/* search  */}
                     <div className="relative z-50 mx-4 flex h-fit w-1/2 items-center justify-end space-x-4 text-gray-800">
-                        {/* search options (medium screen)  */}
-                        <div className="relative hidden h-full flex-1 items-center justify-end md:flex md:justify-center lg:justify-end">
-                            <ListBoxButton
-                                options={['tiki', 'lazada', 'shopee', 'tất cả']}
-                                defaultOption={
-                                    market === 'all' ? 'tất cả' : market
-                                }
-                                style="bg-white w-full p-2 rounded-lg focus:ring-2 focus:ring-gray-700 text-lg lg:text-2xl"
-                                handleSelect={handleSelect}
-                            />
-                        </div>
-
-                        {/* mobile search button  */}
-                        <button
-                            onClick={() => setSearchModalState(true)}
-                            className="absolute-center rounded-xl bg-white p-3 shadow-lg md:hidden"
-                        >
-                            <MagnifyingGlassIcon className="h-8 w-8" />
-                        </button>
-
-                        <div className="relative hidden h-full w-4/5 md:block">
-                            <div className="full-size absolute top-2 left-2 -z-10 rounded-xl border-2 border-dashed border-white"></div>
-                            <SearchInput styles="z-[60] hidden items-center space-x-2 overflow-hidden rounded-xl bg-white p-2 shadow-xl md:flex" />
-                        </div>
-
-                        {matchesMediumScreen && (
-                            <SearchResults styles="absolute top-[105%] hidden h-fit max-h-[400px] w-full bg-white shadow-xl" />
-                        )}
+                        <DesktopSearch />
                     </div>
 
                     {/* menu desktop & user  */}
