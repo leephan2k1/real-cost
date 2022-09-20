@@ -1,41 +1,41 @@
-import Image from 'next/image';
-import { BellIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import { SearchResult } from 'types';
+import { mapping_market_colors } from '~/constants';
 
-const ProductCard = () => {
+import { BellIcon } from '@heroicons/react/24/outline';
+
+const ProductCard = ({
+    img,
+    market,
+    name,
+    price,
+    totalSales,
+}: SearchResult) => {
     const [isNotification, setIsNotification] = useState(false);
-
-    // const mapping_market_colors: { [key in Market]: string } = {
-    //     tiki: '#1a94ff',
-    //     lazada: '#0f1470',
-    //     shopee: '#f84a2f',
-    //     all: '#f43f5e',
-    // };
 
     const activeNotification = () => {
         setIsNotification((prevState) => !prevState);
     };
+
     return (
-        <div className="sm:py-3 sm:px-1 lg:p-5">
+        <div className="absolute-center sm:py-3 sm:px-1 lg:p-5">
             <div className="smooth-effect relative z-10 font-primary hover:-translate-y-1 sm:h-[265px] sm:w-[155px] lg:h-[290px] lg:w-[185px]">
                 <div
-                    className="absolute -z-10 rounded-2xl border-2 border-gray-700 bg-[#1a94ff] sm:top-[6px] sm:left-[0px] sm:h-[265px] sm:w-[155px] lg:top-[6px] lg:left-[6px] lg:h-[290px] lg:w-[185px]"
-                    // style={{background-color: mapping_market_colors[
-                    //     item?.market
-                    // ],
-                    // }}
+                    className="absolute -z-10 rounded-2xl border-2 border-gray-700 sm:top-[6px] sm:left-[0px] sm:h-[265px] sm:w-[155px] lg:top-[6px] lg:left-[6px] lg:h-[290px] lg:w-[185px]"
+                    style={{
+                        backgroundColor: mapping_market_colors[market],
+                    }}
                 ></div>
                 <div className="relative z-20 flex cursor-pointer flex-col rounded-xl border-2 border-black bg-white hover:bg-white sm:h-[265px] sm:w-[155px] lg:h-[290px] lg:w-[185px]">
-                    <div className="relative block p-2">
-                        <Image
-                            className="z-0 rounded-xl"
-                            src={{ url }}
-                            alt="Product Image"
-                            width={190}
-                            height={190}
+                    <div className="relative space-y-4 p-2">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={img}
+                            alt="img-item"
+                            className="z-0 h-auto max-h-[150px] w-full rounded-xl"
                         />
-                        <div className="absolute right-4 top-4 z-10 flex h-14 w-14 rounded-[50%] border border-black bg-white">
-                            <div
+                        <div className="absolute right-4 top-0 z-10 flex h-14 w-14 rounded-[50%] border border-black bg-white">
+                            <button
                                 className="absolute-center w-14 select-none"
                                 onClick={activeNotification}
                             >
@@ -47,22 +47,25 @@ const ProductCard = () => {
                                             : '#fff',
                                     }}
                                 />
-                            </div>
+                            </button>
                         </div>
                         <div className="flex flex-col px-2">
-                            <span className="line-clamp-2">
-                                {/* {{Title}} */}
-                            </span>
-                            <span className="pt-1 text-4xl font-medium text-red-400">
-                                {/* <u>đ</u> {{Price}} */}
-                            </span>
+                            <h2 className="line-clamp-2">{name}</h2>
+                            <h3 className="pt-1 text-2xl font-medium text-red-400 line-clamp-1 md:text-3xl">
+                                {price}
+                            </h3>
                             <div>
-                                <span className="float-left py-2 text-xl text-[#1a94ff]">
-                                    {/* {{Platform}} */}
-                                </span>
-                                <span className="float-right py-2 text-xl">
-                                    {/* {{Selling count}} */}
-                                </span>
+                                <h4
+                                    className="float-left py-2 text-xl"
+                                    style={{
+                                        color: mapping_market_colors[market],
+                                    }}
+                                >
+                                    {market}
+                                </h4>
+                                <h5 className="float-right py-2 text-xl">
+                                    {totalSales}
+                                </h5>
                             </div>
                         </div>
                     </div>
