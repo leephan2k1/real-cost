@@ -8,8 +8,8 @@ const LogIn: NextPage = () => {
             <div className="absolute-screen-center content-center font-primary">
                 <div className="page sm:w-[960px] md:w-[1600px]">
                     <div className="con sm:-top-20">
-                        <div className="box">
-                            <span className="flex-center h-56 font-secondary  sm:text-5xl md:text-7xl">
+                        <div className="box p-4">
+                            <span className="mt-4 ml-4 font-secondary sm:text-5xl md:text-7xl">
                                 Đăng nhập
                             </span>
                             <div className="absolute-screen-center h-[160px] ">
