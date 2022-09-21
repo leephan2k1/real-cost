@@ -1,9 +1,14 @@
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
+import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
 import { VscLoading } from 'react-icons/vsc';
+import { Else, If, Then } from 'react-if';
 import { useOnClickOutside } from 'usehooks-ts';
+import searchMarket from '~/atoms/marketSearch';
 import searchResult from '~/atoms/searchResult';
-import { If, Then, Else } from 'react-if';
+import { mapping_market_colors, SEARCH_PATH } from '~/constants';
+import mobileSearchState from '~/atoms/mobileSearchState';
+import { useSetAtom } from 'jotai';
 
 import {
     ArrowTrendingUpIcon,
@@ -16,17 +21,11 @@ interface SearchResultsProps {
 }
 
 function SearchResults({ styles, isMobile }: SearchResultsProps) {
-    const [result, setResult] = useAtom(searchResult);
+    const router = useRouter();
+    const market = useAtomValue(searchMarket);
     const ref = useRef<HTMLDivElement | null>(null);
-
-    const mapping_market_colors: {
-        [key: string]: string;
-    } = {
-        tiki: '#1a94ff',
-        lazada: '#0f1470',
-        shopee: '#f84a2f',
-        all: '#f43f5e',
-    };
+    const [result, setResult] = useAtom(searchResult);
+    const setModalSearch = useSetAtom(mobileSearchState);
 
     useOnClickOutside(ref, () => {
         if (!isMobile) {
@@ -36,6 +35,25 @@ function SearchResults({ styles, isMobile }: SearchResultsProps) {
             });
         }
     });
+
+    const handleGoToSearchPage = () => {
+        setModalSearch(false);
+
+        setResult({
+            items: [],
+            isFetching: false,
+        });
+
+        router.push(
+            `/${SEARCH_PATH}?market=${market}&keyword=${encodeURIComponent(
+                String(
+                    document
+                        .querySelector('#real-cost-search')
+                        ?.getAttribute('value'),
+                ),
+            )}`,
+        );
+    };
 
     return (
         <div
@@ -57,7 +75,7 @@ function SearchResults({ styles, isMobile }: SearchResultsProps) {
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                         <img
                                             alt="search-item"
-                                            className="full-size object-contain object-center"
+                                            className="full-size rounded-xl object-contain object-center"
                                             src={item?.img}
                                         />
                                     </figure>
@@ -101,7 +119,10 @@ function SearchResults({ styles, isMobile }: SearchResultsProps) {
                     </Else>
                 </If>
 
-                <button className="absolute-center smooth-effect mx-auto w-1/2 rounded-lg bg-[#f0edf4] p-4 hover:bg-gray-200">
+                <button
+                    onClick={handleGoToSearchPage}
+                    className="absolute-center smooth-effect mx-auto w-1/2 rounded-lg bg-[#f0edf4] p-4 hover:bg-gray-200"
+                >
                     <span className="text-2xl">Xem thêm</span>
                     <ChevronRightIcon className="h-9 w-9" />
                 </button>

@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { ChangeEvent, memo, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
 import { SearchResult } from 'types';
-import { useDebounce, useEffectOnce } from 'usehooks-ts';
+import { useDebounce, useEffectOnce, useEventListener } from 'usehooks-ts';
 import marketSearch from '~/atoms/marketSearch';
 import searchResult from '~/atoms/searchResult';
 import { MARKET_URL } from '~/constants';
@@ -28,7 +28,7 @@ function SearchInput({ styles, focusOnMount }: SearchInputProps) {
         setValue(event.target.value);
     };
 
-    const { data: searchResults } = useSWR<SearchResult[]>(
+    const { data: searchResults, mutate } = useSWR<SearchResult[]>(
         `${market} ${debouncedValue}`,
         async (slug: string) => {
             const market = slug.split(' ')[0];
@@ -104,15 +104,30 @@ function SearchInput({ styles, focusOnMount }: SearchInputProps) {
         }
     });
 
+    useEventListener(
+        'focusin',
+        () => {
+            mutate();
+
+            setResult(() => ({
+                items: searchResults?.length ? searchResults : [],
+                isFetching: searchResults?.length !== 0,
+            }));
+        },
+        inputRef,
+    );
+
     return (
         <div className={styles}>
             <MagnifyingGlassIcon className="h-8 w-8" />
 
             <input
+                ref={inputRef}
                 id="real-cost-search"
                 onChange={handleChange}
                 value={value}
                 type="text"
+                autoComplete="off"
                 className="h-12 w-full"
                 placeholder="Tìm kiếm sản phẩm..."
             />

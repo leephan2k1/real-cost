@@ -89,22 +89,6 @@ function MobileSearchModal() {
                                                 ]}
                                             />
                                         </div>
-
-                                        {/* <ListBoxButton
-                                            options={[
-                                                'tiki',
-                                                'lazada',
-                                                'shopee',
-                                                'tất cả',
-                                            ]}
-                                            defaultOption={
-                                                market === 'all'
-                                                    ? 'tất cả'
-                                                    : market
-                                            }
-                                            style="bg-white border-gray-500 border-[1px] w-32 p-2 rounded-lg"
-                                            handleSelect={handleSelect}
-                                        /> */}
                                     </div>
 
                                     <div className="space-x-6">
