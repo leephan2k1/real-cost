@@ -3,27 +3,32 @@ import { unique } from 'radash';
 import { memo, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
 import { Market, SearchResult } from 'types';
-import { useEventListener } from 'usehooks-ts';
+import { useEffectOnce, useEventListener } from 'usehooks-ts';
 import { MARKET_URL } from '~/constants';
 import useAxiosClient from '~/services/axiosClient';
 import ProductList from './ProductList';
 
 function ItemContainer() {
     const router = useRouter();
-    const [lastElem, setLastElem] = useState(false);
     const axiosClient = useAxiosClient(
         MARKET_URL('e-commerce-server' as Market),
     );
 
+    const [items, setItems] = useState<SearchResult[]>([]);
+
     const containerRef = useRef<HTMLDivElement | null>(null);
+
+    const [isReachingEnd, setIsReachingEnd] = useState(false);
 
     const currentPage = useRef(1);
     const previousKeyword = useRef(String(router.query?.keyword) || '');
-    const isReachingEnd = useRef(false);
-    const [items, setItems] = useState<SearchResult[]>([]);
 
-    const { data: resItems } = useSWR<SearchResult[]>(
-        router.asPath + String(lastElem),
+    const {
+        data: resItems,
+        mutate,
+        isValidating,
+    } = useSWR<SearchResult[]>(
+        router.asPath + String(router.isReady),
         async () => {
             const { keyword, market } = router.query;
 
@@ -34,8 +39,6 @@ function ItemContainer() {
             const { data } = await axiosClient.get(`/products/search`, {
                 params: { ...router.query, page: currentPage.current },
             });
-
-            ++currentPage.current;
 
             if (!data || !data?.products) {
                 return [];
@@ -69,13 +72,15 @@ function ItemContainer() {
 
     // hook set result value:
     useEffect(() => {
-        isReachingEnd.current =
-            Array.isArray(resItems) && resItems.length === 0;
+        setIsReachingEnd(Array.isArray(resItems) && resItems.length === 0);
 
         if (previousKeyword.current !== String(router.query?.keyword)) {
             if (!containerRef.current) return;
 
             setItems(resItems?.length ? resItems : []);
+
+            currentPage.current = 1;
+
             previousKeyword.current = String(router.query?.keyword);
 
             return;
@@ -96,16 +101,27 @@ function ItemContainer() {
         if (!containerRef.current) return;
 
         const isNearBottom =
-            containerRef.current?.clientHeight / window.scrollY < 1.25;
+            containerRef.current?.clientHeight / window.scrollY < 1.1;
 
-        if (lastElem !== isNearBottom) {
-            setLastElem(isNearBottom);
+        if (isNearBottom && resItems?.length && !isValidating) {
+            //fetching next page:
+            currentPage.current++;
+            mutate();
         }
+    });
+
+    useEffectOnce(() => {
+        currentPage.current = 1;
+        mutate();
     });
 
     return (
         <section ref={containerRef} className="h-fit min-h-screen w-full py-10">
-            <ProductList items={items} />
+            <ProductList
+                isFetching={isValidating}
+                isReachingEnd={isReachingEnd}
+                items={items}
+            />
         </section>
     );
 }

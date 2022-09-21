@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { SearchResult } from 'types';
 import { mapping_market_colors } from '~/constants';
 
@@ -75,4 +75,4 @@ const ProductCard = ({
     );
 };
 
-export default ProductCard;
+export default memo(ProductCard);
