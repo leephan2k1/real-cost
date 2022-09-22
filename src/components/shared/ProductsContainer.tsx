@@ -101,7 +101,7 @@ function ItemContainer() {
         if (!containerRef.current) return;
 
         const isNearBottom =
-            containerRef.current?.clientHeight / window.scrollY < 1.1;
+            containerRef.current?.clientHeight / window.scrollY < 1.4;
 
         if (isNearBottom && resItems?.length && !isValidating) {
             //fetching next page:

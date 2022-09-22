@@ -1,10 +1,12 @@
-import { SearchResult } from 'types';
 import { memo } from 'react';
+import { VscLoading } from 'react-icons/vsc';
 import { Else, If, Then } from 'react-if';
-import ProductCard from './ProductCard';
+import { SearchResult } from 'types';
+
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FaceFrownIcon } from '@heroicons/react/24/outline';
-import { VscLoading } from 'react-icons/vsc';
+
+import ProductCard from './ProductCard';
 
 interface ProductListProps {
     items: SearchResult[];
@@ -20,7 +22,7 @@ function ProductList({ items, isReachingEnd, isFetching }: ProductListProps) {
             <Then>
                 <div
                     ref={parent}
-                    className="smooth-effect flex w-full flex-wrap items-center justify-center gap-y-6 gap-x-4 md:justify-start"
+                    className="smooth-effect absolute-center w-full flex-wrap gap-6"
                 >
                     {items.map((item) => {
                         return (

@@ -1,6 +1,8 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
+import { ArrowLongLeftIcon } from '@heroicons/react/24/outline';
 import { ReactNode } from 'react';
+import Link from 'next/link';
 
 const LogIn: NextPage = () => {
     return (
@@ -9,11 +11,19 @@ const LogIn: NextPage = () => {
                 <div className="page sm:w-[960px] md:w-[1600px]">
                     <div className="con sm:-top-20">
                         <div className="box p-4">
-                            <span className="mt-4 ml-4 font-secondary sm:text-5xl md:text-7xl">
+                            <Link href="/">
+                                <a>
+                                    <button className="smooth-effect mr-16 hover:scale-[90%]">
+                                        <ArrowLongLeftIcon className="h-10 w-10 text-gray-700" />
+                                    </button>
+                                </a>
+                            </Link>
+
+                            <h1 className="md:absolute-center mt-4 ml-4 font-secondary text-gray-600 sm:text-5xl md:text-7xl">
                                 Đăng nhập
-                            </span>
+                            </h1>
                             <div className="absolute-screen-center h-[160px] ">
-                                <button className="decoration-3 absolute-left-center top-12 flex h-24 rounded-[50px] border-2 border-black bg-sky-300 p-3 hover:bg-sky-200 sm:top-6 sm:w-[250px] md:w-[420px]">
+                                <button className="smooth-effect decoration-3 absolute-left-center top-12 flex h-24 rounded-[50px] border-2 border-black bg-sky-300 p-3 hover:bg-sky-200 sm:top-6 sm:w-[250px] md:w-[420px]">
                                     <div className="absolute -left-1.5 w-[70px] sm:-top-1">
                                         <Image
                                             src="/fb_icon.svg"
@@ -27,7 +37,7 @@ const LogIn: NextPage = () => {
                                     </span>
                                 </button>
 
-                                <button className="decoration-3 absolute-left-center top-[125px] flex h-24  rounded-[50px] border-2 border-black bg-yellow-300 p-3 hover:bg-yellow-200 sm:top-36 sm:w-[250px] md:w-[420px]">
+                                <button className="smooth-effect decoration-3 absolute-left-center top-[125px] flex h-24  rounded-[50px] border-2 border-black bg-yellow-300 p-3 hover:bg-yellow-200 sm:top-36 sm:w-[250px] md:w-[420px]">
                                     <div className="absolute -left-1.5 w-[70px] sm:top-0.5">
                                         <Image
                                             src="/gg_icon.svg"
