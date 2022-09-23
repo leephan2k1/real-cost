@@ -25,7 +25,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
         return (
             <section ref={ref} className={style}>
                 {title && (
-                    <h2 className="mt-4 flex select-none items-center font-secondary text-3xl text-white hover:cursor-pointer  md:text-4xl lg:text-5xl">
+                    <h2 className="mt-4 flex select-none items-center font-secondary text-3xl hover:cursor-pointer  md:text-4xl lg:text-5xl">
                         {backLink ? (
                             <Link href={backLink}>
                                 <a>
