@@ -3,6 +3,11 @@ export interface Navigate {
     link: string;
 }
 
+export interface BcSuggestion {
+    slug: string;
+    name: string;
+}
+
 export type Market =
     | 'tiki'
     | 'tiki-shopee'
