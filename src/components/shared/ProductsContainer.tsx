@@ -21,7 +21,14 @@ function ItemContainer() {
     const [isReachingEnd, setIsReachingEnd] = useState(false);
 
     const currentPage = useRef(1);
-    const previousKeyword = useRef(String(router.query?.keyword) || '');
+
+    const previousQuery = useRef<{
+        [key: string]: string;
+    }>({
+        keyword: router.query?.keyword ? String(router.query?.keyword) : '',
+        market: router.query?.market ? String(router.query?.market) : '',
+        sort: router.query?.sort ? String(router.query?.sort) : '',
+    });
 
     const {
         data: resItems,
@@ -74,16 +81,19 @@ function ItemContainer() {
     useEffect(() => {
         setIsReachingEnd(Array.isArray(resItems) && resItems.length === 0);
 
-        if (previousKeyword.current !== String(router.query?.keyword)) {
-            if (!containerRef.current) return;
+        for (const key in router.query) {
+            if (previousQuery.current[key] !== String(router.query[key])) {
+                setItems(resItems?.length ? resItems : []);
 
-            setItems(resItems?.length ? resItems : []);
+                currentPage.current = 1;
 
-            currentPage.current = 1;
+                Object.assign(previousQuery.current, {
+                    ...previousQuery,
+                    [key]: String(router.query[key]),
+                });
 
-            previousKeyword.current = String(router.query?.keyword);
-
-            return;
+                return;
+            }
         }
 
         if (resItems?.length) {
@@ -95,7 +105,7 @@ function ItemContainer() {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [resItems]);
+    }, [resItems, router.asPath]);
 
     useEventListener('scroll', () => {
         if (!containerRef.current) return;

@@ -1,10 +1,27 @@
 import { memo } from 'react';
 import SelectMultiple from '~/components/buttons/SelectMultiple';
 import SelectBox from '../buttons/SelectBox';
+import usePushQuery from '~/hooks/usePushQuery';
+
+const sort_mapping: { [key: string]: string } = {
+    'phổ biến': '',
+    'giá thấp đến cao': 'asc',
+    'giá cao đến thấp': 'desc',
+};
 
 function SearchFilter() {
-    const handleSelect = (values: string[]) => {
-        console.error(values);
+    const qry = usePushQuery();
+
+    const handleSelectMarkets = (values: string[]) => {
+        if (values.length < 3) {
+            qry.push('market', values.join('-'), false);
+        } else {
+            qry.push('market', 'all', false);
+        }
+    };
+
+    const handleSelectSort = (value: string) => {
+        qry.push('sort', sort_mapping[value.toLowerCase()], false);
     };
 
     return (
@@ -15,7 +32,7 @@ function SearchFilter() {
                         Sàn thương mại:
                     </h3>
                     <SelectMultiple
-                        handleSelect={handleSelect}
+                        handleSelect={handleSelectMarkets}
                         options={['tiki', 'lazada', 'shopee']}
                         defaultOption={['tiki']}
                     />
@@ -27,9 +44,7 @@ function SearchFilter() {
                     </h3>
                     <SelectBox
                         defaultValue={'Phổ biến'}
-                        handleSelect={(value: string) => {
-                            console.error(value);
-                        }}
+                        handleSelect={handleSelectSort}
                         options={[
                             'Phổ biến',
                             'Giá cao đến thấp',
