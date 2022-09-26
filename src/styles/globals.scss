@@ -93,6 +93,12 @@ input[type='number'] {
     }
 }
 
+.atropos-inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
 #not-found-page {
     .container {
         margin: 0 auto;
