@@ -26,7 +26,7 @@ export default function MainLayout({
     return (
         <>
             {showHeader && <Header />}
-            <main className="overflow-x-hidden">{children}</main>
+            <main className="min-h-screen overflow-y-hidden">{children}</main>
             {matchesMobile && (
                 <ClientOnly>
                     <Sidebar /> <MobileSearchModal />

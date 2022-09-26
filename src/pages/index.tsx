@@ -44,9 +44,10 @@ export const getStaticProps: GetStaticProps = async () => {
             props: {
                 suggestion_list: data?.data?.lst_query,
             },
+            revalidate: 6 * 60 * 60, // 6h
         };
     } catch (error) {
-        return { props: { dat: [] } };
+        return { props: { suggestion_list: [] } };
     }
 };
 
