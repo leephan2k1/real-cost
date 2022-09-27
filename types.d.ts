@@ -28,3 +28,17 @@ export interface SearchResult {
     link: string;
     market: Market;
 }
+
+export interface ItemHistory {
+    price: number[];
+    priceTs: number[];
+}
+
+export interface Product
+    extends Pick<SearchResult, 'name' | 'price' | 'totalSales' | 'market'> {
+    brand: string;
+    description: string;
+    images: string[];
+    priceBeforeDiscount?: string | null;
+    product_base_id?: string;
+}
