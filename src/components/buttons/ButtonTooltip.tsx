@@ -1,9 +1,14 @@
 import { Button } from 'ariakit/button';
 import { Tooltip, TooltipAnchor, useTooltipState } from 'ariakit/tooltip';
-import { HeartIcon } from '@heroicons/react/24/outline';
-import { memo } from 'react';
+import { memo, ReactNode } from 'react';
 
-function BookmarkButton() {
+interface ButtonTooltipProps {
+    children: ReactNode;
+    title: string;
+    handler: () => void;
+}
+
+function ButtonTooltip({ children, title }: ButtonTooltipProps) {
     const tooltip = useTooltipState();
 
     return (
@@ -13,16 +18,16 @@ function BookmarkButton() {
                 as={Button}
                 className="button secondary"
             >
-                <HeartIcon className="mx-4 h-8 w-8 md:h-10 md:w-10" />
+                {children}
             </TooltipAnchor>
             <Tooltip
                 state={tooltip}
                 className="animate__zoomIn animate__animated animate__faster absolute-center rounded-xl border-[1px] border-gray-700 p-2"
             >
-                Yêu thích
+                {title}
             </Tooltip>
         </>
     );
 }
 
-export default memo(BookmarkButton);
+export default memo(ButtonTooltip);
