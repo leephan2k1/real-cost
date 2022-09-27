@@ -11,6 +11,12 @@ export function MARKET_URL(market: Market) {
     return market === 'tiki' ? 'https://tiki.vn' : BASE_URL;
 }
 
+export const MARKET_MAPPING: { [key: string]: string } = {
+    shopee: 'https://shopee.vn',
+    tiki: 'https://tiki.vn',
+    lazada: 'https://www.lazada.vn',
+};
+
 export const quickList: Navigate[] = [
     { title: 'Xu Hướng', link: '/' },
     { title: 'Danh Mục', link: '/' },
