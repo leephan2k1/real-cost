@@ -5,16 +5,13 @@ import Atropos from 'atropos/react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { memo, useCallback, useEffect, useState } from 'react';
 import Zoom from 'react-medium-image-zoom';
+import { If, Then, Else } from 'react-if';
 
-const slides = [
-    'https://salt.tikicdn.com/cache/750x750/ts/review/95/09/96/6d7660a404a6209a431d1ac99ae9d0ff.jpg.webp',
-    'https://salt.tikicdn.com/cache/750x750/ts/product/6a/4a/d3/696c5f6aa4810d0ed3cb8b354010c60f.jpg.webp',
-    'https://salt.tikicdn.com/cache/750x750/ts/product/89/a2/42/a8687c880f35b82fc2164eb4cbb8dc58.jpg.webp',
-    'https://salt.tikicdn.com/cache/750x750/ts/product/93/5e/3e/4dad40ab5ac13305f59960335d5b637c.jpg.webp',
-    'https://salt.tikicdn.com/cache/750x750/ts/review/57/75/4d/f1412b19cbc0dcba3dfa3f9cce0b9421.jpg.webp',
-];
+interface ProductSlidesProps {
+    images: string[];
+}
 
-function ProductSlides() {
+function ProductSlides({ images }: ProductSlidesProps) {
     const [_, setSelectedIndex] = useState(0);
     const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false });
 
@@ -50,53 +47,83 @@ function ProductSlides() {
                 ref={mainViewportRef}
             >
                 <div className="full-size flex select-none">
-                    {slides.map((slide, index) => {
-                        return (
-                            <figure
-                                key={index}
-                                className="absolute-center relative h-full min-w-full overflow-hidden rounded-2xl"
-                            >
-                                <Zoom>
-                                    <Atropos
-                                        shadow={false}
-                                        className="absolute-center smooth-effect h-fit w-full rounded-2xl hover:scale-[90%] hover:cursor-grab"
+                    <If condition={images && images?.length}>
+                        <Then>
+                            {images?.map((img, index) => {
+                                return (
+                                    <figure
+                                        key={img + index}
+                                        className="absolute-center relative h-full min-w-full overflow-hidden rounded-2xl"
                                     >
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={slide}
-                                            className="h-full max-h-[350px] w-auto rounded-2xl object-contain"
-                                            alt="product-image"
-                                        />
-                                    </Atropos>
-                                </Zoom>
-                            </figure>
-                        );
-                    })}
+                                        <Zoom>
+                                            <Atropos
+                                                shadow={false}
+                                                className="absolute-center smooth-effect h-fit w-full rounded-2xl hover:scale-[90%] hover:cursor-grab"
+                                            >
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                    src={img}
+                                                    className="h-full max-h-[350px] w-auto rounded-2xl object-contain"
+                                                    alt="product-image"
+                                                />
+                                            </Atropos>
+                                        </Zoom>
+                                    </figure>
+                                );
+                            })}
+                        </Then>
+
+                        <Else>
+                            {Array.from(new Array(1).keys()).map((idx) => {
+                                return (
+                                    <figure
+                                        key={idx}
+                                        className="tailwind-pulse-effect aspect-w-3 aspect-h-5 bg-gray-300"
+                                    ></figure>
+                                );
+                            })}
+                        </Else>
+                    </If>
                 </div>
             </div>
 
-            <div className="relative flex-1">
+            <div className="relative flex-1 px-4">
                 <div
                     className="full-size overflow-hidden"
                     ref={thumbViewportRef}
                 >
                     <div className="full-size flex select-none space-x-4 hover:cursor-pointer">
-                        {slides.map((slide, index) => {
-                            return (
-                                <figure
-                                    key={slide}
-                                    onClick={() => onThumbClick(index)}
-                                    className="flex h-full min-w-[20%] items-center"
-                                >
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={slide}
-                                        className="h-auto max-h-full w-auto rounded-2xl object-contain"
-                                        alt="product-image"
-                                    />
-                                </figure>
-                            );
-                        })}
+                        <If condition={images && images?.length}>
+                            <Then>
+                                {images?.map((img, index) => {
+                                    return (
+                                        <figure
+                                            key={img}
+                                            onClick={() => onThumbClick(index)}
+                                            className="flex h-full min-w-[20%] items-center"
+                                        >
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={img}
+                                                className="h-auto max-h-full w-auto rounded-2xl object-contain"
+                                                alt="product-image"
+                                            />
+                                        </figure>
+                                    );
+                                })}
+                            </Then>
+
+                            <Else>
+                                {Array.from(new Array(5).keys()).map((idx) => {
+                                    return (
+                                        <figure
+                                            key={idx}
+                                            className="tailwind-pulse-effect h-full min-w-[20%] rounded-2xl bg-gray-300"
+                                        ></figure>
+                                    );
+                                })}
+                            </Else>
+                        </If>
                     </div>
                 </div>
             </div>

@@ -1,16 +1,23 @@
-import { memo, useRef } from 'react';
-import { useIsOverflow } from '~/hooks/useIsOverflow';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Disclosure, useDisclosureState } from 'ariakit/disclosure';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import { Else, If, Then } from 'react-if';
 
-function ProductDescription() {
+interface ProductDescriptionProps {
+    description: string;
+}
+
+function ProductDescription({ description }: ProductDescriptionProps) {
     const disclosure = useDisclosureState();
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const isOverflow = useIsOverflow<HTMLElement>(containerRef);
+    const [isOverflow, setIsOverflow] = useState(false);
 
     const [parent] = useAutoAnimate<HTMLParagraphElement>();
+
+    useEffect(() => {
+        parent.current && setIsOverflow(parent.current?.clientHeight > 200);
+    }, [description]);
 
     return (
         <div
@@ -19,35 +26,11 @@ function ProductDescription() {
             }`}
             ref={containerRef}
         >
-            <p className="lg:w-4/5" ref={parent}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                fugit repellendus, quidem ab quos voluptatibus optio aut maiores
-                provident magnam. Velit vel nemo est vitae nesciunt et dolor
-                praesentium sint! Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Atque fugit repellendus, quidem ab quos
-                voluptatibus optio aut maiores provident magnam. Velit vel nemo
-                est vitae nesciunt et dolor praesentium sint! Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Atque fugit repellendus,
-                quidem ab quos voluptatibus optio aut maiores provident magnam.
-                Velit vel nemo est vitae nesciunt et dolor praesentium sint!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                fugit repellendus, quidem ab quos voluptatibus optio aut maiores
-                provident magnam. Velit vel nemo est vitae nesciunt et dolor
-                praesentium sint! Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Atque fugit repellendus, quidem ab quos
-                voluptatibus optio aut maiores provident magnam. Velit vel nemo
-                est vitae nesciunt et dolor praesentium sint! Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Atque fugit repellendus,
-                quidem ab quos voluptatibus optio aut maiores provident magnam.
-                Velit vel nemo est vitae nesciunt et dolor praesentium sint!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-                fugit repellendus, quidem ab quos voluptatibus optio aut maiores
-                provident magnam. Velit vel nemo est vitae nesciunt et dolor
-                praesentium sint! Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Atque fugit repellendus, quidem ab quos
-                voluptatibus optio aut maiores provident magnam. Velit vel nemo
-                est vitae nesciunt et dolor praesentium sint!
-            </p>
+            <article
+                className="prose prose-xl lg:prose-2xl lg:w-4/5"
+                ref={parent}
+                dangerouslySetInnerHTML={{ __html: description }}
+            ></article>
 
             <If condition={isOverflow}>
                 <Then>
