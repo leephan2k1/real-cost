@@ -1,14 +1,19 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { memo, useRef } from 'react';
+import { memo, useRef, useEffect } from 'react';
 import { VscLoading } from 'react-icons/vsc';
 import { Else, If, Then } from 'react-if';
 import { useOnClickOutside } from 'usehooks-ts';
 import searchMarket from '~/atoms/marketSearch';
-import searchResult from '~/atoms/searchResult';
-import { mapping_market_colors, SEARCH_PATH } from '~/constants';
 import mobileSearchState from '~/atoms/mobileSearchState';
-import { useSetAtom } from 'jotai';
+import searchResult from '~/atoms/searchResult';
+import {
+    mapping_market_colors,
+    SEARCH_PATH,
+    PRODUCTS_PATH,
+    MARKET_MAPPING,
+} from '~/constants';
 
 import {
     ArrowTrendingUpIcon,
@@ -55,6 +60,23 @@ function SearchResults({ styles, isMobile }: SearchResultsProps) {
         );
     };
 
+    useEffect(() => {
+        const turnOffModal = () => {
+            setModalSearch(false);
+
+            setResult({
+                items: [],
+                isFetching: false,
+            });
+        };
+
+        router.events.on('routeChangeStart', turnOffModal);
+
+        return () => {
+            router.events.off('routeChangeStart', turnOffModal);
+        };
+    }, []);
+
     return (
         <div
             ref={ref}
@@ -67,47 +89,58 @@ function SearchResults({ styles, isMobile }: SearchResultsProps) {
                     <Then>
                         {result.items.map((item) => {
                             return (
-                                <li
+                                <Link
                                     key={String(item?.link)}
-                                    className="absolute-center space-x-2xl flex h-[80px] w-full lg:h-[100px]"
+                                    href={`/${PRODUCTS_PATH}/${
+                                        item.market
+                                    }/${item.link.replace(
+                                        `${MARKET_MAPPING[item.market]}/`,
+                                        '',
+                                    )}`}
                                 >
-                                    <figure className="relative h-full min-w-[20%] overflow-hidden rounded-xl p-2 lg:min-w-[15%]">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            alt="search-item"
-                                            className="full-size rounded-xl object-contain object-center"
-                                            src={item?.img}
-                                        />
-                                    </figure>
+                                    <a className="full-size">
+                                        <li className="absolute-center space-x-2xl flex h-[80px] w-full lg:h-[100px]">
+                                            <figure className="relative h-full min-w-[20%] overflow-hidden rounded-xl p-2 lg:min-w-[15%]">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                    alt="search-item"
+                                                    className="full-size rounded-xl object-contain object-center"
+                                                    src={item?.img}
+                                                />
+                                            </figure>
 
-                                    <div className="flex h-full w-[85%] flex-col justify-evenly rounded-2xl py-2 px-6">
-                                        <h2 className="font-secondary text-2xl text-gray-700 line-clamp-1 lg:text-3xl">
-                                            {item?.name}
-                                        </h2>
-                                        <h3 className="text-lg lg:text-xl">
-                                            Giá:{' '}
-                                            <span className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text font-bold text-transparent">
-                                                {item?.price}
-                                            </span>
-                                        </h3>
-                                        <h4 className="text-lg lg:text-xl">
-                                            Sàn:{' '}
-                                            <span
-                                                style={{
-                                                    color: mapping_market_colors[
-                                                        item?.market
-                                                    ],
-                                                }}
-                                            >
-                                                {item?.market}
-                                            </span>
-                                        </h4>
-                                        <h5 className="flex space-x-2 text-lg lg:text-xl">
-                                            <ArrowTrendingUpIcon className="h-6 w-6" />{' '}
-                                            <span>{item?.totalSales}</span>
-                                        </h5>
-                                    </div>
-                                </li>
+                                            <div className="flex h-full w-[85%] flex-col justify-evenly rounded-2xl py-2 px-6">
+                                                <h2 className="font-secondary text-2xl text-gray-700 line-clamp-1 lg:text-3xl">
+                                                    {item?.name}
+                                                </h2>
+                                                <h3 className="text-lg lg:text-xl">
+                                                    Giá:{' '}
+                                                    <span className="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text font-bold text-transparent">
+                                                        {item?.price}
+                                                    </span>
+                                                </h3>
+                                                <h4 className="text-lg lg:text-xl">
+                                                    Sàn:{' '}
+                                                    <span
+                                                        style={{
+                                                            color: mapping_market_colors[
+                                                                item?.market
+                                                            ],
+                                                        }}
+                                                    >
+                                                        {item?.market}
+                                                    </span>
+                                                </h4>
+                                                <h5 className="flex space-x-2 text-lg lg:text-xl">
+                                                    <ArrowTrendingUpIcon className="h-6 w-6" />{' '}
+                                                    <span>
+                                                        {item?.totalSales}
+                                                    </span>
+                                                </h5>
+                                            </div>
+                                        </li>
+                                    </a>
+                                </Link>
                             );
                         })}
                     </Then>

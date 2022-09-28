@@ -4,6 +4,8 @@ export const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1`;
 
 export const SEARCH_PATH = 'search';
 
+export const PRODUCTS_PATH = 'products';
+
 export const BC_URL = String(process.env.BC_URL);
 export const BC_BASE_API = String(process.env.BC_BASE_API);
 
