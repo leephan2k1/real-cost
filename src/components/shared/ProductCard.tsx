@@ -1,11 +1,8 @@
 import Link from 'next/link';
 import { memo, useState } from 'react';
 import { SearchResult } from 'types';
-import {
-    mapping_market_colors,
-    PRODUCTS_PATH,
-    MARKET_MAPPING,
-} from '~/constants';
+import { mapping_market_colors, PRODUCTS_PATH } from '~/constants';
+import { handleSubPathMarket } from '~/utils/stringHandler';
 
 import { BellIcon } from '@heroicons/react/24/outline';
 
@@ -25,9 +22,9 @@ const ProductCard = ({
 
     return (
         <Link
-            href={`/${PRODUCTS_PATH}/${market}/${link.replace(
-                `${MARKET_MAPPING[market]}/`,
-                '',
+            href={`/${PRODUCTS_PATH}/${market}/${handleSubPathMarket(
+                market,
+                link,
             )}`}
         >
             <a>

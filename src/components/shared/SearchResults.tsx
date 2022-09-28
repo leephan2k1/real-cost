@@ -1,19 +1,15 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { memo, useRef, useEffect } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { VscLoading } from 'react-icons/vsc';
 import { Else, If, Then } from 'react-if';
 import { useOnClickOutside } from 'usehooks-ts';
 import searchMarket from '~/atoms/marketSearch';
 import mobileSearchState from '~/atoms/mobileSearchState';
 import searchResult from '~/atoms/searchResult';
-import {
-    mapping_market_colors,
-    SEARCH_PATH,
-    PRODUCTS_PATH,
-    MARKET_MAPPING,
-} from '~/constants';
+import { mapping_market_colors, PRODUCTS_PATH, SEARCH_PATH } from '~/constants';
+import { handleSubPathMarket } from '~/utils/stringHandler';
 
 import {
     ArrowTrendingUpIcon,
@@ -93,9 +89,9 @@ function SearchResults({ styles, isMobile }: SearchResultsProps) {
                                     key={String(item?.link)}
                                     href={`/${PRODUCTS_PATH}/${
                                         item.market
-                                    }/${item.link.replace(
-                                        `${MARKET_MAPPING[item.market]}/`,
-                                        '',
+                                    }/${handleSubPathMarket(
+                                        item.market,
+                                        item.link,
                                     )}`}
                                 >
                                     <a className="full-size">
