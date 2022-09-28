@@ -11,6 +11,7 @@ import {
     Legend,
 } from 'chart.js';
 import { ItemHistory } from 'types';
+import { min, max } from 'radash';
 
 ChartJS.register(
     CategoryScale,
@@ -130,8 +131,36 @@ function ProductChart({ itemHistory, productName }: ProductChartProps) {
         },
     });
 
+    const value = useMemo(() => {
+        return {
+            min: min(itemHistory?.price, (price) => price),
+            max: max(itemHistory?.price, (price) => price),
+        };
+    }, [itemHistory]);
+
     return (
         <div className="mx-auto w-full lg:w-3/4">
+            <div className="absolute-center w-full space-x-4">
+                <h3 className="flex flex-col items-center space-x-4 md:flex-row">
+                    <span>Giá cao nhất:</span>
+                    <span className="rounded-2xl border-[2px] border-rose-500 px-4 py-2">
+                        {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        }).format(value.max)}
+                    </span>
+                </h3>
+                <h3 className="flex flex-col items-center space-x-4 md:flex-row">
+                    <span>Giá thấp nhất:</span>
+                    <span className="rounded-2xl border-[2px] border-green-500 px-4 py-2">
+                        {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        }).format(value.min)}
+                    </span>
+                </h3>
+            </div>
+
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
             <Line options={options} data={data} plugins={[chartAreaBorder]} />
