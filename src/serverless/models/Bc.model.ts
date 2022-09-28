@@ -36,14 +36,14 @@ export async function getProductDetails(
         } = data?.data?.product_base;
 
         return {
-            name,
+            name: name ? name : '',
             price: handlePriceNumber(price),
             priceBeforeDiscount: price_before_discount
                 ? handlePriceNumber(price_before_discount)
                 : null,
-            brand: brand?.name,
-            description,
-            images: url_images,
+            brand: brand?.name ? brand?.name : '',
+            description: description ? description : '',
+            images: url_images ? url_images : [],
             totalSales: historical_sold,
             market: market as Market,
             product_base_id,

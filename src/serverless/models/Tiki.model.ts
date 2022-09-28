@@ -32,7 +32,7 @@ export async function getProductDetails(url: string): Promise<Product | null> {
 
         return {
             name,
-            description,
+            description: description ? description : '',
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
             images: images.map((img) => img?.medium_url),
@@ -42,7 +42,7 @@ export async function getProductDetails(url: string): Promise<Product | null> {
                     ? handlePriceNumber(original_price)
                     : null,
             totalSales: all_time_quantity_sold ? all_time_quantity_sold : '0',
-            brand: brand?.name,
+            brand: brand?.name ? brand?.name : '',
             market: 'tiki',
             product_base_id: `3__${objId}__${current_seller?.product_id}`,
         };
