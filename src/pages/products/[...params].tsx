@@ -61,17 +61,17 @@ const DetailsPage: NextPage<DetailsPageProps> = ({
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const [market, url] = params?.params;
+    const [market, ...url] = params?.params;
 
     let product: Product | null;
 
     switch (market) {
         case 'tiki':
-            product = await tkGetProductDetails(url);
+            product = await tkGetProductDetails(url.join('/'));
             break;
         case 'shopee':
         case 'lazada':
-            product = await bcGetProductDetails(market, url);
+            product = await bcGetProductDetails(market, url.join('/'));
             break;
         default:
             return { notFound: true };

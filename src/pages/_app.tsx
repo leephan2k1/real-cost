@@ -1,7 +1,10 @@
 import '~/styles/globals.scss';
 import 'animate.css';
+import 'nprogress/nprogress.css';
 
 import { Provider as JotaiProvider } from 'jotai';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 import { ReactElement, ReactNode } from 'react';
 import MainLayout from '~/components/layouts/MainLayout';
 
@@ -14,6 +17,10 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout;
 };
+
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout =
