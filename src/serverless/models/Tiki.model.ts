@@ -41,7 +41,7 @@ export async function getProductDetails(url: string): Promise<Product | null> {
                 original_price !== price
                     ? handlePriceNumber(original_price)
                     : null,
-            totalSales: all_time_quantity_sold,
+            totalSales: all_time_quantity_sold ? all_time_quantity_sold : '0',
             brand: brand?.name,
             market: 'tiki',
             product_base_id: `3__${objId}__${current_seller?.product_id}`,
