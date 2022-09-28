@@ -1,8 +1,10 @@
 import { Disclosure, useDisclosureState } from 'ariakit/disclosure';
+import Link from 'next/link';
 import { unique } from 'radash';
 import { memo, useEffect, useState } from 'react';
 import { Else, If, Then } from 'react-if';
 import { BcSuggestion } from 'types';
+import { SEARCH_PATH } from '~/constants';
 
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
@@ -47,12 +49,18 @@ function SearchTrends({ suggestion_list }: SearchTrendsProps) {
                     <Then>
                         {trendingList.map((trend) => {
                             return (
-                                <li
+                                <Link
                                     key={trend.slug}
-                                    className="smooth-effect max-h-[40px] overflow-hidden rounded-2xl border-[1px] border-gray-700 px-4 py-3 line-clamp-1 hover:cursor-pointer hover:outline-double hover:outline-blue-500"
+                                    href={`/${SEARCH_PATH}?market=all&keyword=${encodeURIComponent(
+                                        trend.name,
+                                    )}`}
                                 >
-                                    {trend.name}
-                                </li>
+                                    <a>
+                                        <li className="smooth-effect max-h-[40px] overflow-hidden rounded-2xl border-[1px] border-gray-700 px-4 py-3 line-clamp-1 hover:cursor-pointer hover:outline-double hover:outline-blue-500">
+                                            {trend.name}
+                                        </li>
+                                    </a>
+                                </Link>
                             );
                         })}
                     </Then>

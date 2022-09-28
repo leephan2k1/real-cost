@@ -111,7 +111,7 @@ function ProductChart({ itemHistory, productName }: ProductChartProps) {
         labels,
         datasets: [
             {
-                label: `Biến động giá`,
+                label: `Giá`,
                 data: itemHistory?.price,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
