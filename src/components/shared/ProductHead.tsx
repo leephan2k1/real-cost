@@ -1,8 +1,8 @@
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 import { If, Then } from 'react-if';
 import { Product } from 'types';
 import { mapping_market_colors } from '~/constants';
-
+import { useIntersectionObserver } from 'usehooks-ts';
 import {
     ArrowTopRightOnSquareIcon,
     BellIcon,
@@ -17,6 +17,10 @@ interface ProductHeadProps {
 }
 
 function ProductHead({ product }: ProductHeadProps) {
+    const btnRef = useRef<HTMLButtonElement | null>(null);
+    const entry = useIntersectionObserver(btnRef, {});
+    const isVisible = !!entry?.isIntersecting;
+
     return (
         <div className="smooth-effect relative h-fit w-full rounded-2xl border-[2px] border-gray-700 md:h-[400px] lg:h-[500px]">
             <div
@@ -34,7 +38,7 @@ function ProductHead({ product }: ProductHeadProps) {
                             <h2 className="text-xl">
                                 Thương hiệu: {product?.brand}
                             </h2>
-                            <h1 className="py-3 font-secondary text-3xl font-medium line-clamp-2 md:w-4/5 md:text-4xl lg:text-5xl lg:line-clamp-3">
+                            <h1 className="overflow-hidden font-secondary text-3xl font-medium line-clamp-2 md:w-4/5 md:text-4xl lg:text-5xl lg:line-clamp-3">
                                 {product?.name}
                             </h1>
 
@@ -54,7 +58,10 @@ function ProductHead({ product }: ProductHeadProps) {
                             <h4>Đã bán: {product?.totalSales}</h4>
 
                             <div className="flex w-full items-center space-x-8">
-                                <button className="smooth-effect absolute-center w-fit space-x-4 rounded-2xl bg-[#f84a2f] p-4 text-white hover:scale-[110%]">
+                                <button
+                                    ref={btnRef}
+                                    className="smooth-effect absolute-center w-fit space-x-4 rounded-2xl bg-[#f84a2f] p-4 text-white hover:scale-[110%]"
+                                >
                                     <span>Đi đến nơi bán</span>
                                     <ArrowTopRightOnSquareIcon className="h-8 w-8" />
                                 </button>
@@ -94,6 +101,13 @@ function ProductHead({ product }: ProductHeadProps) {
                     </div>
                 </aside>
             </div>
+
+            {!isVisible && (
+                <button className="animate__fadeIn animate__faster animate__animated smooth-effect absolute-center fixed left-1/2 bottom-6 z-[50] w-fit -translate-x-1/2 space-x-4 rounded-2xl bg-[#f84a2f] p-4 px-10 text-white hover:scale-[110%] md:px-10 lg:px-16">
+                    <span>Đi đến nơi bán</span>
+                    <ArrowTopRightOnSquareIcon className="h-8 w-8" />
+                </button>
+            )}
         </div>
     );
 }
