@@ -29,6 +29,11 @@ export interface SearchResult {
     market: Market;
 }
 
+export interface ItemsWithKeyword {
+    keyword: string;
+    items: SearchResult[];
+}
+
 export interface ItemHistory {
     price: number[];
     priceTs: number[];
