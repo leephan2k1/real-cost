@@ -3,13 +3,13 @@ import { MARKET_URL } from '~/constants';
 import { handlePriceNumber } from '~/utils/handlePrice';
 import { Product } from 'types';
 
-export async function getProductDetails(url: string): Promise<Product | null> {
-    const axiosClient = getAxiosClient(
-        MARKET_URL('tiki'),
-        MARKET_URL('tiki'),
-        MARKET_URL('tiki') + '/api/v2',
-    );
+const axiosClient = getAxiosClient(
+    MARKET_URL('tiki'),
+    MARKET_URL('tiki'),
+    MARKET_URL('tiki') + '/api/v2',
+);
 
+export async function getProductDetails(url: string): Promise<Product | null> {
     const lastStr = String(url.split('-').pop());
     const id = lastStr.slice(1, lastStr.indexOf('.'));
 
@@ -46,6 +46,20 @@ export async function getProductDetails(url: string): Promise<Product | null> {
             market: 'tiki',
             product_base_id: `3__${objId}__${current_seller?.product_id}`,
         };
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function getSuggestionKeyword() {
+    try {
+        const { data } = await axiosClient.get(`/search/suggestion`);
+
+        if (!data?.data && !data?.data?.length) return null;
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return data.data.map((item) => item?.keyword);
     } catch (error) {
         return null;
     }

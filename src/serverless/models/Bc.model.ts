@@ -5,12 +5,6 @@ import { handlePriceNumber } from '~/utils/handlePrice';
 
 const axiosClient = getAxiosClient(BC_URL, BC_URL, BC_BASE_API);
 
-// enum MarketId {
-//     shopee,
-//     lazada,
-//     tiki,
-// }
-
 export async function getProductDetails(
     market: string,
     url: string,
@@ -71,6 +65,24 @@ export async function getHistoryPrice(
             data.data?.product_history_data?.item_history;
 
         return { price, priceTs: price_ts };
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function getSuggestionKeyword(limit = 20) {
+    try {
+        const { data } = await axiosClient.get(
+            `/product/recent/v2?limit=${limit}`,
+        );
+
+        if (!data?.data && !data.data?.products) return null;
+
+        const { products } = data?.data;
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return products?.map((product) => product?.name);
     } catch (error) {
         return null;
     }
