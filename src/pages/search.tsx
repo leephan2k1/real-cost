@@ -1,43 +1,64 @@
 import { NextPage } from 'next';
+import { useCallback } from 'react';
+import SelectBox from '~/components/buttons/SelectBox';
+import SelectMultiple from '~/components/buttons/SelectMultiple';
 import ItemContainer from '~/components/shared/ProductsContainer';
+import ScrollTop from '~/components/shared/ScrollTop';
 import SearchFilter from '~/components/shared/SearchFilter';
-import { useEventListener } from 'usehooks-ts';
-import { useRef, useState } from 'react';
-import { ArrowUpIcon } from '@heroicons/react/24/outline';
+import { sort_mapping } from '~/constants';
+import usePushQuery from '~/hooks/usePushQuery';
 
 const SearchPage: NextPage = () => {
-    const lastScrollTop = useRef(0);
-    const [isScrollUp, setIsScrollUp] = useState(false);
+    const qry = usePushQuery();
 
-    useEventListener('scroll', () => {
-        const st = window.pageYOffset;
-
-        if (st > lastScrollTop.current) {
-            setIsScrollUp(false);
+    const handleSelectMarkets = useCallback((values: string[]) => {
+        if (values.length < 3) {
+            qry.push('market', values.join('-'), false);
         } else {
-            setIsScrollUp(true);
+            qry.push('market', 'all', false);
         }
-        lastScrollTop.current = st;
-    });
+    }, []);
+
+    const handleSelectSort = useCallback((value: string) => {
+        qry.push('sort', sort_mapping[value.toLowerCase()], false);
+    }, []);
 
     return (
-        <div className="w-max-[1300px] mx-auto w-[90%] pt-[100px] text-black">
-            <SearchFilter />
+        <ScrollTop>
+            <div className="w-max-[1300px] mx-auto w-[90%] pt-[100px] text-black">
+                <SearchFilter>
+                    <>
+                        <div className="flex w-52 flex-col space-y-4">
+                            <h3 className="font-secondary text-2xl md:text-3xl">
+                                Sàn thương mại:
+                            </h3>
+                            <SelectMultiple
+                                handleSelect={handleSelectMarkets}
+                                options={['tiki', 'lazada', 'shopee']}
+                                defaultOption={['tiki']}
+                            />
+                        </div>
 
-            <ItemContainer />
+                        <div className="flex w-60 flex-col space-y-4">
+                            <h3 className="font-secondary text-2xl md:text-3xl">
+                                Bộ lọc:
+                            </h3>
+                            <SelectBox
+                                defaultValue={'Phổ biến'}
+                                handleSelect={handleSelectSort}
+                                options={[
+                                    'Phổ biến',
+                                    'Giá cao đến thấp',
+                                    'Giá thấp đến cao',
+                                ]}
+                            />
+                        </div>
+                    </>
+                </SearchFilter>
 
-            {isScrollUp && (
-                <button
-                    onClick={() => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="animate__fadeInUp animate__animated animate__faster smooth-effect fixed bottom-10 right-6 z-[100] rounded-full border-[1px] border-gray-700 bg-blue-400 p-4 hover:bg-blue-400/50"
-                >
-                    <div className="absolute-screen-center absolute h-[130%] w-[130%] rounded-full border-[2px] border-dashed border-gray-400"></div>
-                    <ArrowUpIcon className="h-8 w-8 text-white md:h-6 md:w-6" />
-                </button>
-            )}
-        </div>
+                <ItemContainer />
+            </div>
+        </ScrollTop>
     );
 };
 

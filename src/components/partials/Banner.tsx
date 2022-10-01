@@ -9,7 +9,7 @@ import {
 function Banner() {
     return (
         <div className="full-size flex flex-col justify-evenly">
-            <h1 className="tracking-in-expand bg-gradient-to-r py-4 px-8 text-center font-secondary text-3xl uppercase md:px-0 md:text-4xl lg:text-6xl ">
+            <h1 className="bg-gradient-to-r py-4 px-8 text-center font-secondary text-3xl uppercase md:px-0 md:text-4xl lg:text-6xl ">
                 Real Cost giúp bạn mua sắm online tốt hơn mỗi ngày!
             </h1>
 
