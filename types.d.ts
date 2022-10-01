@@ -27,6 +27,11 @@ export interface SearchResult {
     totalSales: string;
     link: string;
     market: Market;
+
+    priceBeforeDiscount?: number;
+    discountPercent?: number;
+    qtyRemainPercent?: number;
+    product_base_id?: string;
 }
 
 export interface ItemsWithKeyword {

@@ -13,6 +13,28 @@ export function MARKET_URL(market: Market) {
     return market === 'tiki' ? 'https://tiki.vn' : BASE_URL;
 }
 
+export const TailwindColors = [
+    '#facc15',
+    '#a3e635',
+    '#fbbf24',
+    '#34d399',
+    '#fb923c',
+    '#22d3ee',
+    '#f87171',
+    '#38bdf8',
+    '#f472b6',
+    '#818cf8',
+    '#fb7185',
+    '#a78bfa',
+    '#e879f9',
+];
+
+export const sort_mapping: { [key: string]: string } = {
+    'phổ biến': '',
+    'giá thấp đến cao': 'asc',
+    'giá cao đến thấp': 'desc',
+};
+
 export const MARKET_MAPPING: { [key: string]: string } = {
     shopee: 'https://shopee.vn',
     tiki: 'https://tiki.vn',
@@ -20,10 +42,8 @@ export const MARKET_MAPPING: { [key: string]: string } = {
 };
 
 export const quickList: Navigate[] = [
-    { title: 'Xu Hướng', link: '/' },
-    { title: 'Danh Mục', link: '/' },
-    { title: 'Danh Sách Sản Phẩm', link: '/' },
-    { title: 'Voucher', link: '/' },
+    { title: 'Danh Sách Sản Phẩm', link: '/browse' },
+    { title: 'Deal', link: '/flash-sale' },
 ];
 
 export const mapping_market_colors: {

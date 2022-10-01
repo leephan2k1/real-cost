@@ -58,13 +58,8 @@ function Slides({ items }: SlidesProps) {
                             {items?.map((item) => {
                                 return (
                                     <ProductCard
+                                        product={item}
                                         key={item.link}
-                                        img={item.img}
-                                        link={item.link}
-                                        market={item.market}
-                                        name={item.name}
-                                        price={item.price}
-                                        totalSales={item.totalSales}
                                     />
                                 );
                             })}
