@@ -10,6 +10,7 @@ import {
     getProductDetails as bcGetProductDetails,
 } from '~/serverless/models/Bc.model';
 import { getProductDetails as tkGetProductDetails } from '~/serverless/models/Tiki.model';
+import Voting from '~/components/features/Voting';
 
 interface DetailsPageProps {
     product: Product;
@@ -24,6 +25,13 @@ const DetailsPage: NextPage<DetailsPageProps> = ({
         <div className="min-h-screen w-full pt-[100px]">
             <Section style="w-max-[1300px] h-fit mx-auto w-[90%]">
                 <ProductHead product={product} />
+            </Section>
+
+            <Section
+                title="Người dùng Real Cost bình chọn"
+                style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
+            >
+                <Voting />
             </Section>
 
             <Section

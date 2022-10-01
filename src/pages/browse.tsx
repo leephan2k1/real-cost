@@ -1,12 +1,13 @@
 import type { NextPage, GetStaticProps } from 'next';
 import axios from 'axios';
-import { Market, SearchResult, ItemsWithKeyword } from 'types';
+import { If, Then } from 'react-if';
+import { ItemsWithKeyword, Market, SearchResult } from 'types';
+import ScrollTop from '~/components/shared/ScrollTop';
 import Section from '~/components/shared/Section';
 import SuggestionSection from '~/components/shared/SuggestionSection';
 import { MARKET_URL } from '~/constants';
 import { getSuggestionKeyword as bcGetSuggestionKeyword } from '~/serverless/models/Bc.model';
 import { getSuggestionKeyword as tkGetSuggestionKeyword } from '~/serverless/models/Tiki.model';
-import { If, Then } from 'react-if';
 
 interface BrowsePageProps {
     itemsWithKeyword: ItemsWithKeyword[];
@@ -14,26 +15,30 @@ interface BrowsePageProps {
 
 const BrowsePage: NextPage<BrowsePageProps> = ({ itemsWithKeyword }) => {
     return (
-        <div className="min-h-screen w-full pt-[100px]">
-            <Section
-                title="Gợi ý hôm nay"
-                style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
-            >
-                <If condition={itemsWithKeyword && itemsWithKeyword?.length}>
-                    <Then>
-                        {itemsWithKeyword.map((list, index) => {
-                            return (
-                                <SuggestionSection
-                                    itemsWithKeyword={list}
-                                    index={index}
-                                    key={list.keyword}
-                                />
-                            );
-                        })}
-                    </Then>
-                </If>
-            </Section>
-        </div>
+        <ScrollTop>
+            <div className="min-h-screen w-full pt-[100px]">
+                <Section
+                    title="Gợi ý hôm nay"
+                    style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
+                >
+                    <If
+                        condition={itemsWithKeyword && itemsWithKeyword?.length}
+                    >
+                        <Then>
+                            {itemsWithKeyword.map((list, index) => {
+                                return (
+                                    <SuggestionSection
+                                        itemsWithKeyword={list}
+                                        index={index}
+                                        key={list.keyword}
+                                    />
+                                );
+                            })}
+                        </Then>
+                    </If>
+                </Section>
+            </div>
+        </ScrollTop>
     );
 };
 
