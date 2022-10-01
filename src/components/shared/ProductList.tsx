@@ -25,17 +25,7 @@ function ProductList({ items, isReachingEnd, isFetching }: ProductListProps) {
                     className="smooth-effect absolute-center w-full flex-wrap gap-6"
                 >
                     {items.map((item) => {
-                        return (
-                            <ProductCard
-                                img={item.img}
-                                link={item.link}
-                                market={item?.market}
-                                name={item.name}
-                                price={item.price}
-                                totalSales={item.totalSales}
-                                key={item.link}
-                            />
-                        );
+                        return <ProductCard product={item} key={item.link} />;
                     })}
                 </div>
 

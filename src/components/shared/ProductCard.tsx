@@ -1,19 +1,19 @@
 import Link from 'next/link';
+import { isNumber } from 'radash';
 import { memo, useState } from 'react';
+import { Else, If, Then } from 'react-if';
 import { SearchResult } from 'types';
+import Progress from '~/components/shared/Progress';
 import { mapping_market_colors, PRODUCTS_PATH } from '~/constants';
 import { handleSubPathMarket } from '~/utils/stringHandler';
 
 import { BellIcon } from '@heroicons/react/24/outline';
 
-const ProductCard = ({
-    img,
-    market,
-    name,
-    price,
-    link,
-    totalSales,
-}: SearchResult) => {
+interface ProductCardProps {
+    product: SearchResult;
+}
+
+const ProductCard = ({ product }: ProductCardProps) => {
     const [isNotification, setIsNotification] = useState(false);
 
     const activeNotification = () => {
@@ -22,25 +22,26 @@ const ProductCard = ({
 
     return (
         <Link
-            href={`/${PRODUCTS_PATH}/${market}/${handleSubPathMarket(
-                market,
-                link,
+            href={`/${PRODUCTS_PATH}/${product?.market}/${handleSubPathMarket(
+                product?.market,
+                product?.link,
             )}`}
         >
-            <a>
-                <div className="absolute-center sm:py-3 sm:px-1 lg:p-5">
+            <a className="absolute-center flex-col">
+                <div className="absolute-center flex-col sm:py-3 sm:px-1 lg:p-5">
                     <div className="smooth-effect relative z-10 font-primary hover:-translate-y-1 sm:h-[265px] sm:w-[155px] lg:h-[290px] lg:w-[185px]">
                         <div
                             className="absolute -z-10 rounded-2xl border-2 border-gray-700 sm:top-[6px] sm:left-[0px] sm:h-[265px] sm:w-[155px] lg:top-[6px] lg:left-[6px] lg:h-[290px] lg:w-[185px]"
                             style={{
-                                backgroundColor: mapping_market_colors[market],
+                                backgroundColor:
+                                    mapping_market_colors[product?.market],
                             }}
                         ></div>
                         <div className="relative z-20 flex cursor-pointer flex-col rounded-xl border-2 border-black bg-white hover:bg-white sm:h-[265px] sm:w-[155px] lg:h-[290px] lg:w-[185px]">
                             <div className="relative space-y-4 p-2">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
-                                    src={img}
+                                    src={product.img}
                                     alt="img-item"
                                     className="z-0 h-auto max-h-[150px] w-full rounded-xl"
                                 />
@@ -60,23 +61,72 @@ const ProductCard = ({
                                     </button>
                                 </div>
                                 <div className="flex flex-col px-2">
-                                    <h2 className="line-clamp-2">{name}</h2>
-                                    <h3 className="pt-1 text-2xl font-medium text-red-400 line-clamp-1 md:text-3xl">
-                                        {price}
-                                    </h3>
+                                    <h2 className="line-clamp-2">
+                                        {product.name}
+                                    </h2>
+                                    <div className="flex items-center space-x-2">
+                                        <h3 className="pt-1 text-2xl font-medium text-red-400 line-clamp-1 md:text-3xl">
+                                            <If
+                                                condition={isNumber(
+                                                    product.price,
+                                                )}
+                                            >
+                                                <Then>
+                                                    {new Intl.NumberFormat(
+                                                        'vi-VN',
+                                                        {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        },
+                                                    ).format(
+                                                        Number(product.price),
+                                                    )}
+                                                </Then>
+
+                                                <Else>{product.price}</Else>
+                                            </If>
+                                        </h3>
+                                        <h3 className="m-auto pt-2 text-lg line-through">
+                                            <If
+                                                condition={isNumber(
+                                                    product?.priceBeforeDiscount,
+                                                )}
+                                            >
+                                                <Then>
+                                                    {new Intl.NumberFormat(
+                                                        'vi-VN',
+                                                        {
+                                                            style: 'currency',
+                                                            currency: 'VND',
+                                                        },
+                                                    ).format(
+                                                        Number(
+                                                            product?.priceBeforeDiscount,
+                                                        ),
+                                                    )}
+                                                </Then>
+
+                                                <Else>
+                                                    {
+                                                        product?.priceBeforeDiscount
+                                                    }
+                                                </Else>
+                                            </If>
+                                        </h3>
+                                    </div>
                                     <div>
                                         <h4
                                             className="float-left py-2 text-xl"
                                             style={{
                                                 color: mapping_market_colors[
-                                                    market
+                                                    product?.market
                                                 ],
                                             }}
                                         >
-                                            {market}
+                                            {product?.market}
                                         </h4>
                                         <h5 className="float-right py-2 text-xl">
-                                            {totalSales}
+                                            {product.totalSales}
                                         </h5>
                                     </div>
                                 </div>
@@ -84,6 +134,14 @@ const ProductCard = ({
                         </div>
                     </div>
                 </div>
+
+                <If condition={product?.qtyRemainPercent !== undefined}>
+                    <Then>
+                        <Progress
+                            done={100 - Number(product?.qtyRemainPercent)}
+                        />
+                    </Then>
+                </If>
             </a>
         </Link>
     );
