@@ -4,6 +4,10 @@ import { BiUser } from 'react-icons/bi';
 import { HiMenuAlt2 } from 'react-icons/hi';
 import sideBarState from '~/atoms/sideBarState';
 import { quickList } from '~/constants';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import DialogAnimated from './UserMenu';
 
 import { BellIcon } from '@heroicons/react/24/outline';
 
@@ -13,6 +17,18 @@ import DesktopSearch from '../shared/DesktopSearch';
 
 const Header = () => {
     const setSideBarState = useSetAtom(sideBarState);
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    const [userMenu, setUserMenu] = useState(false);
+
+    const handleUserMenu = () => {
+        if (status === 'unauthenticated') {
+            router.push('/login');
+        } else {
+            setUserMenu(true);
+        }
+    };
 
     return (
         <ClientOnly>
@@ -60,18 +76,31 @@ const Header = () => {
                         </ul>
 
                         {/* notification  */}
-                        <button className="absolute-center mx-4 md:mx-0">
-                            <BellIcon className="h-9 w-9" />
-                        </button>
+                        <div className="flex md:space-x-10">
+                            <button className="absolute-center mx-4 md:mx-0">
+                                <BellIcon className="h-9 w-9" />
+                            </button>
 
-                        {/* user */}
-                        <Link href="/login">
-                            <a>
-                                <button className="absolute-center ml-4 h-16 w-16 rounded-full bg-white/40 md:ml-0">
-                                    <BiUser className="h-3/4 w-3/4" />
-                                </button>
-                            </a>
-                        </Link>
+                            {/* user */}
+
+                            <DialogAnimated state={userMenu}>
+                                <div
+                                    onClick={handleUserMenu}
+                                    className="absolute-center ml-4 h-16 w-16 rounded-full bg-white/40 bg-contain bg-center md:ml-0"
+                                    style={{
+                                        backgroundImage: `url(${
+                                            session?.user?.image
+                                                ? session?.user?.image
+                                                : ''
+                                        })`,
+                                    }}
+                                >
+                                    {!session?.user?.image && (
+                                        <BiUser className="h-3/4 w-3/4" />
+                                    )}
+                                </div>
+                            </DialogAnimated>
+                        </div>
                     </div>
                 </div>
             </header>

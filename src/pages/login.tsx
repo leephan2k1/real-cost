@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { ArrowLongLeftIcon } from '@heroicons/react/24/outline';
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 const LogIn: NextPage = () => {
     return (
@@ -23,7 +24,14 @@ const LogIn: NextPage = () => {
                                 Đăng nhập
                             </h1>
                             <div className="absolute-screen-center h-[160px] ">
-                                <button className="smooth-effect decoration-3 absolute-left-center top-12 flex h-24 rounded-[50px] border-2 border-black bg-sky-300 p-3 hover:bg-sky-200 sm:top-6 sm:w-[250px] md:w-[420px]">
+                                <button
+                                    onClick={() =>
+                                        signIn('facebook', {
+                                            callbackUrl: '/',
+                                        })
+                                    }
+                                    className="smooth-effect decoration-3 absolute-left-center top-12 flex h-24 rounded-[50px] border-2 border-black bg-sky-300 p-3 hover:bg-sky-200 sm:top-6 sm:w-[250px] md:w-[420px]"
+                                >
                                     <div className="absolute -left-1.5 w-[70px] sm:-top-1">
                                         <Image
                                             src="/fb_icon.svg"
@@ -37,7 +45,14 @@ const LogIn: NextPage = () => {
                                     </span>
                                 </button>
 
-                                <button className="smooth-effect decoration-3 absolute-left-center top-[125px] flex h-24  rounded-[50px] border-2 border-black bg-yellow-300 p-3 hover:bg-yellow-200 sm:top-36 sm:w-[250px] md:w-[420px]">
+                                <button
+                                    onClick={() =>
+                                        signIn('google', {
+                                            callbackUrl: '/',
+                                        })
+                                    }
+                                    className="smooth-effect decoration-3 absolute-left-center top-[125px] flex h-24  rounded-[50px] border-2 border-black bg-yellow-300 p-3 hover:bg-yellow-200 sm:top-36 sm:w-[250px] md:w-[420px]"
+                                >
                                     <div className="absolute -left-1.5 w-[70px] sm:top-0.5">
                                         <Image
                                             src="/gg_icon.svg"

@@ -24,6 +24,7 @@
         "jotai": "^1.8.2",
         "modern-normalize": "^1.1.0",
         "next": "latest",
+        "next-auth": "^4.12.2",
         "nprogress": "^0.2.0",
         "radash": "^7.1.0",
         "react": "18.1.0",
