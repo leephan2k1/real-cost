@@ -9,6 +9,8 @@ export const PRODUCTS_PATH = 'products';
 export const BC_URL = String(process.env.BC_URL);
 export const BC_BASE_API = String(process.env.BC_BASE_API);
 
+export const MARKET_OPTIONS = ['tiki', 'lazada', 'shopee'];
+
 export function MARKET_URL(market: Market) {
     return market === 'tiki' ? 'https://tiki.vn' : BASE_URL;
 }

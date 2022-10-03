@@ -1,15 +1,30 @@
 import { NextPage } from 'next';
-import { useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useMemo } from 'react';
 import SelectBox from '~/components/buttons/SelectBox';
 import SelectMultiple from '~/components/buttons/SelectMultiple';
 import ItemContainer from '~/components/shared/ProductsContainer';
 import ScrollTop from '~/components/shared/ScrollTop';
 import SearchFilter from '~/components/shared/SearchFilter';
-import { sort_mapping } from '~/constants';
+import { MARKET_OPTIONS, sort_mapping } from '~/constants';
 import usePushQuery from '~/hooks/usePushQuery';
 
 const SearchPage: NextPage = () => {
+    const router = useRouter();
     const qry = usePushQuery();
+
+    const queryParams = useMemo(() => {
+        const { market, sort } = router.query;
+
+        return {
+            market: market
+                ? market === 'all'
+                    ? MARKET_OPTIONS
+                    : String(market).split('-')
+                : ['tiki'],
+            sort: sort ? String(sort) : 'Phổ biến',
+        };
+    }, [router]);
 
     const handleSelectMarkets = useCallback((values: string[]) => {
         if (values.length < 3) {
@@ -34,8 +49,8 @@ const SearchPage: NextPage = () => {
                             </h3>
                             <SelectMultiple
                                 handleSelect={handleSelectMarkets}
-                                options={['tiki', 'lazada', 'shopee']}
-                                defaultOption={['tiki']}
+                                options={MARKET_OPTIONS}
+                                defaultOption={queryParams.market}
                             />
                         </div>
 
@@ -44,7 +59,7 @@ const SearchPage: NextPage = () => {
                                 Bộ lọc:
                             </h3>
                             <SelectBox
-                                defaultValue={'Phổ biến'}
+                                defaultValue={queryParams.sort}
                                 handleSelect={handleSelectSort}
                                 options={[
                                     'Phổ biến',

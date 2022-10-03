@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useEffectOnce } from 'usehooks-ts';
 import SelectBox from '~/components/buttons/SelectBox';
 import FsBanner from '~/components/shared/FsBanner';
@@ -11,6 +11,14 @@ import Section from '~/components/shared/Section';
 
 const FlashSalePage: NextPage = () => {
     const router = useRouter();
+
+    const queryParams = useMemo(() => {
+        const { market } = router.query;
+
+        return {
+            market: market ? String(market) : 'tiki',
+        };
+    }, [router]);
 
     useEffectOnce(() => {
         router.replace({
@@ -62,7 +70,7 @@ const FlashSalePage: NextPage = () => {
                                     Sàn thương mại
                                 </h3>
                                 <SelectBox
-                                    defaultValue={'tiki'}
+                                    defaultValue={queryParams.market}
                                     handleSelect={handleSelectMarket}
                                     options={['tiki', 'shopee']}
                                 />
