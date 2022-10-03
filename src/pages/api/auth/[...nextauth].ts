@@ -1,6 +1,9 @@
 import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
+import GoogleProvider from 'next-auth/providers/google';
+import clientPromise from '~/serverless/libs/mongodb';
+
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 
 export default NextAuth({
     providers: [
@@ -31,4 +34,5 @@ export default NextAuth({
             return session;
         },
     },
+    adapter: MongoDBAdapter(clientPromise),
 });
