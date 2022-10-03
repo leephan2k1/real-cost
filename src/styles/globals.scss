@@ -337,3 +337,35 @@ input[type='number'] {
         opacity: 1;
     }
 }
+
+/* Dialog Animated */
+
+[data-backdrop] {
+    background-color: rgb(0 0 0 / 10%);
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.dialog {
+    filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 15%));
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.dark .dialog {
+    border-color: hsl(204, 3%, 32%);
+    background-color: hsl(204, 3%, 20%);
+    color: hsl(0, 0%, 100%);
+    filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 40%));
+}
+
+[data-backdrop][data-enter] {
+    opacity: 1;
+}
+
+.dialog[data-enter] {
+    opacity: 1;
+}
