@@ -7,7 +7,6 @@ import ProductChart from '~/components/shared/ProductChart';
 import ProductDescription from '~/components/shared/ProductDescription';
 import ProductHead from '~/components/shared/ProductHead';
 import Section from '~/components/shared/Section';
-import { MARKET_MAPPING } from '~/constants';
 import {
     getHistoryPrice,
     getProductDetails as bcGetProductDetails,
@@ -94,10 +93,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     if (product) {
         return {
             props: {
-                product: {
-                    ...product,
-                    link: `${MARKET_MAPPING[market]}/${url.join('/')}`,
-                },
+                product,
                 productPriceHistory: priceHistory,
             },
             revalidate: 60 * 60 * 12, //12h

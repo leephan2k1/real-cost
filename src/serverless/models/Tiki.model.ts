@@ -1,5 +1,5 @@
 import { getAxiosClient } from '~/utils/axios';
-import { MARKET_URL } from '~/constants';
+import { MARKET_URL, MARKET_MAPPING } from '~/constants';
 import { handlePriceNumber } from '~/utils/handlePrice';
 import { Product } from 'types';
 
@@ -33,6 +33,7 @@ export async function getProductDetails(url: string): Promise<Product | null> {
         return {
             name,
             description: description ? description : '',
+            link: `${MARKET_MAPPING['tiki']}/${url}`,
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
             images: images.map((img) => img?.medium_url),

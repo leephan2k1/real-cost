@@ -1,13 +1,19 @@
-import { memo, useRef } from 'react';
-import { If, Then } from 'react-if';
-import { Product } from 'types';
-import { mapping_market_colors } from '~/constants';
-import { useIntersectionObserver } from 'usehooks-ts';
 import {
     ArrowTopRightOnSquareIcon,
     BellIcon,
     HeartIcon,
 } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
+import { useSession } from 'next-auth/react';
+import { memo, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { VscLoading } from 'react-icons/vsc';
+import { Else, If, Then } from 'react-if';
+import useSwr from 'swr';
+import { Market, Product } from 'types';
+import { useIntersectionObserver } from 'usehooks-ts';
+import { mapping_market_colors, MARKET_URL } from '~/constants';
+import useAxiosClient from '~/services/axiosClient';
 
 import BookmarkButton from '../buttons/ButtonTooltip';
 import ProductImgPreview from './ProductSlides';
@@ -20,6 +26,89 @@ function ProductHead({ product }: ProductHeadProps) {
     const btnRef = useRef<HTMLButtonElement | null>(null);
     const entry = useIntersectionObserver(btnRef, {});
     const isVisible = !!entry?.isIntersecting;
+    const axiosClient = useAxiosClient(
+        MARKET_URL('e-commerce-server' as Market),
+    );
+
+    const [fvState, setFvState] = useState(false);
+
+    const { data: session, status } = useSession();
+
+    const { data: favoriteState, isValidating } = useSwr<{
+        status: string;
+        isSaved: boolean;
+    }>(product?.link, async () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const { id } = session?.user;
+
+        const { data } = await axiosClient.post(`/users/${id}/get-favorite`, {
+            link: product?.link,
+        });
+
+        setFvState(data?.isSaved);
+
+        return data;
+    });
+
+    const handleToggleFavorite = async () => {
+        if (status === 'unauthenticated') {
+            toast.error('Đăng nhập để thao tác nhé bạn!');
+            return;
+        }
+
+        try {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const { id } = session?.user;
+
+            if (!id || !product) throw new Error();
+
+            // DELETE
+            if (fvState) {
+                toast.success('Xoá khỏi danh sách thành công!');
+
+                const { data } = await axiosClient.delete(
+                    `/users/${id}/favorite`,
+                    {
+                        data: {
+                            link: product?.link,
+                        },
+                    },
+                );
+
+                if (!data || data?.status !== 'success') throw new Error();
+
+                setFvState(false);
+            }
+            //POST
+            else {
+                toast.success('Thêm vào danh sách thành công!');
+
+                const { data } = await axiosClient.post(
+                    `/users/${id}/favorite`,
+                    {
+                        name: product?.name,
+                        link: product?.link,
+                        market: product?.market,
+                        img: product?.images[0],
+                        price: product?.price,
+                        totalSales: product?.totalSales,
+                    },
+                );
+
+                if (!data || data?.status !== 'success') throw new Error();
+
+                setFvState(true);
+            }
+        } catch (error) {
+            toast.error('Lỗi rồi, thử lại sau!');
+        }
+    };
+
+    const handleToggleNotify = () => {
+        // console.log('handleToggleNotify');
+    };
 
     return (
         <div className="smooth-effect relative h-fit w-full rounded-2xl border-[2px] border-gray-700 md:h-[400px] lg:h-[500px]">
@@ -66,19 +155,35 @@ function ProductHead({ product }: ProductHeadProps) {
                                     <ArrowTopRightOnSquareIcon className="h-8 w-8" />
                                 </button>
 
-                                <BookmarkButton
-                                    handler={() => {
-                                        // console.log('test');
-                                    }}
-                                    title="Yêu thích"
-                                >
-                                    <HeartIcon className="mx-4 h-8 w-8 md:h-10 md:w-10" />
-                                </BookmarkButton>
+                                <If condition={isValidating}>
+                                    <Then>
+                                        <VscLoading className="h-8 w-8 animate-spin text-gray-700" />
+                                    </Then>
+
+                                    <Else>
+                                        <BookmarkButton
+                                            handler={handleToggleFavorite}
+                                            title={`${
+                                                favoriteState?.isSaved
+                                                    ? 'Huỷ yêu thích'
+                                                    : 'Yêu thích'
+                                            }`}
+                                        >
+                                            <If condition={fvState}>
+                                                <Then>
+                                                    <HeartIconSolid className="animate__heartBeat animate__animated animate__faster mx-4 h-8 w-8 text-rose-500 md:h-10 md:w-10" />
+                                                </Then>
+
+                                                <Else>
+                                                    <HeartIcon className="animate__heartBeat animate__animated animate__faster mx-4 h-8 w-8 md:h-10 md:w-10" />
+                                                </Else>
+                                            </If>
+                                        </BookmarkButton>
+                                    </Else>
+                                </If>
 
                                 <BookmarkButton
-                                    handler={() => {
-                                        // console.log('test');
-                                    }}
+                                    handler={handleToggleNotify}
                                     title="Nhận thông báo"
                                 >
                                     <BellIcon className="mx-4 h-8 w-8 md:h-10 md:w-10" />

@@ -45,7 +45,10 @@ export interface ItemHistory {
 }
 
 export interface Product
-    extends Pick<SearchResult, 'name' | 'price' | 'totalSales' | 'market'> {
+    extends Pick<
+        SearchResult,
+        'name' | 'price' | 'totalSales' | 'market' | 'link'
+    > {
     brand: string;
     description: string;
     images: string[];
