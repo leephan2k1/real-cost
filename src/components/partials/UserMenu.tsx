@@ -1,7 +1,10 @@
 import { Button } from 'ariakit/button';
 import { Dialog, DialogHeading, useDialogState } from 'ariakit/dialog';
 import { signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { ReactNode, useEffect } from 'react';
+import { FAVORITES_PATH } from '~/constants';
+import { useRouter } from 'next/router';
 
 import {
     ArrowRightOnRectangleIcon,
@@ -14,12 +17,25 @@ interface UserMenuProps {
 }
 
 export default function UserMenu({ state, children }: UserMenuProps) {
+    const router = useRouter();
     const dialog = useDialogState({ animated: true });
     const { data: session, status } = useSession();
 
     useEffect(() => {
         dialog.setOpen(state);
     }, [state]);
+
+    useEffect(() => {
+        const handleTurnOffUserMenu = () => {
+            dialog.setOpen(false);
+        };
+
+        router.events.on('routeChangeStart', handleTurnOffUserMenu);
+
+        return () => {
+            router.events.off('routeChangeStart', handleTurnOffUserMenu);
+        };
+    }, []);
 
     const handleShowDialog = () => {
         if (status === 'unauthenticated') {
@@ -49,11 +65,15 @@ export default function UserMenu({ state, children }: UserMenuProps) {
                 <hr className="my-4 mx-auto h-[1px] w-3/4 border-gray-400" />
 
                 <ul className=" my-2 flex w-full flex-col space-y-4">
-                    <li className="group flex h-fit items-center space-x-4">
-                        <HeartIcon className="smooth-effect h-8 w-8 group-hover:text-rose-400" />
-                        <button className="w-fit py-2">
-                            Sản phẩm yêu thích
-                        </button>
+                    <li>
+                        <Link href={FAVORITES_PATH}>
+                            <a className="group flex h-fit items-center space-x-4">
+                                <HeartIcon className="smooth-effect h-8 w-8 group-hover:text-rose-400" />
+                                <button className="w-fit py-2">
+                                    Sản phẩm yêu thích
+                                </button>
+                            </a>
+                        </Link>
                     </li>
                     <li className="group flex h-fit items-center space-x-4">
                         <ArrowRightOnRectangleIcon className="smooth-effect h-8 w-8 group-hover:text-blue-400" />
