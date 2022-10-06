@@ -35,7 +35,9 @@ export async function getProductDetails(
             priceBeforeDiscount: price_before_discount
                 ? handlePriceNumber(price_before_discount)
                 : null,
-            link: `${MARKET_MAPPING[market]}/${url}`,
+            link: `${MARKET_MAPPING[market]}/${
+                market === 'lazada' ? 'products/' : ''
+            }${url}`,
             brand: brand?.name ? brand?.name : '',
             description: description ? description : '',
             images: url_images ? url_images : [],
