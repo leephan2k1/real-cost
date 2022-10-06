@@ -8,7 +8,7 @@ interface ButtonTooltipProps {
     handler: () => void;
 }
 
-function ButtonTooltip({ children, title }: ButtonTooltipProps) {
+function ButtonTooltip({ children, title, handler }: ButtonTooltipProps) {
     const tooltip = useTooltipState();
 
     return (
@@ -17,6 +17,7 @@ function ButtonTooltip({ children, title }: ButtonTooltipProps) {
                 state={tooltip}
                 as={Button}
                 className="button secondary"
+                onClick={handler}
             >
                 {children}
             </TooltipAnchor>

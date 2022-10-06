@@ -52,7 +52,7 @@ export default function UserMenu({ state, children }: UserMenuProps) {
                     <li className="group flex h-fit items-center space-x-4">
                         <HeartIcon className="smooth-effect h-8 w-8 group-hover:text-rose-400" />
                         <button className="w-fit py-2">
-                            Sản phẩm quan tâm
+                            Sản phẩm yêu thích
                         </button>
                     </li>
                     <li className="group flex h-fit items-center space-x-4">

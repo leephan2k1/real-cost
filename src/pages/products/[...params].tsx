@@ -1,16 +1,18 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { Toaster } from 'react-hot-toast';
 import { Else, If, Then } from 'react-if';
 import { ItemHistory, Product } from 'types';
+import Voting from '~/components/features/Voting';
 import ProductChart from '~/components/shared/ProductChart';
 import ProductDescription from '~/components/shared/ProductDescription';
 import ProductHead from '~/components/shared/ProductHead';
 import Section from '~/components/shared/Section';
+import { MARKET_MAPPING } from '~/constants';
 import {
     getHistoryPrice,
     getProductDetails as bcGetProductDetails,
 } from '~/serverless/models/Bc.model';
 import { getProductDetails as tkGetProductDetails } from '~/serverless/models/Tiki.model';
-import Voting from '~/components/features/Voting';
 
 interface DetailsPageProps {
     product: Product;
@@ -23,6 +25,8 @@ const DetailsPage: NextPage<DetailsPageProps> = ({
 }) => {
     return (
         <div className="min-h-screen w-full pt-[100px]">
+            <Toaster position="bottom-center" />
+
             <Section style="w-max-[1300px] h-fit mx-auto w-[90%]">
                 <ProductHead product={product} />
             </Section>
@@ -90,7 +94,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     if (product) {
         return {
             props: {
-                product,
+                product: {
+                    ...product,
+                    link: `${MARKET_MAPPING[market]}/${url.join('/')}`,
+                },
                 productPriceHistory: priceHistory,
             },
             revalidate: 60 * 60 * 12, //12h
