@@ -12,9 +12,15 @@ interface ProductListProps {
     items: SearchResult[];
     isFetching?: boolean;
     isReachingEnd?: boolean;
+    endMessage?: string;
 }
 
-function ProductList({ items, isReachingEnd, isFetching }: ProductListProps) {
+function ProductList({
+    items,
+    isReachingEnd,
+    isFetching,
+    endMessage,
+}: ProductListProps) {
     const [parent] = useAutoAnimate<HTMLDivElement>();
 
     return (
@@ -22,7 +28,7 @@ function ProductList({ items, isReachingEnd, isFetching }: ProductListProps) {
             <Then>
                 <div
                     ref={parent}
-                    className="smooth-effect absolute-center w-full flex-wrap gap-6"
+                    className="smooth-effect flex w-full flex-wrap items-center gap-6"
                 >
                     {items.map((item) => {
                         return <ProductCard product={item} key={item.link} />;
@@ -32,9 +38,10 @@ function ProductList({ items, isReachingEnd, isFetching }: ProductListProps) {
                 <div className="absolute-center smooth-effect my-10 w-full space-x-4">
                     {isReachingEnd ? (
                         <>
-                            😁{' '}
                             <span className="mx-2">
-                                Đã lướt hết rồi, hôm sau quay lại nhé bạn!
+                                {endMessage
+                                    ? endMessage
+                                    : '😁 Đã lướt hết rồi, hôm sau quay lại nhé bạn!'}
                             </span>
                         </>
                     ) : (
