@@ -6,6 +6,10 @@ export const SEARCH_PATH = 'search';
 
 export const PRODUCTS_PATH = 'products';
 
+export const USER_PATH = 'users';
+
+export const FAVORITES_PATH = `/${USER_PATH}/favorites`;
+
 export const BC_URL = String(process.env.BC_URL);
 export const BC_BASE_API = String(process.env.BC_BASE_API);
 
