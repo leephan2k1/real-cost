@@ -36,7 +36,7 @@ const DetailsPage: NextPage<DetailsPageProps> = ({
                     title="Người dùng Real Cost bình chọn"
                     style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
                 >
-                    <Voting />
+                    <Voting product={product} />
                 </Section>
 
                 <Section
