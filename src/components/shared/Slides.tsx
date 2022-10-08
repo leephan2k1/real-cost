@@ -1,15 +1,14 @@
-import { memo, useState, useEffect, useCallback } from 'react';
+import { memo, useState, useEffect, useCallback, ReactNode } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import ProductCard from '~/components/shared/ProductCard';
 import EmblaCarouselButtons from './EmblaCarouselButtons';
-import { SearchResult } from 'types';
-import { If, Then } from 'react-if';
-
+// import { SearchResult } from 'types';
+// import { If, Then } from 'react-if';
+//import ProductCard from '~/components/shared/ProductCard';
 interface SlidesProps {
-    items: SearchResult[];
+    children: ReactNode;
 }
 
-function Slides({ items }: SlidesProps) {
+function Slides({ children }: SlidesProps) {
     const [viewportRef, embla] = useEmblaCarousel({
         slidesToScroll: 1,
         skipSnaps: false,
@@ -36,7 +35,7 @@ function Slides({ items }: SlidesProps) {
 
     return (
         <div className="relative my-4 mx-auto w-full">
-            <div className="flex space-x-4">
+            <div className="mb-2 ml-1 flex space-x-4">
                 <EmblaCarouselButtons
                     direction="left"
                     onClick={scrollPrev}
@@ -48,25 +47,15 @@ function Slides({ items }: SlidesProps) {
                     enabled={nextBtnEnabled}
                 />
             </div>
-            <If condition={items && items.length}>
-                <Then>
-                    <div
-                        className="full-size overflow-hidden"
-                        ref={viewportRef}
-                    >
-                        <div className="full-size flex select-none space-x-4">
-                            {items?.map((item) => {
-                                return (
-                                    <ProductCard
-                                        product={item}
-                                        key={item.link}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>
-                </Then>
-            </If>
+            {/* <If condition={items && items.length}>
+                <Then> */}
+            <div className="full-size overflow-hidden" ref={viewportRef}>
+                <div className="full-size flex select-none space-x-4">
+                    {children}
+                </div>
+            </div>
+            {/* </Then>
+            </If> */}
         </div>
     );
 }

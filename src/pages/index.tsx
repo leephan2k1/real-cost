@@ -6,6 +6,7 @@ import { BC_BASE_API, BC_URL } from '~/constants';
 import { getAxiosClient } from '~/utils/axios';
 import { BcSuggestion } from 'types';
 import { If, Then } from 'react-if';
+import Category from '~/components/shared/Category';
 
 interface HomeProps {
     suggestion_list: BcSuggestion[];
@@ -28,6 +29,7 @@ const Home: NextPage<HomeProps> = ({ suggestion_list }) => {
                     </Section>
                 </Then>
             </If>
+            <Category />
         </div>
     );
 };
