@@ -1,5 +1,6 @@
 import type { NextPage, GetStaticProps } from 'next';
 import axios from 'axios';
+import { Toaster } from 'react-hot-toast';
 import { If, Then } from 'react-if';
 import { ItemsWithKeyword, Market, SearchResult } from 'types';
 import ScrollTop from '~/components/shared/ScrollTop';
@@ -16,6 +17,8 @@ interface BrowsePageProps {
 const BrowsePage: NextPage<BrowsePageProps> = ({ itemsWithKeyword }) => {
     return (
         <ScrollTop>
+            <Toaster position="bottom-right" />
+
             <div className="min-h-screen w-full pt-[100px]">
                 <Section
                     title="Gợi ý hôm nay"

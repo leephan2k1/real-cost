@@ -8,6 +8,7 @@ import ScrollTop from '~/components/shared/ScrollTop';
 import SearchFilter from '~/components/shared/SearchFilter';
 import { MARKET_OPTIONS, sort_mapping } from '~/constants';
 import usePushQuery from '~/hooks/usePushQuery';
+import { Toaster } from 'react-hot-toast';
 
 const SearchPage: NextPage = () => {
     const router = useRouter();
@@ -40,6 +41,8 @@ const SearchPage: NextPage = () => {
 
     return (
         <ScrollTop>
+            <Toaster position="bottom-right" />
+
             <div className="w-max-[1300px] mx-auto w-[90%] pt-[100px] text-black">
                 <SearchFilter>
                     <>

@@ -26,7 +26,7 @@ function SelectBox({ options, handleSelect, defaultValue }: SelectBoxProps) {
     }, [select]);
 
     return (
-        <div className="smooth-effect flex min-w-full flex-col rounded-xl border-[1px] border-gray-700 bg-white py-3 px-2 text-xl text-gray-800 lg:text-2xl">
+        <div className="smooth-effect flex min-w-full flex-col rounded-xl border-[1px] border-gray-700 bg-white py-4 px-2 text-xl text-gray-800 lg:text-2xl">
             <Select state={select} className="absolute-center gap-[2px]" />
             <SelectPopover
                 state={select}

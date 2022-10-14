@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { useEffectOnce } from 'usehooks-ts';
 import SelectBox from '~/components/buttons/SelectBox';
 import FsBanner from '~/components/shared/FsBanner';
@@ -57,6 +58,8 @@ const FlashSalePage: NextPage = () => {
 
     return (
         <ScrollTop>
+            <Toaster position="bottom-right" />
+
             <div className="flex min-h-screen w-full flex-col pt-[100px]">
                 <Section style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]">
                     <FsBanner />
