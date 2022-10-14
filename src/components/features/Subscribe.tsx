@@ -144,11 +144,11 @@ function Subscribe({ handleToggle, shouldShow, product }: SubscribeProps) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="smooth-effect flex h-fit w-[70vw] transform flex-col justify-between overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl lg:w-[50vw]">
+                                <Dialog.Panel className="smooth-effect flex h-fit w-[85vw] transform flex-col justify-between overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl md:w-[70vw] lg:w-[50vw]">
                                     <div className="mb-8 flex items-center justify-between px-4">
                                         <Dialog.Title
                                             as="h3"
-                                            className="font-medium leading-6 text-gray-900 lg:text-5xl"
+                                            className="text-4xl font-medium leading-6 text-gray-900 lg:text-5xl"
                                         >
                                             Nhận thông báo
                                         </Dialog.Title>
