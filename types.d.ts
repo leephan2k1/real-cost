@@ -44,6 +44,14 @@ export interface ItemHistory {
     priceTs: number[];
 }
 
+export interface Subscription {
+    endpoint: string;
+    keys: {
+        p256dh: string;
+        auth: string;
+    };
+}
+
 export interface Product
     extends Pick<
         SearchResult,
