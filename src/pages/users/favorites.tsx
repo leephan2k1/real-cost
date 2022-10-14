@@ -100,7 +100,7 @@ const FavoritesPage: NextPage = () => {
                     >
                         <button
                             onClick={() => removeProduct('multiple')}
-                            className="smooth-effect my-2 rounded-xl border-[1px] border-rose-500 px-4 py-2 hover:scale-110"
+                            className="smooth-effect my-2 rounded-xl border-[1px] border-rose-500 px-4 py-2 hover:scale-110 hover:bg-rose-400 hover:text-white"
                         >
                             Xoá tất cả
                         </button>
