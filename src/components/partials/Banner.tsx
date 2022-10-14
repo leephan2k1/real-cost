@@ -9,11 +9,19 @@ import {
 function Banner() {
     return (
         <div className="full-size flex flex-col justify-evenly">
-            <h1 className="bg-gradient-to-r py-4 px-8 text-center font-secondary text-3xl uppercase md:px-0 md:text-4xl lg:text-6xl ">
-                Real Cost giúp bạn mua sắm online tốt hơn mỗi ngày!
+            <h1 className="font-sans  mx-auto max-w-[80%] py-4 px-8 text-center text-5xl font-black uppercase leading-snug text-[#213547] md:px-0 md:text-6xl md:leading-normal lg:max-w-[1200px] lg:text-8xl lg:leading-[85px]">
+                <strong className="bg-gradient-to-br from-[#2980B9] to-[#6DD5FA] bg-clip-text text-transparent">
+                    Real Cost
+                </strong>{' '}
+                giúp bạn mua sắm online tốt hơn mỗi ngày!
             </h1>
 
-            <div className="mx-auto grid w-3/4 grid-cols-2  gap-6 md:grid-cols-4 md:gap-0">
+            <h2 className="mx-auto my-4 max-w-[80%] text-center font-secondary text-2xl text-gray-800 highlight highlight-cyan-400 highlight-variant-12 md:py-2 md:text-3xl lg:text-4xl">
+                Stop f*cking click to &quot;Add to cart&quot; when you don&#39;t
+                know the &quot;Real cost&quot;
+            </h2>
+
+            <div className="mx-auto my-4 grid w-3/4 grid-cols-2 gap-6 md:grid-cols-4 md:gap-0">
                 <div className="absolute-center flex-col space-y-6">
                     <div className="relative z-10">
                         <div className="absolute top-[2px] left-[2px] -z-10 rounded-2xl border-2 border-gray-700 bg-[#82d0f1] p-[24px]"></div>
