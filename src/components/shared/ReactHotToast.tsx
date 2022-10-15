@@ -24,7 +24,7 @@ function ReactHotToast({ product, t }: ReactHotToastProps) {
                     product?.market
                 }/${handleSubPathMarket(product?.market, product?.link)}`}
             >
-                <a className="w-0 flex-1 p-4">
+                <a className="flex-1 w-0 p-4">
                     <div className="flex items-start">
                         <div className="absolute-center mx-4 py-2">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -34,7 +34,7 @@ function ReactHotToast({ product, t }: ReactHotToastProps) {
                                 alt=""
                             />
                         </div>
-                        <div className="ml-3 flex-1">
+                        <div className="flex-1 ml-3">
                             <h1 className="text-xl font-medium text-gray-900 line-clamp-1 md:text-2xl">
                                 {product?.name}
                             </h1>

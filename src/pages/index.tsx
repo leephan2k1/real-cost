@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import { If, Then } from 'react-if';
 import { BcSuggestion } from 'types';
 import Banner from '~/components/partials/Banner';
+import Category from '~/components/shared/Category';
 import SearchTrends from '~/components/shared/SearchTrends';
 import Section from '~/components/shared/Section';
 import { BC_BASE_API, BC_URL } from '~/constants';
@@ -25,13 +26,20 @@ const Home: NextPage<HomeProps> = ({ suggestion_list }) => {
                 <If condition={suggestion_list && suggestion_list?.length}>
                     <Then>
                         <Section
-                            style="my-10 w-max-[1300px] mx-auto w-[90%]"
+                            style="my-10 mx-auto max-w-[1300px] w-[90%]"
                             title="Xu hướng tìm kiếm"
                         >
                             <SearchTrends suggestion_list={suggestion_list} />
                         </Section>
                     </Then>
                 </If>
+
+                <Section
+                    style="mx-auto w-[90%] max-w-[1300px]"
+                    title="Danh mục"
+                >
+                    <Category />
+                </Section>
             </div>
         </>
     );

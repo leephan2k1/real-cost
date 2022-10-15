@@ -6,6 +6,7 @@ import Slides from '~/components/shared/Slides';
 import { TailwindColors } from '~/constants';
 import { rotateColors } from '~/utils/arrayHandler';
 import { SEARCH_PATH } from '~/constants';
+import ProductCard from '~/components/shared/ProductCard';
 
 interface SuggestionSectionProps {
     itemsWithKeyword: ItemsWithKeyword;
@@ -44,7 +45,13 @@ function SuggestionSection({
                         </Link>
                     </div>
 
-                    <Slides items={itemsWithKeyword.items} />
+                    <Slides>
+                        {itemsWithKeyword.items.map((item) => {
+                            return (
+                                <ProductCard product={item} key={item.link} />
+                            );
+                        })}
+                    </Slides>
                 </div>
             </Then>
         </If>

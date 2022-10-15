@@ -40,7 +40,7 @@ function SearchTrends({ suggestion_list }: SearchTrendsProps) {
     }, [disclosure.open]);
 
     return (
-        <div className="min-h-[300px] w-full">
+        <div className="h-fit w-full">
             <ul
                 ref={parent}
                 className="full-size my-2 flex flex-wrap gap-4 text-2xl md:text-3xl"

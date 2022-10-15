@@ -17,6 +17,9 @@ module.exports = {
             primary: 'Nunito, sans-serif',
             secondary: 'League Spartan, sans-serif',
         },
+        flex: {
+            0: '0 0 135px',
+        },
     },
 
     plugins: [
