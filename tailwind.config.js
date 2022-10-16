@@ -12,13 +12,13 @@ module.exports = {
             screens: {
                 sm: '320px',
             },
+            flex: {
+                0: '0 0 135px',
+            },
         },
         fontFamily: {
             primary: 'Nunito, sans-serif',
             secondary: 'League Spartan, sans-serif',
-        },
-        flex: {
-            0: '0 0 135px',
         },
     },
 

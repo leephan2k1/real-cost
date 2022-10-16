@@ -55,7 +55,7 @@ export default function UserMenu({ state, children }: UserMenuProps) {
 
             <Dialog
                 state={dialog}
-                className={`animate__zoomIn animate__animated user-menu-duration fixed right-[2.5%] z-[200] flex w-96 flex-col overflow-auto rounded-2xl border-[1px] border-black bg-white p-4 py-4 sm:top-24 md:right-[8%] md:top-28`}
+                className={`animate__zoomIn animate__animated animate-duration-200 fixed right-[2.5%] z-[200] flex w-96 flex-col overflow-auto rounded-2xl border-[1px] border-black bg-white p-4 py-4 sm:top-24 md:right-[8%] md:top-28`}
             >
                 <h2 className="my-4">
                     <DialogHeading className="text-center font-secondary text-3xl font-medium">
