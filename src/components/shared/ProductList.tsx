@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { VscLoading } from 'react-icons/vsc';
 import { Else, If, Then } from 'react-if';
-import { SearchResult } from 'types';
+import { ProductPreview } from 'types';
 
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { FaceFrownIcon } from '@heroicons/react/24/outline';
@@ -9,7 +9,7 @@ import { FaceFrownIcon } from '@heroicons/react/24/outline';
 import ProductCard from './ProductCard';
 
 interface ProductListProps {
-    items: SearchResult[];
+    items: ProductPreview[];
     isFetching?: boolean;
     isReachingEnd?: boolean;
     endMessage?: string;

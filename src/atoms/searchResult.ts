@@ -1,8 +1,8 @@
 import { atom } from 'jotai';
-import { SearchResult } from 'types';
+import { ProductPreview } from 'types';
 
 const searchResult = atom({
-    items: [] as SearchResult[],
+    items: [] as ProductPreview[],
     isFetching: false,
 });
 

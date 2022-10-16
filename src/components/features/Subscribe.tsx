@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic';
 import { Fragment, memo, useState } from 'react';
 import { VscLoading } from 'react-icons/vsc';
 import { Else, If, Then } from 'react-if';
-import { Market, Product } from 'types';
+import { Product } from 'types';
 import SelectBox from '~/components/buttons/SelectBox';
 import SelectMultiple from '~/components/buttons/SelectMultiple';
-import { MARKET_URL } from '~/constants';
+import { BASE_URL } from '~/constants';
 import useAxiosClient from '~/services/axiosClient';
 import { handleSelectMultipleChannel } from '~/utils/arrayHandler';
 import { convertPriceStringToNumber } from '~/utils/stringHandler';
@@ -35,9 +35,7 @@ const priceConditionsMapping: { [key: string]: string } = {
 };
 
 function Subscribe({ handleToggle, shouldShow, product }: SubscribeProps) {
-    const axiosClient = useAxiosClient(
-        MARKET_URL('e-commerce-server' as Market),
-    );
+    const axiosClient = useAxiosClient(BASE_URL);
 
     const { data: session, status } = useSession();
 

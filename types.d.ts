@@ -20,7 +20,7 @@ export type Market =
     | 'lazada-shopee'
     | 'all';
 
-export interface SearchResult {
+export interface ProductPreview {
     name: string;
     img: string;
     price: string;
@@ -36,7 +36,7 @@ export interface SearchResult {
 
 export interface ItemsWithKeyword {
     keyword: string;
-    items: SearchResult[];
+    items: ProductPreview[];
 }
 
 export interface ItemHistory {
@@ -54,7 +54,7 @@ export interface Subscription {
 
 export interface Product
     extends Pick<
-        SearchResult,
+        ProductPreview,
         'name' | 'price' | 'totalSales' | 'market' | 'link'
     > {
     brand: string;

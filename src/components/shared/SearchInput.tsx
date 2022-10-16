@@ -1,7 +1,7 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ChangeEvent, memo, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
-import { SearchResult } from 'types';
+import { ProductPreview } from 'types';
 import { useDebounce, useEffectOnce, useEventListener } from 'usehooks-ts';
 import marketSearch from '~/atoms/marketSearch';
 import searchResult from '~/atoms/searchResult';
@@ -28,7 +28,7 @@ function SearchInput({ styles, focusOnMount }: SearchInputProps) {
         setValue(event.target.value);
     };
 
-    const { data: searchResults, mutate } = useSWR<SearchResult[]>(
+    const { data: searchResults, mutate } = useSWR<ProductPreview[]>(
         `${market} ${debouncedValue}`,
         async (slug: string) => {
             const market = slug.split(' ')[0];

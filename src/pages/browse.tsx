@@ -2,7 +2,7 @@ import type { NextPage, GetStaticProps } from 'next';
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { If, Then } from 'react-if';
-import { ItemsWithKeyword, Market, SearchResult } from 'types';
+import { ItemsWithKeyword, Market, ProductPreview } from 'types';
 import ScrollTop from '~/components/shared/ScrollTop';
 import Section from '~/components/shared/Section';
 import SuggestionSection from '~/components/shared/SuggestionSection';
@@ -66,7 +66,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const combineData = await Promise.allSettled(
         keywords.map(async (kw: string) => {
-            let items: SearchResult[] = [];
+            let items: ProductPreview[] = [];
 
             try {
                 const { data } = await axios.get(

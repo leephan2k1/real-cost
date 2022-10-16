@@ -1,8 +1,8 @@
 import { MARKET_URL } from '~/constants';
 import { handlePriceNumber } from './handlePrice';
-import { SearchResult } from 'types';
+import { ProductPreview } from 'types';
 
-export function handleTikiSearch(searchResult: any): SearchResult[] | null {
+export function handleTikiSearch(searchResult: any): ProductPreview[] | null {
     if (Array.isArray(searchResult)) {
         const products = searchResult.reduce((result, product) => {
             const name = product?.name;

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { isNumber } from 'radash';
 import { memo } from 'react';
 import { Else, If, Then } from 'react-if';
-import { SearchResult } from 'types';
+import { ProductPreview } from 'types';
 import Progress from '~/components/shared/Progress';
 import { mapping_market_colors, PRODUCTS_PATH } from '~/constants';
 import useProduct from '~/context/ProductContext';
@@ -11,7 +11,7 @@ import { handleSubPathMarket } from '~/utils/stringHandler';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface ProductCardProps {
-    product: SearchResult;
+    product: ProductPreview;
     isFavoriteProduct?: boolean;
 }
 

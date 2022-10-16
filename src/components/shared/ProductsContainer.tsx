@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { unique } from 'radash';
 import { memo, useEffect, useRef, useState, useMemo } from 'react';
 import useSWR from 'swr';
-import { Market, SearchResult } from 'types';
+import { Market, ProductPreview } from 'types';
 import { useEffectOnce, useEventListener } from 'usehooks-ts';
 import { MARKET_URL } from '~/constants';
 import useAxiosClient from '~/services/axiosClient';
@@ -14,7 +14,7 @@ function ItemContainer() {
         MARKET_URL('e-commerce-server' as Market),
     );
 
-    const [items, setItems] = useState<SearchResult[]>([]);
+    const [items, setItems] = useState<ProductPreview[]>([]);
 
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,7 +38,7 @@ function ItemContainer() {
         data: resItems,
         mutate,
         isValidating,
-    } = useSWR<SearchResult[]>(
+    } = useSWR<ProductPreview[]>(
         router.asPath + String(router.isReady),
         async () => {
             try {

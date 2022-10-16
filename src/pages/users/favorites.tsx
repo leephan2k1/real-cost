@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
-import { Market, SearchResult } from 'types';
+import { Market, ProductPreview } from 'types';
 import ProductList from '~/components/shared/ProductList';
 import Section from '~/components/shared/Section';
 import { MARKET_URL } from '~/constants';
@@ -13,7 +13,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const FavoritesPage: NextPage = () => {
     const { data: session, status } = useSession();
-    const [items, setItems] = useState<SearchResult[]>([]);
+    const [items, setItems] = useState<ProductPreview[]>([]);
 
     const axiosClient = useAxiosClient(
         MARKET_URL('e-commerce-server' as Market),
@@ -25,7 +25,7 @@ const FavoritesPage: NextPage = () => {
         mutate,
     } = useSWR<{
         _id: string;
-        favorite_products: SearchResult[];
+        favorite_products: ProductPreview[];
     }>(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
