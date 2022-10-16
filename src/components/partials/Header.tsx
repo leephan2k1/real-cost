@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import DialogAnimated from './UserMenu';
+import NotificationPanel from './NotificationPanel';
 
 import { BellIcon } from '@heroicons/react/24/outline';
 
@@ -21,6 +22,7 @@ const Header = () => {
     const router = useRouter();
 
     const [userMenu, setUserMenu] = useState(false);
+    const [notificationMenu, setNotificationMenu] = useState(false);
 
     const handleUserMenu = () => {
         if (status === 'unauthenticated') {
@@ -77,9 +79,11 @@ const Header = () => {
 
                         {/* notification  */}
                         <div className="flex md:space-x-10">
-                            <button className="absolute-center mx-4 md:mx-0">
-                                <BellIcon className="h-9 w-9" />
-                            </button>
+                            <NotificationPanel state={notificationMenu}>
+                                <button className="absolute-center mx-4 md:mx-0">
+                                    <BellIcon className="h-9 w-9" />{' '}
+                                </button>
+                            </NotificationPanel>
 
                             {/* user */}
 
