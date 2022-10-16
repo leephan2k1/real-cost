@@ -3,7 +3,8 @@ import { Dialog, useDialogState } from 'ariakit/dialog';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ReactNode, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { ReactNode, useEffect, useState, MouseEvent } from 'react';
 import toast from 'react-hot-toast';
 import { Else, If, Then } from 'react-if';
 import useSWR from 'swr';
@@ -12,8 +13,9 @@ import { BASE_URL, mapping_market_colors, PRODUCTS_PATH } from '~/constants';
 import useSocket from '~/context/SocketContext';
 import useAxiosClient from '~/services/axiosClient';
 import { handleSubPathMarket } from '~/utils/stringHandler';
-import { useRouter } from 'next/router';
+
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { BellSlashIcon } from '@heroicons/react/24/outline';
 
 interface NotificationProps {
     children: ReactNode;
@@ -30,7 +32,7 @@ export default function NotificationModal({ children }: NotificationProps) {
         { productLink: string; product: ProductPreview; seen: Date }[]
     >([]);
 
-    const [parent] = useAutoAnimate<HTMLDivElement>();
+    const [parent] = useAutoAnimate<HTMLUListElement>();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -104,6 +106,24 @@ export default function NotificationModal({ children }: NotificationProps) {
         }
     };
 
+    const handleUnsubscribeNotify = async (e: MouseEvent) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const productLink = e.currentTarget.dataset.product;
+
+        toast.success('Đã ngừng nhận thông báo về sản phẩm!');
+
+        try {
+            await axiosClient.delete(`/users/${userId}/subscribe`, {
+                params: {
+                    productLink,
+                },
+            });
+        } catch (error) {
+            toast.error('Có gì đó khum đúng, thử lại nhé!');
+        }
+    };
+
     return (
         <>
             <Button
@@ -141,78 +161,96 @@ export default function NotificationModal({ children }: NotificationProps) {
                             </button>
                         </div>
 
-                        <div
+                        <ul
                             ref={parent}
                             className="flex w-full flex-1 flex-col-reverse justify-end space-y-4 pb-6"
                         >
                             {items?.map((item) => {
                                 return (
-                                    <Link
-                                        className="flex h-40 w-full flex-col"
-                                        href={`/${PRODUCTS_PATH}/${
-                                            item.product.market
-                                        }/${handleSubPathMarket(
-                                            item.product.market,
-                                            item.product.link,
-                                        )}`}
+                                    <li
+                                        className="relative h-40 w-full"
                                         key={item.productLink}
                                     >
-                                        <a
-                                            className={`smooth-effect z-20 flex cursor-pointer items-center overflow-hidden rounded-2xl ${
-                                                item?.seen ? 'opacity-60' : ''
-                                            }`}
+                                        <button
+                                            data-product={item.productLink}
+                                            onClick={handleUnsubscribeNotify}
+                                            className="smooth-effect absolute bottom-[7%] right-[5%] z-50 hover:text-rose-500"
                                         >
-                                            <div className="absolute-center m-4 flex h-32 w-32 rounded-2xl border-[1px] border-black">
-                                                <Image
-                                                    src={item.product.img}
-                                                    alt=""
-                                                    width={60}
-                                                    height={60}
-                                                />
-                                            </div>
-                                            <div className="flex w-[26rem] flex-col items-start font-primary">
-                                                <span className="flex text-[1.6rem] font-medium line-clamp-2">
-                                                    {item.product.name}
-                                                </span>
-                                                <span className="text-[1.4rem]">
-                                                    Sản phẩm đã có giá mới
-                                                </span>
-                                                <div className="flex w-full flex-row">
-                                                    <span className="flex  basis-1/2 text-[1.4rem]">
-                                                        Giá:&nbsp;{' '}
-                                                        <span className="text-[1.4rem] text-rose-600">
-                                                            {item.product.price}
-                                                        </span>
+                                            <BellSlashIcon className="h-8 w-8" />
+                                        </button>
+
+                                        <Link
+                                            className="full-size flex flex-col"
+                                            href={`/${PRODUCTS_PATH}/${
+                                                item.product.market
+                                            }/${handleSubPathMarket(
+                                                item.product.market,
+                                                item.product.link,
+                                            )}`}
+                                        >
+                                            <a
+                                                className={`smooth-effect z-20 flex cursor-pointer items-center overflow-hidden rounded-2xl ${
+                                                    item?.seen
+                                                        ? 'opacity-60'
+                                                        : ''
+                                                }`}
+                                            >
+                                                <div className="absolute-center m-4 flex h-32 w-32 rounded-2xl border-[1px] border-black">
+                                                    <Image
+                                                        src={item.product.img}
+                                                        alt=""
+                                                        width={60}
+                                                        height={60}
+                                                    />
+                                                </div>
+                                                <div className="flex w-[26rem] flex-col items-start font-primary">
+                                                    <span className="flex text-[1.6rem] font-medium line-clamp-2">
+                                                        {item.product.name}
                                                     </span>
-                                                    <span className="flex  basis-1/2 text-[1.4rem]">
-                                                        Sàn:&nbsp;{' '}
-                                                        <span
-                                                            className="text-[1.4rem]"
-                                                            style={{
-                                                                color: mapping_market_colors[
+                                                    <span className="text-[1.4rem]">
+                                                        Sản phẩm đã có giá mới
+                                                    </span>
+                                                    <div className="flex w-full flex-row">
+                                                        <span className="flex  basis-1/2 text-[1.4rem]">
+                                                            Giá:&nbsp;{' '}
+                                                            <span className="text-[1.4rem] text-rose-600">
+                                                                {
+                                                                    item.product
+                                                                        .price
+                                                                }
+                                                            </span>
+                                                        </span>
+                                                        <span className="flex basis-1/2 text-[1.4rem]">
+                                                            Sàn:&nbsp;{' '}
+                                                            <span
+                                                                className="text-[1.4rem]"
+                                                                style={{
+                                                                    color: mapping_market_colors[
+                                                                        item
+                                                                            .product
+                                                                            .market
+                                                                    ],
+                                                                }}
+                                                            >
+                                                                {
                                                                     item.product
                                                                         .market
-                                                                ],
-                                                            }}
-                                                        >
-                                                            {
-                                                                item.product
-                                                                    .market
-                                                            }
+                                                                }
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="flex content-end items-center">
-                                                {!item?.seen && (
-                                                    <span className="h-5 w-5 rounded-full bg-sky-600"></span>
-                                                )}
-                                            </div>
-                                        </a>
-                                    </Link>
+                                                <div className="flex content-end items-center">
+                                                    {!item?.seen && (
+                                                        <span className="h-5 w-5 rounded-full bg-sky-600"></span>
+                                                    )}
+                                                </div>
+                                            </a>
+                                        </Link>
+                                    </li>
                                 );
                             })}
-                        </div>
+                        </ul>
                     </Then>
                     <Else>
                         <h4 className="absolute-center w-full py-4  font-secondary text-4xl">
