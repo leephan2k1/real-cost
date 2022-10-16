@@ -1,28 +1,37 @@
 import { useSetAtom } from 'jotai';
+import { useSession } from 'next-auth/react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { BiUser } from 'react-icons/bi';
 import { HiMenuAlt2 } from 'react-icons/hi';
+import { If, Then } from 'react-if';
 import sideBarState from '~/atoms/sideBarState';
 import { quickList } from '~/constants';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
-import DialogAnimated from './UserMenu';
-import NotificationPanel from './NotificationPanel';
+import useSocket from '~/context/SocketContext';
 
 import { BellIcon } from '@heroicons/react/24/outline';
 
 import Logo from '../icons/Logo';
 import ClientOnly from '../shared/ClientOnly';
 import DesktopSearch from '../shared/DesktopSearch';
+import DialogAnimated from './UserMenu';
+
+const NotificationModal = dynamic(
+    () =>
+        import('./NotificationModal', {
+            ssr: false,
+        } as ImportCallOptions),
+);
 
 const Header = () => {
+    const router = useRouter();
+    const socketContext = useSocket();
     const setSideBarState = useSetAtom(sideBarState);
     const { data: session, status } = useSession();
-    const router = useRouter();
 
     const [userMenu, setUserMenu] = useState(false);
-    const [notificationMenu, setNotificationMenu] = useState(false);
 
     const handleUserMenu = () => {
         if (status === 'unauthenticated') {
@@ -79,14 +88,21 @@ const Header = () => {
 
                         {/* notification  */}
                         <div className="flex md:space-x-10">
-                            <NotificationPanel state={notificationMenu}>
-                                <button className="absolute-center mx-4 md:mx-0">
+                            <NotificationModal>
+                                <button className="absolute-center relative mx-4 md:mx-0">
                                     <BellIcon className="h-9 w-9" />{' '}
+                                    <If condition={socketContext?.ping}>
+                                        <Then>
+                                            <span className="absolute top-0 right-0 flex h-4 w-4">
+                                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                                                <span className="relative inline-flex h-4 w-4 rounded-full bg-sky-500"></span>
+                                            </span>
+                                        </Then>
+                                    </If>
                                 </button>
-                            </NotificationPanel>
+                            </NotificationModal>
 
                             {/* user */}
-
                             <DialogAnimated state={userMenu}>
                                 <div
                                     onClick={handleUserMenu}

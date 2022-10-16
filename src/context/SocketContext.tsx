@@ -12,9 +12,12 @@ import { io, Socket } from 'socket.io-client';
 import { Product } from 'types';
 import { useEffectOnce } from 'usehooks-ts';
 import ReactHotToast from '~/components/shared/ReactHotToast';
+import { DOMAIN_BASE_URL } from '~/constants';
 
 interface SocketContextType {
-    socket: Socket | null;
+    product: Product | null;
+    ping: boolean;
+    resetState: () => void;
 }
 
 interface SocketContextProps {
@@ -34,7 +37,7 @@ export const SocketContextProvider = ({ children }: SocketContextProps) => {
     const userId = data?.user?.id;
 
     useEffectOnce(() => {
-        setSocket(io('http://127.0.0.1:5555'));
+        setSocket(io(DOMAIN_BASE_URL));
     });
 
     useEffect(() => {
@@ -52,12 +55,18 @@ export const SocketContextProvider = ({ children }: SocketContextProps) => {
     useEffect(() => {
         if (product)
             toast.custom((t) => <ReactHotToast t={t} product={product} />, {
-                duration: 5000,
+                duration: 6000,
             });
     }, [product]);
 
+    const resetState = () => {
+        setProduct(null);
+    };
+
     return (
-        <SocketContext.Provider value={{ socket }}>
+        <SocketContext.Provider
+            value={{ ping: !!product, resetState, product }}
+        >
             {children}
         </SocketContext.Provider>
     );
