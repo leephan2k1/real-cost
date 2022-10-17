@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, memo, useEffect } from 'react';
+import analysisModalState from '~/atoms/analysisModal';
 import sideBarState from '~/atoms/sideBarState';
 import { quickList } from '~/constants';
 
@@ -14,6 +15,7 @@ import Logo from '../icons/Logo';
 function Sidebar() {
     const router = useRouter();
     const [isOpen, setIsOpen] = useAtom(sideBarState);
+    const setAnalysisModalState = useSetAtom(analysisModalState);
 
     //hidden sidebar after navigate
     useEffect(() => {
@@ -84,6 +86,16 @@ function Sidebar() {
                                                         </Link>
                                                     );
                                                 })}
+
+                                            <li
+                                                onClick={() => {
+                                                    setAnalysisModalState(true);
+                                                    setIsOpen(false);
+                                                }}
+                                                className="my-10 md:my-14"
+                                            >
+                                                Phân tích
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { BiUser } from 'react-icons/bi';
 import { HiMenuAlt2 } from 'react-icons/hi';
 import { If, Then } from 'react-if';
+import analysisModalState from '~/atoms/analysisModal';
 import sideBarState from '~/atoms/sideBarState';
 import { quickList } from '~/constants';
 import useSocket from '~/context/SocketContext';
@@ -29,6 +30,8 @@ const Header = () => {
     const router = useRouter();
     const socketContext = useSocket();
     const setSideBarState = useSetAtom(sideBarState);
+    const setAnalysisModalState = useSetAtom(analysisModalState);
+
     const { data: session, status } = useSession();
 
     const [userMenu, setUserMenu] = useState(false);
@@ -84,6 +87,13 @@ const Header = () => {
                                         </li>
                                     );
                                 })}
+
+                            <li
+                                onClick={() => setAnalysisModalState(true)}
+                                className="smooth-effect hover:cursor-pointer hover:text-blue-500"
+                            >
+                                Phân tích
+                            </li>
                         </ul>
 
                         {/* notification  */}

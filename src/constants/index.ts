@@ -52,7 +52,6 @@ export const MARKET_MAPPING: { [key: string]: string } = {
 export const quickList: Navigate[] = [
     { title: 'Danh Sách Sản Phẩm', link: '/browse' },
     { title: 'Deal', link: '/flash-sale' },
-    { title: 'Phân tích', link: '/flash-sale' },
 ];
 
 export const mapping_market_colors: {

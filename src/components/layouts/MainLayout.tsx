@@ -15,6 +15,7 @@ const MobileSearchModal = dynamic(
     () => import('~/components/shared/MobileSearchModal'),
 );
 const Sidebar = dynamic(() => import('../partials/Sidebar'));
+const AnalysisModal = dynamic(() => import('~/components/features/Analysis'));
 
 export default function MainLayout({
     children,
@@ -26,7 +27,10 @@ export default function MainLayout({
     return (
         <>
             {showHeader && <Header />}
-            <main className="min-h-screen overflow-y-hidden">{children}</main>
+            <main className="min-h-screen overflow-y-hidden">
+                {children}
+                <AnalysisModal />
+            </main>
             {matchesMobile && (
                 <ClientOnly>
                     <Sidebar /> <MobileSearchModal />
