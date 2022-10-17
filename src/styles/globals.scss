@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Lato');
 @import 'node_modules/modern-normalize/modern-normalize.css';
 
+// this animation taken from https://github.com/nzbin/three-dots/tree/master/sass
+@import 'variables';
+@import 'mixins';
+@import 'dot-flashing';
+
 $white: #ededed;
 $gray: #bfc0c0;
 $dark: #585959;
