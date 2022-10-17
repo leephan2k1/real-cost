@@ -1,18 +1,24 @@
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
+import dynamic from 'next/dynamic';
+import { useCallback, useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import useSWR from 'swr';
 import { Market, ProductPreview } from 'types';
 import ProductList from '~/components/shared/ProductList';
+import ScrollTop from '~/components/shared/ScrollTop';
 import Section from '~/components/shared/Section';
 import { MARKET_URL } from '~/constants';
-import useAxiosClient from '~/services/axiosClient';
-import ScrollTop from '~/components/shared/ScrollTop';
 import { ProductContextProvider } from '~/context/ProductContext';
-import { useCallback, useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import useAxiosClient from '~/services/axiosClient';
+
+const ConfirmModal = dynamic(() => import('~/components/shared/ConfirmModal'));
 
 const FavoritesPage: NextPage = () => {
     const { data: session, status } = useSession();
+
+    const [confirmModalState, setConfirmModalState] = useState(false);
+
     const [items, setItems] = useState<ProductPreview[]>([]);
 
     const axiosClient = useAxiosClient(
@@ -48,11 +54,19 @@ const FavoritesPage: NextPage = () => {
         }
     }, [favoriteItems]);
 
+    const handleConfirmModal = (state: boolean) => {
+        setConfirmModalState(state);
+    };
+
     const removeProduct = useCallback(
-        async (removeMode: 'single' | 'multiple', link?: string) => {
+        async (removeMode: 'single' | 'multiple' | 'deny', link?: string) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             if (status === 'unauthenticated' || !session?.user?.id) return;
+
+            if (removeMode === 'deny') {
+                return;
+            }
 
             // Optimistic UI (remove ASAP in the UI)
             toast.success('Xoá sản phẩm thành công');
@@ -92,6 +106,12 @@ const FavoritesPage: NextPage = () => {
         <ScrollTop>
             <Toaster position="bottom-center" />
 
+            <ConfirmModal
+                isOpen={confirmModalState}
+                setOpen={handleConfirmModal}
+                removeAction={removeProduct}
+            />
+
             <ProductContextProvider value={{ removeProduct }}>
                 <div className="min-h-screen w-full pt-[100px]">
                     <Section
@@ -99,7 +119,9 @@ const FavoritesPage: NextPage = () => {
                         style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
                     >
                         <button
-                            onClick={() => removeProduct('multiple')}
+                            onClick={() => {
+                                handleConfirmModal(true);
+                            }}
                             className="smooth-effect my-2 rounded-xl border-[1px] border-rose-500 px-4 py-2 hover:scale-110 hover:bg-rose-400 hover:text-white"
                         >
                             Xoá tất cả
