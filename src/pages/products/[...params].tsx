@@ -13,6 +13,7 @@ import {
     getProductDetails as bcGetProductDetails,
 } from '~/serverless/models/Bc.model';
 import { getProductDetails as tkGetProductDetails } from '~/serverless/models/Tiki.model';
+import Head from '~/components/shared/Head';
 
 interface DetailsPageProps {
     product: Product;
@@ -24,49 +25,63 @@ const DetailsPage: NextPage<DetailsPageProps> = ({
     productPriceHistory,
 }) => {
     return (
-        <ScrollTop>
-            <div className="min-h-screen w-full pt-[100px]">
-                <Toaster position="bottom-center" />
+        <>
+            <Head
+                title={`Real Cost - ${product?.name}`}
+                image={
+                    (product.images?.length && product?.images[0]) ||
+                    'https://i.ibb.co/HPNrGZF/real-cost-homepage-min.png'
+                }
+            />
 
-                <Section style="w-max-[1300px] h-fit mx-auto w-[90%]">
-                    <ProductHead product={product} />
-                </Section>
+            <ScrollTop>
+                <div className="min-h-screen w-full pt-[100px]">
+                    <Toaster position="bottom-center" />
 
-                <Section
-                    title="Người dùng Real Cost bình chọn"
-                    style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
-                >
-                    <Voting product={product} />
-                </Section>
+                    <Section style="w-max-[1300px] h-fit mx-auto w-[90%]">
+                        <ProductHead product={product} />
+                    </Section>
 
-                <Section
-                    title="Lịch sử giá"
-                    style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
-                >
-                    <If condition={!!productPriceHistory}>
-                        <Then>
-                            <ProductChart
-                                productName={product?.name}
-                                itemHistory={productPriceHistory as ItemHistory}
-                            />
-                        </Then>
+                    <Section
+                        title="Người dùng Real Cost bình chọn"
+                        style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
+                    >
+                        <Voting product={product} />
+                    </Section>
 
-                        <Else>
-                            <h3 className="mx-auto">
-                                Sản phẩm hiện tại chưa có lịch sử giá
-                            </h3>
-                        </Else>
-                    </If>
-                </Section>
+                    <Section
+                        title="Lịch sử giá"
+                        style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
+                    >
+                        <If condition={!!productPriceHistory}>
+                            <Then>
+                                <ProductChart
+                                    productName={product?.name}
+                                    itemHistory={
+                                        productPriceHistory as ItemHistory
+                                    }
+                                />
+                            </Then>
 
-                <Section
-                    title="Mô tả"
-                    style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
-                >
-                    <ProductDescription description={product?.description} />
-                </Section>
-            </div>
-        </ScrollTop>
+                            <Else>
+                                <h3 className="mx-auto">
+                                    Sản phẩm hiện tại chưa có lịch sử giá
+                                </h3>
+                            </Else>
+                        </If>
+                    </Section>
+
+                    <Section
+                        title="Mô tả"
+                        style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
+                    >
+                        <ProductDescription
+                            description={product?.description}
+                        />
+                    </Section>
+                </div>
+            </ScrollTop>
+        </>
     );
 };
 

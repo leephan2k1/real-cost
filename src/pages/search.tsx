@@ -9,6 +9,7 @@ import SearchFilter from '~/components/shared/SearchFilter';
 import { MARKET_OPTIONS, sort_mapping } from '~/constants';
 import usePushQuery from '~/hooks/usePushQuery';
 import { Toaster } from 'react-hot-toast';
+import Head from '~/components/shared/Head';
 
 const SearchPage: NextPage = () => {
     const router = useRouter();
@@ -40,43 +41,47 @@ const SearchPage: NextPage = () => {
     }, []);
 
     return (
-        <ScrollTop>
-            <Toaster position="bottom-right" />
+        <>
+            <Head title="Real Cost - tìm kiếm" />
 
-            <div className="w-max-[1300px] mx-auto w-[90%] pt-[100px] text-black">
-                <SearchFilter>
-                    <>
-                        <div className="flex w-52 flex-col space-y-4">
-                            <h3 className="font-secondary text-2xl md:text-3xl">
-                                Sàn thương mại:
-                            </h3>
-                            <SelectMultiple
-                                handleSelect={handleSelectMarkets}
-                                options={MARKET_OPTIONS}
-                                defaultOption={queryParams.market}
-                            />
-                        </div>
+            <ScrollTop>
+                <Toaster position="bottom-right" />
 
-                        <div className="flex w-60 flex-col space-y-4">
-                            <h3 className="font-secondary text-2xl md:text-3xl">
-                                Bộ lọc:
-                            </h3>
-                            <SelectBox
-                                defaultValue={queryParams.sort}
-                                handleSelect={handleSelectSort}
-                                options={[
-                                    'Phổ biến',
-                                    'Giá cao đến thấp',
-                                    'Giá thấp đến cao',
-                                ]}
-                            />
-                        </div>
-                    </>
-                </SearchFilter>
+                <div className="w-max-[1300px] mx-auto w-[90%] pt-[100px] text-black">
+                    <SearchFilter>
+                        <>
+                            <div className="flex w-52 flex-col space-y-4">
+                                <h3 className="font-secondary text-2xl md:text-3xl">
+                                    Sàn thương mại:
+                                </h3>
+                                <SelectMultiple
+                                    handleSelect={handleSelectMarkets}
+                                    options={MARKET_OPTIONS}
+                                    defaultOption={queryParams.market}
+                                />
+                            </div>
 
-                <ItemContainer />
-            </div>
-        </ScrollTop>
+                            <div className="flex w-60 flex-col space-y-4">
+                                <h3 className="font-secondary text-2xl md:text-3xl">
+                                    Bộ lọc:
+                                </h3>
+                                <SelectBox
+                                    defaultValue={queryParams.sort}
+                                    handleSelect={handleSelectSort}
+                                    options={[
+                                        'Phổ biến',
+                                        'Giá cao đến thấp',
+                                        'Giá thấp đến cao',
+                                    ]}
+                                />
+                            </div>
+                        </>
+                    </SearchFilter>
+
+                    <ItemContainer />
+                </div>
+            </ScrollTop>
+        </>
     );
 };
 

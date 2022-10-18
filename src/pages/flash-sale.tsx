@@ -9,6 +9,7 @@ import ItemContainer from '~/components/shared/ProductsContainer';
 import ScrollTop from '~/components/shared/ScrollTop';
 import SearchFilter from '~/components/shared/SearchFilter';
 import Section from '~/components/shared/Section';
+import Head from '~/components/shared/Head';
 
 const FlashSalePage: NextPage = () => {
     const router = useRouter();
@@ -57,36 +58,44 @@ const FlashSalePage: NextPage = () => {
     );
 
     return (
-        <ScrollTop>
-            <Toaster position="bottom-right" />
+        <>
+            <Head
+                title="Real Cost - Flash-sale"
+                description="Săn flash-sale với Real Cost"
+                image="https://i.ibb.co/vX1QVm1/real-cost-flash-sale-min.png"
+            />
 
-            <div className="flex min-h-screen w-full flex-col pt-[100px]">
-                <Section style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]">
-                    <FsBanner />
-                </Section>
+            <ScrollTop>
+                <Toaster position="bottom-right" />
 
-                <Section style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]">
-                    <SearchFilter>
-                        <>
-                            <div className="flex w-60 flex-col space-y-4">
-                                <h3 className="font-secondary text-2xl md:text-3xl">
-                                    Sàn thương mại
-                                </h3>
-                                <SelectBox
-                                    defaultValue={queryParams.market}
-                                    handleSelect={handleSelectMarket}
-                                    options={['tiki', 'shopee']}
-                                />
-                            </div>
-                        </>
-                    </SearchFilter>
-                </Section>
+                <div className="flex min-h-screen w-full flex-col pt-[100px]">
+                    <Section style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]">
+                        <FsBanner />
+                    </Section>
 
-                <Section style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]">
-                    <ItemContainer />
-                </Section>
-            </div>
-        </ScrollTop>
+                    <Section style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]">
+                        <SearchFilter>
+                            <>
+                                <div className="flex w-60 flex-col space-y-4">
+                                    <h3 className="font-secondary text-2xl md:text-3xl">
+                                        Sàn thương mại
+                                    </h3>
+                                    <SelectBox
+                                        defaultValue={queryParams.market}
+                                        handleSelect={handleSelectMarket}
+                                        options={['tiki', 'shopee']}
+                                    />
+                                </div>
+                            </>
+                        </SearchFilter>
+                    </Section>
+
+                    <Section style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]">
+                        <ItemContainer />
+                    </Section>
+                </div>
+            </ScrollTop>
+        </>
     );
 };
 

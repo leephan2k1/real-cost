@@ -9,6 +9,7 @@ import SuggestionSection from '~/components/shared/SuggestionSection';
 import { MARKET_URL } from '~/constants';
 import { getSuggestionKeyword as bcGetSuggestionKeyword } from '~/serverless/models/Bc.model';
 import { getSuggestionKeyword as tkGetSuggestionKeyword } from '~/serverless/models/Tiki.model';
+import Head from '~/components/shared/Head';
 
 interface BrowsePageProps {
     itemsWithKeyword: ItemsWithKeyword[];
@@ -16,32 +17,41 @@ interface BrowsePageProps {
 
 const BrowsePage: NextPage<BrowsePageProps> = ({ itemsWithKeyword }) => {
     return (
-        <ScrollTop>
-            <Toaster position="bottom-right" />
+        <>
+            <Head
+                title="Real Cost - Lướt xem sản phẩm"
+                image="https://i.ibb.co/jJZ6czH/real-cost-browse-min.png"
+            />
 
-            <div className="min-h-screen w-full pt-[100px]">
-                <Section
-                    title="Gợi ý hôm nay"
-                    style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
-                >
-                    <If
-                        condition={itemsWithKeyword && itemsWithKeyword?.length}
+            <ScrollTop>
+                <Toaster position="bottom-right" />
+
+                <div className="min-h-screen w-full pt-[100px]">
+                    <Section
+                        title="Gợi ý hôm nay"
+                        style="my-10 w-max-[1300px] h-fit mx-auto w-[90%]"
                     >
-                        <Then>
-                            {itemsWithKeyword.map((list, index) => {
-                                return (
-                                    <SuggestionSection
-                                        itemsWithKeyword={list}
-                                        index={index}
-                                        key={list.keyword}
-                                    />
-                                );
-                            })}
-                        </Then>
-                    </If>
-                </Section>
-            </div>
-        </ScrollTop>
+                        <If
+                            condition={
+                                itemsWithKeyword && itemsWithKeyword?.length
+                            }
+                        >
+                            <Then>
+                                {itemsWithKeyword.map((list, index) => {
+                                    return (
+                                        <SuggestionSection
+                                            itemsWithKeyword={list}
+                                            index={index}
+                                            key={list.keyword}
+                                        />
+                                    );
+                                })}
+                            </Then>
+                        </If>
+                    </Section>
+                </div>
+            </ScrollTop>
+        </>
     );
 };
 

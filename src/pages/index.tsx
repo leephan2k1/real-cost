@@ -11,6 +11,7 @@ import Slides from '~/components/shared/Slides';
 import { BC_BASE_API, BC_URL, BASE_URL } from '~/constants';
 import { getAxiosClient } from '~/utils/axios';
 import ProductCard from '~/components/shared/ProductCard';
+import Head from '~/components/shared/Head';
 
 interface HomeProps {
     suggestion_list: BcSuggestion[];
@@ -30,6 +31,8 @@ const Home: NextPage<HomeProps> = ({ suggestion_list }) => {
 
     return (
         <>
+            <Head />
+
             <Toaster position="bottom-right" />
 
             <div className="flex h-fit min-h-screen flex-col text-gray-700">
