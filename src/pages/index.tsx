@@ -1,19 +1,33 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { Toaster } from 'react-hot-toast';
 import { If, Then } from 'react-if';
-import { BcSuggestion } from 'types';
+import useSwr from 'swr';
+import { BcSuggestion, ProductPreview } from 'types';
 import Banner from '~/components/partials/Banner';
 import Category from '~/components/shared/Category';
 import SearchTrends from '~/components/shared/SearchTrends';
 import Section from '~/components/shared/Section';
-import { BC_BASE_API, BC_URL } from '~/constants';
+import Slides from '~/components/shared/Slides';
+import { BC_BASE_API, BC_URL, BASE_URL } from '~/constants';
 import { getAxiosClient } from '~/utils/axios';
+import ProductCard from '~/components/shared/ProductCard';
 
 interface HomeProps {
     suggestion_list: BcSuggestion[];
 }
 
+const axiosClient = getAxiosClient(BASE_URL, BASE_URL, BASE_URL);
+
 const Home: NextPage<HomeProps> = ({ suggestion_list }) => {
+    const { data: recentlyVoteList } = useSwr<ProductPreview[]>(
+        `/products/recently-vote`,
+        async (slug) => {
+            const { data } = await axiosClient.get(slug);
+
+            return data?.products;
+        },
+    );
+
     return (
         <>
             <Toaster position="bottom-right" />
@@ -30,6 +44,26 @@ const Home: NextPage<HomeProps> = ({ suggestion_list }) => {
                             title="Xu hướng tìm kiếm"
                         >
                             <SearchTrends suggestion_list={suggestion_list} />
+                        </Section>
+                    </Then>
+                </If>
+
+                <If condition={recentlyVoteList && recentlyVoteList.length}>
+                    <Then>
+                        <Section
+                            style="mx-auto w-[90%] max-w-[1300px]"
+                            title="Người dùng Real Cost vừa bình chọn"
+                        >
+                            <Slides>
+                                {recentlyVoteList?.map((prod) => {
+                                    return (
+                                        <ProductCard
+                                            product={prod}
+                                            key={prod.link}
+                                        />
+                                    );
+                                })}
+                            </Slides>
                         </Section>
                     </Then>
                 </If>
