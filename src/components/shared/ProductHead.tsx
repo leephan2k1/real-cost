@@ -27,6 +27,13 @@ const Subscribe = dynamic(
         } as ImportCallOptions),
 );
 
+const RedirectModal = dynamic(
+    () =>
+        import('~/components/shared/RedirectModal', {
+            ssr: false,
+        } as ImportCallOptions),
+);
+
 interface ProductHeadProps {
     product: Product;
 }
@@ -38,6 +45,7 @@ function ProductHead({ product }: ProductHeadProps) {
     const axiosClient = useAxiosClient(
         MARKET_URL('e-commerce-server' as Market),
     );
+    const [isRedirect, setRedirect] = useState(false);
 
     const [shouldShowNotification, setShouldShowNotification] = useState(false);
 
@@ -61,6 +69,36 @@ function ProductHead({ product }: ProductHeadProps) {
 
         return data;
     });
+
+    const handleRedirect = async () => {
+        if (product?.market !== 'tiki') {
+            window.open(product?.link, '_blank');
+            return;
+        }
+
+        setRedirect(true);
+
+        try {
+            const { data } = await axiosClient.get(`/products/generate-link`, {
+                params: {
+                    productLink: product?.link,
+                    market: product?.market,
+                },
+            });
+
+            if (data?.productLink) {
+                window.open(data?.productLink, '_blank');
+                setRedirect(false);
+            }
+        } catch (error) {
+            console.error(error);
+
+            // fallback a missing AF link
+            window.open(product?.link, '_blank');
+
+            setRedirect(false);
+        }
+    };
 
     const handleToggleFavorite = async () => {
         if (status === 'unauthenticated') {
@@ -134,6 +172,11 @@ function ProductHead({ product }: ProductHeadProps) {
                 shouldShow={shouldShowNotification}
             />
 
+            <RedirectModal
+                isOpen={isRedirect}
+                setIsOpen={(state: boolean) => setRedirect(state)}
+            />
+
             <div className="smooth-effect relative h-fit w-full rounded-2xl border-[2px] border-gray-700 md:h-[400px] lg:h-[500px]">
                 <div
                     className="full-size absolute top-4 left-4 -z-50 rounded-2xl border-2 border-gray-700 "
@@ -174,6 +217,7 @@ function ProductHead({ product }: ProductHeadProps) {
                                 <div className="flex w-full items-center space-x-8">
                                     <button
                                         ref={btnRef}
+                                        onClick={handleRedirect}
                                         className="smooth-effect absolute-center w-fit space-x-4 rounded-2xl bg-[#f84a2f] p-4 text-white hover:scale-[110%]"
                                     >
                                         <span>Đi đến nơi bán</span>
@@ -233,7 +277,10 @@ function ProductHead({ product }: ProductHeadProps) {
                 </div>
 
                 {!isVisible && (
-                    <button className="animate__fadeIn animate__faster animate__animated smooth-effect absolute-center fixed left-1/2 bottom-6 z-[50] w-fit -translate-x-1/2 space-x-4 rounded-2xl bg-[#f84a2f] p-4 px-10 text-white hover:scale-[110%] md:px-10 lg:px-16">
+                    <button
+                        onClick={handleRedirect}
+                        className="animate__fadeIn animate__faster animate__animated smooth-effect absolute-center fixed left-1/2 bottom-6 z-[50] w-fit -translate-x-1/2 space-x-4 rounded-2xl bg-[#f84a2f] p-4 px-10 text-white hover:scale-[110%] md:px-10 lg:px-16"
+                    >
                         <span>Đi đến nơi bán</span>
                         <ArrowTopRightOnSquareIcon className="h-8 w-8" />
                     </button>
