@@ -18,7 +18,11 @@ function Category() {
                                     {item.map((value) => {
                                         return (
                                             <Link
-                                                href={value.href}
+                                                href={`${
+                                                    value.href
+                                                }&keyword=${encodeURIComponent(
+                                                    value.title,
+                                                )}`}
                                                 key={value.id}
                                             >
                                                 <div className="smooth-effect z-20 flex-0 cursor-pointer  hover:-translate-y-1 ">
