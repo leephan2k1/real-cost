@@ -15,6 +15,9 @@ module.exports = {
             flex: {
                 0: '0 0 135px',
             },
+            animation: {
+                'spin-slow': 'spin 2s linear infinite',
+            },
         },
         fontFamily: {
             primary: 'Nunito, sans-serif',
