@@ -37,15 +37,21 @@ function Analysis() {
     };
 
     const handleGetContentClipboard = async () => {
-        const text = await navigator.clipboard?.readText();
+        try {
+            const text = await navigator.clipboard?.readText();
 
-        if (text) {
-            setRawText(text);
-        }
+            if (text) {
+                setRawText(text);
+            }
 
-        if (!checkValidURL(text)) {
-            setIsValidURL(checkValidURL(text));
-            return;
+            if (!checkValidURL(text)) {
+                setIsValidURL(checkValidURL(text));
+                return;
+            }
+        } catch (error) {
+            alert(
+                'Firefox hoặc trình duyệt bạn đang dùng không hỗ trợ dán link, Hãy dán THỦ CÔNG vào ô nhập liệu bên cạnh!',
+            );
         }
     };
 
