@@ -4,6 +4,8 @@ export const DOMAIN_BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}`;
 
 export const BASE_URL = `${DOMAIN_BASE_URL}/api/v1`;
 
+export const WEBSITE_URL = 'https://realcost.shop';
+
 export const SEARCH_PATH = 'search';
 
 export const PRODUCTS_PATH = 'products';
