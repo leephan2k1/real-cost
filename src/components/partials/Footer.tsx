@@ -3,67 +3,53 @@ import Logo from '../icons/Logo';
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-100 pb-12">
+        <footer className="bg-gray-100 py-12">
             <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-center text-teal-600">
-                    <Logo style="md:w-16 md:h-16 w-12 h-12 fill-black" />
+                    <Logo style="md:w-24 md:h-24 w-20 h-20 fill-black" />
                 </div>
 
                 <p className="mx-auto max-w-md text-center leading-relaxed text-gray-500"></p>
 
-                <nav className="mt-8" aria-labelledby="footer-navigation">
-                    <h2 className="sr-only" id="footer-navigation">
-                        Footer navigation
-                    </h2>
-
+                <div className="my-8">
                     <ul className="flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
                         <li>
                             <Link
                                 className="text-gray-700 transition hover:text-gray-700/75"
-                                href="/"
+                                href="/privacy-policy"
                             >
-                                About
+                                Chính sách riêng tư
                             </Link>
                         </li>
 
                         <li>
                             <Link
                                 className="text-gray-700 transition hover:text-gray-700/75"
-                                href="/"
+                                href="/terms-of-service"
                             >
-                                History
+                                Điều khoản dịch vụ
                             </Link>
                         </li>
 
                         <li>
                             <Link
                                 className="text-gray-700 transition hover:text-gray-700/75"
-                                href="/"
+                                href="/faqs"
                             >
-                                Services
-                            </Link>
-                        </li>
-
-                        <li>
-                            <Link
-                                className="text-gray-700 transition hover:text-gray-700/75"
-                                href="/"
-                            >
-                                Projects
+                                Câu hỏi thường gặp
                             </Link>
                         </li>
                     </ul>
-                </nav>
+                </div>
 
                 <ul className="mt-6 flex justify-center gap-6 md:gap-8">
                     <li>
                         <a
-                            href="/"
+                            href="https://github.com/leephan2k1/real-cost"
                             rel="noopener noreferrer"
                             target="_blank"
                             className="text-gray-700 transition hover:text-gray-700/75"
                         >
-                            <span className="sr-only">GitHub</span>
                             <svg
                                 className="h-10 w-10"
                                 fill="currentColor"
@@ -80,7 +66,7 @@ const Footer = () => {
                     </li>
                 </ul>
                 <span className="absolute-center mt-6 text-gray-500">
-                    Copyright &copy; 2022 by RealCost
+                    &copy; 2022 by realcost.shop
                 </span>
             </div>
         </footer>
