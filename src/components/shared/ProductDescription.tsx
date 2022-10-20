@@ -27,7 +27,7 @@ function ProductDescription({ description }: ProductDescriptionProps) {
             ref={containerRef}
         >
             <article
-                className="prose prose-xl lg:prose-2xl lg:w-4/5"
+                className="prose-xl prose lg:w-4/5 lg:prose-2xl"
                 ref={parent}
                 dangerouslySetInnerHTML={{ __html: description }}
             ></article>
