@@ -31,7 +31,7 @@ function ProductList({
         <div ref={parent}>
             <If condition={items && items.length}>
                 <Then>
-                    <div className="smooth-effect flex w-full flex-wrap items-center gap-6">
+                    <div className="absolute-center smooth-effect w-full flex-wrap gap-6">
                         {items.map((item) => {
                             return (
                                 <ProductCard

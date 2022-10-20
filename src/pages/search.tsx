@@ -50,18 +50,19 @@ const SearchPage: NextPage = () => {
                 <div className="w-max-[1300px] mx-auto w-[90%] pt-[100px] text-black">
                     <SearchFilter>
                         <>
-                            <div className="flex w-52 flex-col space-y-4">
+                            <div className="flex w-fit flex-col space-y-4">
                                 <h3 className="font-secondary text-2xl md:text-3xl">
                                     Sàn thương mại:
                                 </h3>
                                 <SelectMultiple
+                                    styles="py-4"
                                     handleSelect={handleSelectMarkets}
                                     options={MARKET_OPTIONS}
                                     defaultOption={queryParams.market}
                                 />
                             </div>
 
-                            <div className="flex w-60 flex-col space-y-4">
+                            <div className="flex w-fit min-w-[150px] flex-col space-y-4">
                                 <h3 className="font-secondary text-2xl md:text-3xl">
                                     Bộ lọc:
                                 </h3>

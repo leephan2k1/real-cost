@@ -25,6 +25,7 @@ function DesktopSearch() {
             {/* search options (medium screen)  */}
             <div className="relative hidden h-full flex-1 items-center justify-end md:flex md:justify-center lg:justify-end">
                 <SelectMultiple
+                    styles="py-3"
                     handleSelect={handleSelect}
                     options={['tiki', 'lazada', 'shopee']}
                     defaultOption={[...market.split('-')]}

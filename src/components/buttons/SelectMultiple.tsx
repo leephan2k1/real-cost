@@ -19,6 +19,7 @@ interface SelectMultipleProps {
     options: string[];
     defaultOption?: string[];
     handleSelect: (value: string[]) => void;
+    styles?: string;
 }
 
 //ref: https://ariakit.org/examples/select-multiple
@@ -27,6 +28,7 @@ export default function SelectMultiple({
     options,
     defaultOption,
     handleSelect,
+    styles,
 }: SelectMultipleProps) {
     const select = useSelectState({
         defaultValue: defaultOption || options,
@@ -38,7 +40,9 @@ export default function SelectMultiple({
     }, [select.value]);
 
     return (
-        <div className="smooth-effect flex min-w-full flex-col rounded-xl border-[1px] border-gray-700 bg-white py-3 px-2 text-xl text-gray-800 lg:text-2xl">
+        <div
+            className={`${styles} smooth-effect flex min-w-full flex-col rounded-xl border-[1px] border-gray-700 bg-white px-2 text-xl text-gray-800 lg:text-2xl`}
+        >
             <Select state={select} className="select absolute-center gap-[2px]">
                 {select.value.length === options.length
                     ? 'Tất cả'
