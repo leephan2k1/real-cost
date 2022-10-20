@@ -72,7 +72,7 @@ const Home: NextPage<HomeProps> = ({ suggestion_list }) => {
                 </If>
 
                 <Section
-                    style="mx-auto w-[90%] max-w-[1300px]"
+                    style="mx-auto w-[90%] mb-12 mt-6 max-w-[1300px]"
                     title="Danh mục"
                 >
                     <Category />
