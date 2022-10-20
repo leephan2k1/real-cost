@@ -11,6 +11,7 @@ module.exports = {
     },
 
     images: {
+        unoptimized: true,
         domains: [
             'salt.tikicdn.com',
             'vn-test-11.slatic.net',
@@ -25,4 +26,8 @@ module.exports = {
             'cf.shopee.vn',
         ],
     },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
+    staticPageGenerationTimeout: 5 * 6 * 1000,
 };
