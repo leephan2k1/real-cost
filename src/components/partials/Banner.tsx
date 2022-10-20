@@ -17,8 +17,8 @@ function Banner() {
             </h1>
 
             <h2 className="mx-auto my-4 max-w-[80%] text-center font-secondary text-2xl text-gray-800 highlight highlight-cyan-400 highlight-variant-12 md:py-2 md:text-3xl lg:text-4xl">
-                Stop f*cking click to &quot;Add to cart&quot; when you don&#39;t
-                know the &quot;Real cost&quot;
+                Stop clicking &quot;Add to cart&quot; when you don&#39;t know
+                the &quot;Real cost&quot;
             </h2>
 
             <div className="mx-auto my-4 grid w-3/4 grid-cols-2 gap-6 md:grid-cols-4 md:gap-0">
