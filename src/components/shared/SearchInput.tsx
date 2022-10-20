@@ -1,13 +1,12 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ChangeEvent, memo, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
-import { ProductPreview } from 'types';
+import { Market, ProductPreview } from 'types';
 import { useDebounce, useEffectOnce, useEventListener } from 'usehooks-ts';
 import marketSearch from '~/atoms/marketSearch';
 import searchResult from '~/atoms/searchResult';
 import { MARKET_URL } from '~/constants';
 import useAxiosClient from '~/services/axiosClient';
-import { handleTikiSearch } from '~/utils/handleMarketSearch';
 
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -20,7 +19,9 @@ function SearchInput({ styles, focusOnMount }: SearchInputProps) {
     const [value, setValue] = useState('');
     const market = useAtomValue(marketSearch);
     const setResult = useSetAtom(searchResult);
-    const axiosClient = useAxiosClient(MARKET_URL(market));
+    const axiosClient = useAxiosClient(
+        MARKET_URL('e-commerce-server' as Market),
+    );
     const inputRef = useRef<HTMLInputElement | null>(null);
     const debouncedValue = useDebounce<string>(value, 400);
 
@@ -36,63 +37,42 @@ function SearchInput({ styles, focusOnMount }: SearchInputProps) {
 
             if (!keyword) return [];
 
-            switch (market) {
-                case 'tiki':
-                    const { data: tikiData } = await axiosClient.get(
-                        `/api/v2/products?limit=10&aggregations=2&q=${encodeURIComponent(
-                            keyword,
-                        )}`,
-                        {
-                            headers: {
-                                origin: 'https://tiki.vn',
-                                Referer: 'https://tiki.vn/',
-                                Host: 'tiki.vn',
-                            },
-                        },
-                    );
+            const { data } = await axiosClient.get(`/products/search`, {
+                params: {
+                    market: market,
+                    keyword: keyword,
+                },
+            });
 
-                    const tikiResult = handleTikiSearch(tikiData?.data);
+            if (!data || !data?.products) {
+                return [];
+            }
 
-                    return tikiResult?.length ? tikiResult : [];
+            if (market !== 'all' && data?.products?.length) {
+                return data?.products
+                    .map((item: any) => {
+                        return { ...item, market };
+                    })
+                    .slice(0, 10);
+            }
 
-                default:
-                    const { data } = await axiosClient.get(`/products/search`, {
-                        params: {
-                            market: market,
-                            keyword: keyword,
-                        },
-                    });
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            let result = [];
 
-                    if (!data || !data?.products) {
-                        return [];
-                    }
-
-                    if (market !== 'all' && data?.products?.length) {
-                        return data?.products
-                            .map((item: any) => {
-                                return { ...item, market };
-                            })
-                            .slice(0, 10);
-                    }
-
+            for (const [key, value] of Object.entries(data?.products)) {
+                if (Array.isArray(value))
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     //@ts-ignore
-                    let result = [];
-
-                    for (const [key, value] of Object.entries(data?.products)) {
-                        if (Array.isArray(value))
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            //@ts-ignore
-                            result = result.concat([
-                                ...value?.slice(0, 10).map((item: any) => ({
-                                    ...item,
-                                    market: key,
-                                })),
-                            ]);
-                    }
-
-                    return result;
+                    result = result.concat([
+                        ...value?.slice(0, 10).map((item: any) => ({
+                            ...item,
+                            market: key,
+                        })),
+                    ]);
             }
+
+            return result;
         },
     );
 
