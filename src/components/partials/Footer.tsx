@@ -66,7 +66,7 @@ const Footer = () => {
                     </li>
                 </ul>
                 <span className="absolute-center mt-6 text-gray-500">
-                    &copy; 2022 by realcost.shop
+                    &copy; realcost.shop
                 </span>
             </div>
         </footer>

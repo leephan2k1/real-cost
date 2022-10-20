@@ -65,6 +65,54 @@ export const mapping_market_colors: {
     all: '#f43f5e',
 };
 
+export const FAQS_DOCS = [
+    {
+        title: 'Real Cost ra đời để làm gì?',
+        desc: 'Real Cost lấy cảm hứng từ BeeCost và Lichsugia.com, giúp người dùng mua sắm thông minh hơn trong thế giới thương mại điện tử tại Việt Nam',
+    },
+
+    {
+        title: 'Bạn muốn đóng góp thêm tính năng hoặc sử lỗi cho Real Cost?',
+        desc: 'Nếu bạn muốn đóng góp thêm tính năng có thể liên hệ mình qua email pttl2k1@gmail.com hoặc trietly@protonmail.com. Nếu muốn tham gia sửa lỗi cho Real Cost cũng có thể liên hệ qua email hoặc góp ý trên issues github: https://github.com/leephan2k1/real-cost . Rất cảm ơn!',
+    },
+    {
+        title: 'Real Cost vi phạm DMCA, làm sao yêu cầu gỡ bỏ nội dung?',
+        desc: 'Đa số dữ liệu Real Cost được lấy từ các sàn thương mại Tiki, Lazada, Shopee và trang phân tích Bee Cost. Nếu bạn là người sở hữu trí tuệ các dữ liệu số trên và và cảm thấy rằng Real Cost vi phạm Digital Millennium Copyright Act hãy liên hệ mình qua pttl2k1@gmail.com hoặc trietly@protonmail.com để được xem xét gỡ xuống. Nhưng lưu ý rằng: Real Cost hoạt động phi thương mại, mình không nhận được chi phí trực tiếp nào từ dữ liệu cũng như quảng cáo trên website',
+    },
+
+    {
+        title: 'Các tính năng chính của Real Cost?',
+        desc: 'Tìm kiếm, phân tích, nhận thông báo, yêu thích các sản phẩm và hàng hoá trên các sàn thương mại điện tử',
+    },
+
+    {
+        title: 'Mình muốn tài trợ cho Real Cost?',
+        desc: 'Nếu bạn có thành ý muốn tài trợ (kinh phí hoặc dữ liệu) cho Real Cost, bạn có thể gửi email cho mình: pttl2k1@gmail.com hoặc trietly@protonmail.com',
+    },
+    {
+        title: 'Real Cost có các tính năng tính phí nào?',
+        desc: 'Real Cost là dự án mã nguồn mở và không có tính năng nào tính phí. => Vì sử dụng miễn phí nên nếu gặp khó khăn về việc duy trì máy chủ hoặc vấn đề pháp lý, mình sẽ ngừng triển khai Real Cost',
+    },
+
+    {
+        title: 'Real Cost hỗ trợ các sàn thương mại điện tử nào?',
+        desc: 'Real Cost hỗ trợ các 3 sàn thương mại điện tử phổ biến hiện tại ở Việt Nam: Tiki, Shopee, Lazada',
+    },
+    {
+        title: 'Real Cost được xây dựng dựa trên?',
+        desc: 'Real Cost sử dụng các giải pháp: NextJS, TailwindCSS, Fastify, MongoDB, SocketIO,... với rất nhiều 🧡 và tâm huyết',
+    },
+    {
+        title: 'Real Cost đã được phát triển trong bao lâu?',
+        desc: 'Từ lúc lên ý tưởng và thiết kế và tham khảo giao diện, cơ sở dữ liệu, triển khai thì khoảng 2 tháng',
+    },
+
+    {
+        title: 'Real Cost cạnh tranh với những đối thủ nào?',
+        desc: 'Như "Real Cost ra đời để làm gì?" và hoàn toàn không muốn bị so sánh cũng như cạnh tranh với bất kỳ website nào tương tự. Đồng thời đây cũng là dự án chỉ mang tính học hỏi và xây dựng các bộ công nghệ mã nguồn mở xoay quanh ngôn ngữ Javascript',
+    },
+];
+
 export const CategoryItems = [
     [
         {
