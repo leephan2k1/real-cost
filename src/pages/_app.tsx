@@ -7,6 +7,7 @@ import { SessionProvider } from 'next-auth/react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { ReactElement, ReactNode } from 'react';
+import { useEventListener } from 'usehooks-ts';
 import SubscriptionProvider from '~/components/features/Subscription';
 import MainLayout from '~/components/layouts/MainLayout';
 import { SocketContextProvider } from '~/context/SocketContext';
@@ -27,6 +28,8 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({
     Component,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
     const getLayout =
@@ -36,6 +39,11 @@ function MyApp({
                 {page}
             </MainLayout>
         ));
+
+    useEventListener('focus', () => {
+        const event = new Event('visibilitychange');
+        document.dispatchEvent(event);
+    });
 
     return (
         <SessionProvider session={session} refetchInterval={5 * 60}>
