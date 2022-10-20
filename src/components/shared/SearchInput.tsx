@@ -42,6 +42,13 @@ function SearchInput({ styles, focusOnMount }: SearchInputProps) {
                         `/api/v2/products?limit=10&aggregations=2&q=${encodeURIComponent(
                             keyword,
                         )}`,
+                        {
+                            headers: {
+                                origin: 'https://tiki.vn',
+                                Referer: 'https://tiki.vn/',
+                                Host: 'tiki.vn',
+                            },
+                        },
                     );
 
                     const tikiResult = handleTikiSearch(tikiData?.data);
