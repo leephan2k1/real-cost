@@ -29,7 +29,9 @@ const DetailsPage: NextPage<DetailsPageProps> = ({
             <Head
                 title={`Real Cost - ${product?.name}`}
                 image={
-                    (product.images?.length && product?.images[0]) ||
+                    (product &&
+                        product?.images?.length &&
+                        product?.images[0]) ||
                     'https://i.ibb.co/HPNrGZF/real-cost-homepage-min.png'
                 }
             />
