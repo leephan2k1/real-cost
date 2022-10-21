@@ -72,12 +72,12 @@ export const FAQS_DOCS = [
     },
 
     {
-        title: 'Bạn muốn đóng góp thêm tính năng hoặc sử lỗi cho Real Cost?',
+        title: 'Bạn muốn đóng góp thêm tính năng hoặc sửa lỗi cho Real Cost?',
         desc: 'Nếu bạn muốn đóng góp thêm tính năng có thể liên hệ mình qua email pttl2k1@gmail.com hoặc trietly@protonmail.com. Nếu muốn tham gia sửa lỗi cho Real Cost cũng có thể liên hệ qua email hoặc góp ý trên issues github: https://github.com/leephan2k1/real-cost . Rất cảm ơn!',
     },
     {
         title: 'Real Cost vi phạm DMCA, làm sao yêu cầu gỡ bỏ nội dung?',
-        desc: 'Đa số dữ liệu Real Cost được lấy từ các sàn thương mại Tiki, Lazada, Shopee và trang phân tích Bee Cost. Nếu bạn là người sở hữu trí tuệ các dữ liệu số trên và và cảm thấy rằng Real Cost vi phạm Digital Millennium Copyright Act hãy liên hệ mình qua pttl2k1@gmail.com hoặc trietly@protonmail.com để được xem xét gỡ xuống. Nhưng lưu ý rằng: Real Cost hoạt động phi thương mại, mình không nhận được chi phí trực tiếp nào từ dữ liệu cũng như quảng cáo trên website',
+        desc: 'Đa số dữ liệu Real Cost được lấy từ các sàn thương mại Tiki, Lazada, Shopee và trang phân tích Bee Cost. Nếu bạn là người sở hữu trí tuệ các dữ liệu số trên và và cảm thấy rằng Real Cost vi phạm Digital Millennium Copyright Act hãy liên hệ mình qua pttl2k1@gmail.com hoặc trietly@protonmail.com để được xem xét gỡ xuống. Nhưng lưu ý rằng: Real Cost hoạt động phi thương mại, mình không nhận được chi phí trực tiếp nào từ dữ liệu cũng như KHÔNG quảng cáo trên website',
     },
 
     {
