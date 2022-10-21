@@ -14,68 +14,60 @@ const LogIn: NextPage = () => {
                 image="https://i.ibb.co/b6z1F9t/real-cost-login-min.png"
             />
 
-            <div id="login-page" className="relative h-screen">
-                <div className="absolute-screen-center content-center font-primary">
-                    <div className="page sm:w-[960px] md:w-[1600px]">
-                        <div className="con sm:-top-20">
-                            <div className="box p-4">
-                                <Link href="/">
-                                    <a>
-                                        <button className="smooth-effect mr-16 hover:scale-[90%]">
-                                            <ArrowLeftIcon className="h-10 w-10 text-gray-700" />
-                                        </button>
-                                    </a>
-                                </Link>
-
-                                <h1 className="md:absolute-center mt-4 ml-4 font-secondary text-gray-600 sm:text-5xl md:text-7xl">
-                                    Đăng nhập
+            <div className="absolute-center h-screen w-full">
+                <div className="h-[400px] w-[90%] md:w-[600px]">
+                    <div className="full-size relative flex flex-col rounded-xl rounded-tr-[250px] rounded-bl-[250px] border-2 border-dashed border-gray-500 bg-white shadow-2xl md:rounded-tr-[350px] md:rounded-bl-[350px]">
+                        <div className="full-size absolute top-0 left-0 flex flex-col items-center justify-evenly overflow-hidden rounded-xl rounded-br-[250px] rounded-tl-[250px] border-2 border-gray-500 bg-stone-50 py-20 shadow-2xl md:py-14">
+                            <div className="flex flex-col">
+                                <h1 className="text-center font-secondary text-4xl uppercase md:text-5xl">
+                                    đăng nhập
                                 </h1>
-                                <div className="absolute-screen-center h-[160px] ">
-                                    <button
-                                        onClick={() =>
-                                            signIn('facebook', {
-                                                callbackUrl: '/',
-                                            })
-                                        }
-                                        className="smooth-effect decoration-3 absolute-left-center top-12 flex h-24 rounded-[50px] border-2 border-black bg-sky-300 p-3 hover:bg-sky-200 sm:top-6 sm:w-[250px] md:w-[420px]"
-                                    >
-                                        <div className="absolute -left-1.5 w-[70px] sm:-top-1">
-                                            <Image
-                                                src="/fb_icon.svg"
-                                                alt="Facebook Icon"
-                                                width={60}
-                                                height={60}
-                                            />
-                                        </div>
-                                        <span className="flex-center w-full py-3 decoration-4 sm:pl-[4.7rem] sm:text-3xl md:pl-8 md:text-4xl">
-                                            Tiếp tục với Facebook
-                                        </span>
-                                    </button>
+                                <h2 className="text-center italic">
+                                    realcost.shop
+                                </h2>
+                            </div>
 
-                                    <button
-                                        onClick={() =>
-                                            signIn('google', {
-                                                callbackUrl: '/',
-                                            })
-                                        }
-                                        className="smooth-effect decoration-3 absolute-left-center top-[125px] flex h-24  rounded-[50px] border-2 border-black bg-yellow-300 p-3 hover:bg-yellow-200 sm:top-36 sm:w-[250px] md:w-[420px]"
-                                    >
-                                        <div className="absolute -left-1.5 w-[70px] sm:top-0.5">
-                                            <Image
-                                                src="/gg_icon.svg"
-                                                alt="Facebook Icon"
-                                                width={54}
-                                                height={54}
-                                            />
-                                        </div>
+                            <div className="flex flex-col space-y-6">
+                                <button
+                                    onClick={() => signIn('facebook')}
+                                    className="smooth-effect absolute-center mx-auto w-[200px] space-x-2 rounded-3xl border border-gray-700 py-4 px-6 hover:scale-110 hover:bg-sky-200 md:w-[250px]"
+                                >
+                                    <Image
+                                        src="/fb_icon.svg"
+                                        alt="Facebook Icon"
+                                        width={30}
+                                        height={30}
+                                    />
 
-                                        <span className="flex-center w-full py-3 decoration-4 sm:pl-[4.7rem] sm:text-3xl md:pl-8 md:text-4xl">
-                                            Tiếp tục với Google
-                                        </span>
-                                    </button>
-                                </div>
+                                    <span className="text-base md:text-xl">
+                                        Đăng nhập với Facebook
+                                    </span>
+                                </button>
+                                <button
+                                    onClick={() => signIn('google')}
+                                    className="smooth-effect absolute-center mx-auto w-[200px] space-x-2 rounded-3xl border border-gray-700 py-4 px-6 hover:scale-110 hover:bg-yellow-200 md:w-[250px]"
+                                >
+                                    <Image
+                                        src="/gg_icon.svg"
+                                        alt="Facebook Icon"
+                                        width={30}
+                                        height={30}
+                                    />
+
+                                    <span className="text-base md:text-xl">
+                                        Đăng nhập với Google
+                                    </span>
+                                </button>
                             </div>
                         </div>
+
+                        <Link href="/">
+                            <a>
+                                <button className="smooth-effect m-6 w-fit rounded-2xl border border-gray-700 p-2 hover:scale-110">
+                                    <ArrowLeftIcon className="h-8 w-8" />
+                                </button>
+                            </a>
+                        </Link>
                     </div>
                 </div>
             </div>
