@@ -29,7 +29,11 @@ const LogIn: NextPage = () => {
 
                             <div className="flex flex-col space-y-6">
                                 <button
-                                    onClick={() => signIn('facebook')}
+                                    onClick={() =>
+                                        signIn('facebook', {
+                                            callbackUrl: '/',
+                                        })
+                                    }
                                     className="smooth-effect absolute-center mx-auto w-[200px] space-x-2 rounded-3xl border border-gray-700 py-4 px-6 hover:scale-110 hover:bg-sky-200 md:w-[250px]"
                                 >
                                     <Image
@@ -44,7 +48,11 @@ const LogIn: NextPage = () => {
                                     </span>
                                 </button>
                                 <button
-                                    onClick={() => signIn('google')}
+                                    onClick={() =>
+                                        signIn('google', {
+                                            callbackUrl: '/',
+                                        })
+                                    }
                                     className="smooth-effect absolute-center mx-auto w-[200px] space-x-2 rounded-3xl border border-gray-700 py-4 px-6 hover:scale-110 hover:bg-yellow-200 md:w-[250px]"
                                 >
                                     <Image
