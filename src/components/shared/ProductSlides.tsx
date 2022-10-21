@@ -43,7 +43,7 @@ function ProductSlides({ images }: ProductSlidesProps) {
     return (
         <aside className="flex h-3/4 w-full flex-col border-b-[2px] border-dashed border-gray-700 py-2 md:h-full md:w-[30%] md:border-b-0 md:border-r-[2px]">
             <div
-                className="h-3/4 w-full overflow-hidden py-2"
+                className="absolute-center h-3/4 min-h-[380px] w-full overflow-hidden py-2"
                 ref={mainViewportRef}
             >
                 <div className="full-size flex select-none">
@@ -87,7 +87,7 @@ function ProductSlides({ images }: ProductSlidesProps) {
                 </div>
             </div>
 
-            <div className="relative flex-1 px-4">
+            <div className="relative flex-1 overflow-hidden px-4">
                 <div
                     className="full-size overflow-hidden"
                     ref={thumbViewportRef}
@@ -105,7 +105,7 @@ function ProductSlides({ images }: ProductSlidesProps) {
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img
                                                 src={img}
-                                                className="h-auto max-h-full w-auto rounded-2xl object-contain"
+                                                className="h-auto max-h-[140px] w-auto rounded-2xl object-contain"
                                                 alt="product-image"
                                             />
                                         </figure>

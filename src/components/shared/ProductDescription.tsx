@@ -21,13 +21,13 @@ function ProductDescription({ description }: ProductDescriptionProps) {
 
     return (
         <div
-            className={`relative ${
+            className={`relative w-full ${
                 disclosure.open ? 'h-fit py-4' : 'h-[200px]'
             }`}
             ref={containerRef}
         >
             <article
-                className="prose-xl prose lg:w-4/5 lg:prose-2xl"
+                className="lg:min-w-4/5 prose-xl prose min-w-full overflow-x-hidden prose-img:rounded-xl lg:prose-2xl"
                 ref={parent}
                 dangerouslySetInnerHTML={{ __html: description }}
             ></article>
@@ -36,7 +36,7 @@ function ProductDescription({ description }: ProductDescriptionProps) {
                 <Then>
                     <Disclosure
                         state={disclosure}
-                        className="absolute-center absolute -bottom-8 left-1/2 w-full -translate-x-1/2 space-x-2 bg-gradient-to-b from-[#ffffff00] to-[#ffffff] py-4"
+                        className="absolute-center min-w-screen absolute -bottom-8 left-1/2 w-full -translate-x-1/2 space-x-2 bg-gradient-to-b from-[#ffffff00] to-[#ffffff] py-4"
                     >
                         <span>{disclosure.open ? 'Thu gọn' : 'Xem thêm'}</span>
 
