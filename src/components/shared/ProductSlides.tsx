@@ -43,7 +43,7 @@ function ProductSlides({ images }: ProductSlidesProps) {
     return (
         <aside className="flex h-3/4 w-full flex-col border-b-[2px] border-dashed border-gray-700 py-2 md:h-full md:w-[30%] md:border-b-0 md:border-r-[2px]">
             <div
-                className="absolute-center h-3/4 min-h-[380px] w-full overflow-hidden py-2"
+                className="absolute-center h-3/4 min-h-[380px] w-full  overflow-hidden py-2 md:min-h-[310px] lg:min-h-[380px]"
                 ref={mainViewportRef}
             >
                 <div className="full-size flex select-none">
