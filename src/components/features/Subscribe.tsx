@@ -180,6 +180,7 @@ function Subscribe({ handleToggle, shouldShow, product }: SubscribeProps) {
                                             </small>
                                             <button className="w-52">
                                                 <SelectMultiple
+                                                    styles="py-4"
                                                     options={[
                                                         'Email',
                                                         'Trình duyệt',
