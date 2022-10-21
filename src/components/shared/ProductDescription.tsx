@@ -21,13 +21,13 @@ function ProductDescription({ description }: ProductDescriptionProps) {
 
     return (
         <div
-            className={`relative w-full ${
+            className={`relative w-full lg:max-w-[70vw] ${
                 disclosure.open ? 'h-fit py-4' : 'h-[200px]'
             }`}
             ref={containerRef}
         >
             <article
-                className="lg:min-w-4/5 prose-xl prose min-w-full overflow-x-hidden prose-img:rounded-xl lg:prose-2xl"
+                className="prose-xl prose min-w-full overflow-x-hidden prose-img:max-w-[60vw] prose-img:rounded-2xl lg:prose-2xl"
                 ref={parent}
                 dangerouslySetInnerHTML={{ __html: description }}
             ></article>
