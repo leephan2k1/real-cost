@@ -48,6 +48,10 @@ function VotingButton({
     }, [voting]);
 
     const handleClickVoting = async () => {
+        if (isFetching) {
+            return;
+        }
+
         if (status === 'unauthenticated' || !userId) {
             toast.error(`Đăng nhập để bình chọn bạn nhé!`);
             return;

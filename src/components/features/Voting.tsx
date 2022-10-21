@@ -28,7 +28,7 @@ function Voting({ product }: VotingProps) {
         async (slug) => {
             const { data } = await axiosClient.get(slug);
 
-            if (data?.upVotes && data?.downVotes) {
+            if (data?.upVotes?.length && data?.downVotes?.length) {
                 setVotes({
                     upVotes: data?.upVotes,
                     downVotes: data?.downVotes,
