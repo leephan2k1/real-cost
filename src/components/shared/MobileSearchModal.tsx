@@ -78,6 +78,7 @@ function MobileSearchModal() {
 
                                         <div className="w-32">
                                             <SelectMultiple
+                                                styles="py-2"
                                                 handleSelect={handleSelect}
                                                 options={[
                                                     'tiki',
