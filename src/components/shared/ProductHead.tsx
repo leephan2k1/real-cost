@@ -71,7 +71,7 @@ function ProductHead({ product }: ProductHeadProps) {
     });
 
     const handleRedirect = async () => {
-        if (product?.market !== 'tiki') {
+        if (product?.market === 'lazada') {
             window.open(product?.link, '_blank');
             return;
         }
