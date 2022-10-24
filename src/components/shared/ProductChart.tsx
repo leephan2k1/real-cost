@@ -1,17 +1,18 @@
-import { Line } from 'react-chartjs-2';
-import { memo, useMemo } from 'react';
 import {
-    Chart as ChartJS,
     CategoryScale,
+    Chart as ChartJS,
+    Legend,
     LinearScale,
-    PointElement,
     LineElement,
+    PointElement,
     Title,
     Tooltip,
-    Legend,
 } from 'chart.js';
+import { max, min } from 'radash';
+import { memo, useMemo, useState } from 'react';
+import { Line } from 'react-chartjs-2';
 import { ItemHistory } from 'types';
-import { min, max } from 'radash';
+import MultiRangeSlider from '~/components/shared/MultiRangeSlider';
 
 ChartJS.register(
     CategoryScale,
@@ -97,28 +98,35 @@ interface ProductChartProps {
 }
 
 function ProductChart({ itemHistory, productName }: ProductChartProps) {
+    const [clusterRange, setClusterRange] = useState<{
+        min: number;
+        max: number;
+    }>({ min: 0, max: itemHistory?.priceTs.length });
+
     const labels = useMemo(() => {
         const { priceTs } = itemHistory;
 
-        return priceTs.map((timeStamp) => {
-            const date = new Date(timeStamp);
+        return priceTs
+            .slice(clusterRange.min, clusterRange.max)
+            .map((timeStamp) => {
+                const date = new Date(timeStamp);
 
-            return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-        });
+                return `${date.getDate()}/${
+                    date.getMonth() + 1
+                }/${date.getFullYear()}`;
+            });
+    }, [itemHistory, clusterRange]);
+
+    const items = useMemo(() => {
+        return itemHistory?.price.slice(clusterRange.min, clusterRange.max);
+    }, [itemHistory, clusterRange]);
+
+    const value = useMemo(() => {
+        return {
+            min: min(itemHistory?.price, (price) => price),
+            max: max(itemHistory?.price, (price) => price),
+        };
     }, [itemHistory]);
-
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: `Giá`,
-                data: itemHistory?.price,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                tension: 0.3,
-            },
-        ],
-    };
 
     Object.assign(options, {
         ...options,
@@ -131,39 +139,71 @@ function ProductChart({ itemHistory, productName }: ProductChartProps) {
         },
     });
 
-    const value = useMemo(() => {
-        return {
-            min: min(itemHistory?.price, (price) => price),
-            max: max(itemHistory?.price, (price) => price),
-        };
-    }, [itemHistory]);
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: `Giá`,
+                data: items,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                tension: 0.3,
+            },
+        ],
+    };
+
+    const handleRangeSliderChange = ({
+        min,
+        max,
+    }: {
+        min: number;
+        max: number;
+    }) => {
+        setClusterRange({ ...clusterRange, min, max });
+    };
 
     return (
-        <div className="mx-auto w-full lg:w-3/4">
-            <div className="absolute-center w-full space-x-4">
-                <h3 className="flex flex-col items-center space-x-4 md:flex-row">
-                    <span>Giá cao nhất:</span>
-                    <span className="rounded-2xl border-[2px] border-rose-500 px-4 py-2">
-                        {new Intl.NumberFormat('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND',
-                        }).format(value.max)}
-                    </span>
-                </h3>
-                <h3 className="flex flex-col items-center space-x-4 md:flex-row">
-                    <span>Giá thấp nhất:</span>
-                    <span className="rounded-2xl border-[2px] border-green-500 px-4 py-2">
-                        {new Intl.NumberFormat('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND',
-                        }).format(value.min)}
-                    </span>
-                </h3>
+        <div className="h-fit w-full">
+            <div className="my-6 flex w-full items-center space-x-4">
+                <h2 className="text-lg md:text-2xl">Thời gian: </h2>
+                <MultiRangeSlider
+                    items={itemHistory.priceTs}
+                    min={0}
+                    max={itemHistory?.priceTs?.length}
+                    onChange={handleRangeSliderChange}
+                />
             </div>
 
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-ignore */}
-            <Line options={options} data={data} plugins={[chartAreaBorder]} />
+            <div className="mx-auto mt-16 w-full lg:w-3/4">
+                <div className="absolute-center w-full space-x-4">
+                    <h3 className="flex flex-col items-center space-x-4 md:flex-row">
+                        <span>Giá cao nhất:</span>
+                        <span className="rounded-2xl border-[2px] border-rose-500 px-4 py-2">
+                            {new Intl.NumberFormat('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND',
+                            }).format(value.max)}
+                        </span>
+                    </h3>
+                    <h3 className="flex flex-col items-center space-x-4 md:flex-row">
+                        <span>Giá thấp nhất:</span>
+                        <span className="rounded-2xl border-[2px] border-green-500 px-4 py-2">
+                            {new Intl.NumberFormat('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND',
+                            }).format(value.min)}
+                        </span>
+                    </h3>
+                </div>
+
+                <Line
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    options={options}
+                    data={data}
+                    plugins={[chartAreaBorder]}
+                />
+            </div>
         </div>
     );
 }
