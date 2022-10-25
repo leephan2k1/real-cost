@@ -17,7 +17,9 @@ function DesktopSearch() {
     const matchesMediumScreen = useMediaQuery('(min-width: 768px)');
 
     const handleSelect = (values: string[]) => {
-        setMarket(values);
+        const reNewValues = values.filter((value) => value !== 'all');
+
+        setMarket(reNewValues);
     };
 
     return (

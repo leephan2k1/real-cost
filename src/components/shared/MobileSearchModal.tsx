@@ -19,7 +19,9 @@ function MobileSearchModal() {
     const [isOpen, setIsOpen] = useAtom(mobileSearchState);
 
     const handleSelect = (values: string[]) => {
-        setMarket(values);
+        const reNewValues = values.filter((value) => value !== 'all');
+
+        setMarket(reNewValues);
     };
 
     return (
