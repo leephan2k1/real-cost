@@ -7,7 +7,7 @@ import {
     SelectArrow,
 } from 'ariakit/select';
 import { If, Then } from 'react-if';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 function renderValue(value: string[]) {
     if (value.length === 0 || value[0] === 'all') return 'Tất cả';
@@ -35,7 +35,9 @@ function SelectMultiple({
         sameWidth: true,
     });
 
-    if (handleSelect) handleSelect(select.value);
+    useEffect(() => {
+        if (handleSelect) handleSelect(select.value);
+    }, [select.value]);
 
     return (
         <div
