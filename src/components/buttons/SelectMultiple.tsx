@@ -7,10 +7,10 @@ import {
     SelectArrow,
 } from 'ariakit/select';
 import { If, Then } from 'react-if';
-import { useEffect } from 'react';
+import { memo } from 'react';
 
 function renderValue(value: string[]) {
-    if (value.length === 0) return 'Tất cả';
+    if (value.length === 0 || value[0] === 'all') return 'Tất cả';
     if (value.length === 1) return value[0];
     return `${value[0]}...`;
 }
@@ -24,7 +24,7 @@ interface SelectMultipleProps {
 
 //ref: https://ariakit.org/examples/select-multiple
 
-export default function SelectMultiple({
+function SelectMultiple({
     options,
     defaultOption,
     handleSelect,
@@ -35,9 +35,7 @@ export default function SelectMultiple({
         sameWidth: true,
     });
 
-    useEffect(() => {
-        if (handleSelect) handleSelect(select.value);
-    }, [select.value]);
+    if (handleSelect) handleSelect(select.value);
 
     return (
         <div
@@ -72,3 +70,5 @@ export default function SelectMultiple({
         </div>
     );
 }
+
+export default memo(SelectMultiple);
