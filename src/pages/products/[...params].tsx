@@ -27,7 +27,7 @@ const DetailsPage: NextPage<DetailsPageProps> = ({
     return (
         <>
             <Head
-                title={`Real Cost - ${product?.name}`}
+                title={`Real Cost ${product?.name && `- ${product?.name}`}`}
                 image={
                     (product &&
                         product?.images?.length &&
