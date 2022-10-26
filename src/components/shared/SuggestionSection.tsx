@@ -45,13 +45,25 @@ function SuggestionSection({
                         </Link>
                     </div>
 
-                    <Slides>
-                        {itemsWithKeyword.items.map((item) => {
-                            return (
-                                <ProductCard product={item} key={item.link} />
-                            );
-                        })}
-                    </Slides>
+                    <If
+                        condition={
+                            itemsWithKeyword?.items &&
+                            itemsWithKeyword?.items?.length
+                        }
+                    >
+                        <Then>
+                            <Slides>
+                                {itemsWithKeyword.items.map((item) => {
+                                    return (
+                                        <ProductCard
+                                            product={item}
+                                            key={item.link}
+                                        />
+                                    );
+                                })}
+                            </Slides>
+                        </Then>
+                    </If>
                 </div>
             </Then>
         </If>
