@@ -8,9 +8,11 @@ interface SlidesProps {
 
 function Slides({ children }: SlidesProps) {
     const [viewportRef, embla] = useEmblaCarousel({
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         skipSnaps: false,
         containScroll: 'trimSnaps',
+        align: 'start',
+        speed: 10,
     });
 
     const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
