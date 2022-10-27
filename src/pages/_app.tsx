@@ -12,8 +12,11 @@ import SubscriptionProvider from '~/components/features/Subscription';
 import MainLayout from '~/components/layouts/MainLayout';
 import { SocketContextProvider } from '~/context/SocketContext';
 
+import { Analytics } from '@vercel/analytics/react';
+
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+
 type NextPageWithLayout = NextPage & {
     getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -46,15 +49,19 @@ function MyApp({
     });
 
     return (
-        <SessionProvider session={session} refetchInterval={5 * 60}>
-            <JotaiProvider>
-                <SubscriptionProvider>
-                    <SocketContextProvider>
-                        {getLayout(<Component {...pageProps} />)}
-                    </SocketContextProvider>
-                </SubscriptionProvider>
-            </JotaiProvider>
-        </SessionProvider>
+        <>
+            <Analytics />
+
+            <SessionProvider session={session} refetchInterval={5 * 60}>
+                <JotaiProvider>
+                    <SubscriptionProvider>
+                        <SocketContextProvider>
+                            {getLayout(<Component {...pageProps} />)}
+                        </SocketContextProvider>
+                    </SubscriptionProvider>
+                </JotaiProvider>
+            </SessionProvider>
+        </>
     );
 }
 
