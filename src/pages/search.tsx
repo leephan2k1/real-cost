@@ -30,14 +30,14 @@ const SearchPage: NextPage = () => {
 
     const handleSelectMarkets = useCallback((values: string[]) => {
         if (values.length < 3) {
-            qry.push('market', values.join('-'), false);
+            qry.push('market', values.join('-'), false, false, true);
         } else {
-            qry.push('market', 'all', false);
+            qry.push('market', 'all', false, false, true);
         }
     }, []);
 
     const handleSelectSort = useCallback((value: string) => {
-        qry.push('sort', sort_mapping[value.toLowerCase()], false);
+        qry.push('sort', sort_mapping[value.toLowerCase()], false, false, true);
     }, []);
 
     return (
