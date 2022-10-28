@@ -42,7 +42,9 @@ const SearchPage: NextPage = () => {
 
     return (
         <>
-            <Head title="Real Cost - tìm kiếm" />
+            <Head
+                title={`Real Cost - ${router.query?.keyword || 'tìm kiếm'}`}
+            />
 
             <ScrollTop>
                 <Toaster position="bottom-right" />
