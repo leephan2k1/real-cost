@@ -1,9 +1,15 @@
 import { getAxiosClient } from '~/utils/axios';
-import { Product, Market, ItemHistory } from 'types';
+import { Product, Market, ItemHistory, ProductPreview } from 'types';
 import { BC_URL, BC_BASE_API, MARKET_MAPPING } from '~/constants';
 import { handlePriceNumber } from '~/utils/handlePrice';
 
 const axiosClient = getAxiosClient(BC_URL, BC_URL, BC_BASE_API);
+
+function parseIdToMarket(id: string) {
+    if (id[0] === '1') return 'shopee';
+    if (id[0] === '2') return 'lazada';
+    return 'tiki';
+}
 
 export async function getProductDetails(
     market: string,
@@ -86,6 +92,61 @@ export async function getSuggestionKeyword(limit = 20) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return products?.map((product) => product?.name);
+    } catch (error) {
+        return null;
+    }
+}
+
+export async function getRelatedProducts(
+    id: string,
+    url: string,
+): Promise<ProductPreview[] | null> {
+    try {
+        const { data: prodDetails } = await axiosClient.get(`/product/detail`, {
+            params: {
+                product_base_id: id,
+                type: 'new',
+            },
+        });
+
+        if (prodDetails && prodDetails.data?.product_base) {
+            const { data } = await axiosClient.get(`/product/related`, {
+                params: {
+                    product_base_id: id,
+                    category_base_id:
+                        prodDetails.data.product_base?.category_base_id,
+                    type: 'new',
+                },
+            });
+
+            if (data && data.data && Array.isArray(data.data.products)) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                return data.data.products.map((p) => {
+                    return {
+                        name: p.name,
+                        img: p.url_thumbnail,
+                        price: new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        }).format(p.price),
+                        totalSales: p.historical_sold,
+                        link: `${
+                            MARKET_MAPPING[parseIdToMarket(p.product_base_id)]
+                        }/${
+                            parseIdToMarket(p.product_base_id) === 'lazada'
+                                ? 'products/'
+                                : ''
+                        }${url}`,
+                        market: parseIdToMarket(p.product_base_id),
+                    };
+                });
+            } else {
+                throw new Error();
+            }
+        } else {
+            throw new Error();
+        }
     } catch (error) {
         return null;
     }
