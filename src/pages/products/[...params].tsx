@@ -135,7 +135,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const relatedProducts = await getRelatedProducts(
         String(product?.product_base_id),
-        url.join('/'),
     );
 
     if (product) {

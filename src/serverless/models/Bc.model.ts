@@ -2,6 +2,7 @@ import { getAxiosClient } from '~/utils/axios';
 import { Product, Market, ItemHistory, ProductPreview } from 'types';
 import { BC_URL, BC_BASE_API, MARKET_MAPPING } from '~/constants';
 import { handlePriceNumber } from '~/utils/handlePrice';
+import slug from 'slug';
 
 const axiosClient = getAxiosClient(BC_URL, BC_URL, BC_BASE_API);
 
@@ -9,6 +10,22 @@ function parseIdToMarket(id: string) {
     if (id[0] === '1') return 'shopee';
     if (id[0] === '2') return 'lazada';
     return 'tiki';
+}
+
+function generateUrlByName(name: string, market: Market, baseId: string[]) {
+    if (market === 'shopee') {
+        return `/${String(name)
+            .replace(/\s/g, '-')
+            .replace(/\[|\]/g, '-')
+            .replace('%', '')}-i.${baseId[2]}.${baseId[1]}`;
+    }
+
+    if (market === 'tiki') {
+        return `/${slug(name)}-p${baseId[1]}.html`;
+    }
+
+    //default lazada:
+    return `/${slug(name)}-i${baseId[1]}.html`;
 }
 
 export async function getProductDetails(
@@ -99,7 +116,6 @@ export async function getSuggestionKeyword(limit = 20) {
 
 export async function getRelatedProducts(
     id: string,
-    url: string,
 ): Promise<ProductPreview[] | null> {
     try {
         const { data: prodDetails } = await axiosClient.get(`/product/detail`, {
@@ -137,7 +153,11 @@ export async function getRelatedProducts(
                             parseIdToMarket(p.product_base_id) === 'lazada'
                                 ? 'products/'
                                 : ''
-                        }${url}`,
+                        }${generateUrlByName(
+                            p.name,
+                            parseIdToMarket(p.product_base_id),
+                            String(p.product_base_id).split('__'),
+                        )}`,
                         market: parseIdToMarket(p.product_base_id),
                     };
                 });
