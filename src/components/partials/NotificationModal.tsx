@@ -124,6 +124,27 @@ export default function NotificationModal({ children }: NotificationProps) {
         }
     };
 
+    const handleUnsubscribeAll = async () => {
+        try {
+            toast.success('Đã ngừng nhận tất cả thông báo!');
+
+            const { data } = await axiosClient.delete(
+                `/users/${userId}/subscribe`,
+                {
+                    params: {
+                        opt: 'removeAll',
+                    },
+                },
+            );
+
+            if (!data || data.status !== 'success') {
+                throw new Error();
+            }
+        } catch (error) {
+            toast.error('Có gì đó không đúng? Thử lại sau nhé bạn');
+        }
+    };
+
     return (
         <>
             <Button
@@ -134,7 +155,7 @@ export default function NotificationModal({ children }: NotificationProps) {
             </Button>
             <Dialog
                 state={dialog}
-                className="dialog animate__zoomIn animate__animated animate-duration-200 fixed right-[3%] z-[200] mx-auto flex max-h-[65rem] min-h-[300px] w-[80vw] flex-col space-y-4 overflow-x-hidden overflow-y-scroll rounded-2xl border-2 border-gray-500 bg-white font-secondary sm:top-24 md:right-[14%] md:top-28 md:w-[40rem]"
+                className="dialog animate__zoomIn animate__animated animate-duration-200 fixed right-[3%] z-[200] mx-auto flex max-h-[65rem] min-h-[300px] w-[85vw] flex-col space-y-4 overflow-x-hidden overflow-y-scroll rounded-2xl border-2 border-gray-500 bg-white font-secondary sm:top-24 md:right-[14%] md:top-28 md:w-[40rem]"
             >
                 <If condition={Array.isArray(items) && items?.length}>
                     <Then>
@@ -158,6 +179,12 @@ export default function NotificationModal({ children }: NotificationProps) {
                                 className="absolute-center smooth-effect py-2 px-4 hover:rounded-xl hover:bg-gray-200"
                             >
                                 Đã xem
+                            </button>
+                            <button
+                                onClick={handleUnsubscribeAll}
+                                className="absolute-center smooth-effect py-2 px-4 hover:rounded-xl hover:bg-gray-200"
+                            >
+                                Tắt thông báo
                             </button>
                         </div>
 
