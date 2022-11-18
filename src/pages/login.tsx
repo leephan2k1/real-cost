@@ -5,8 +5,11 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import Head from '~/components/shared/Head';
+import usePreviousRoute from '~/context/HistoryRouteContext';
 
 const LogIn: NextPage = () => {
+    const hsRouteCtx = usePreviousRoute();
+
     return (
         <>
             <Head
@@ -31,7 +34,11 @@ const LogIn: NextPage = () => {
                                 <button
                                     onClick={() =>
                                         signIn('facebook', {
-                                            callbackUrl: '/',
+                                            callbackUrl: `${
+                                                hsRouteCtx?.url
+                                                    ? hsRouteCtx?.url
+                                                    : '/'
+                                            }`,
                                         })
                                     }
                                     className="smooth-effect absolute-center mx-auto w-[200px] space-x-2 rounded-3xl border border-gray-700 py-4 px-6 hover:scale-110 hover:bg-sky-200 md:w-[250px]"
@@ -50,7 +57,11 @@ const LogIn: NextPage = () => {
                                 <button
                                     onClick={() =>
                                         signIn('google', {
-                                            callbackUrl: '/',
+                                            callbackUrl: `${
+                                                hsRouteCtx?.url
+                                                    ? hsRouteCtx?.url
+                                                    : '/'
+                                            }`,
                                         })
                                     }
                                     className="smooth-effect absolute-center mx-auto w-[200px] space-x-2 rounded-3xl border border-gray-700 py-4 px-6 hover:scale-110 hover:bg-yellow-200 md:w-[250px]"
@@ -69,7 +80,9 @@ const LogIn: NextPage = () => {
                             </div>
                         </div>
 
-                        <Link href="/">
+                        <Link
+                            href={`${hsRouteCtx?.url ? hsRouteCtx?.url : '/'}`}
+                        >
                             <a>
                                 <button className="smooth-effect m-6 w-fit rounded-2xl border border-gray-700 p-2 hover:scale-110">
                                     <ArrowLeftIcon className="h-8 w-8" />

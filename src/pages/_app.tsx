@@ -10,6 +10,7 @@ import { ReactElement, ReactNode } from 'react';
 import { useEventListener } from 'usehooks-ts';
 import SubscriptionProvider from '~/components/features/Subscription';
 import MainLayout from '~/components/layouts/MainLayout';
+import { HistoryRouteContextProvider } from '~/context/HistoryRouteContext';
 import { SocketContextProvider } from '~/context/SocketContext';
 
 import { Analytics } from '@vercel/analytics/react';
@@ -56,7 +57,9 @@ function MyApp({
                 <JotaiProvider>
                     <SubscriptionProvider>
                         <SocketContextProvider>
-                            {getLayout(<Component {...pageProps} />)}
+                            <HistoryRouteContextProvider>
+                                {getLayout(<Component {...pageProps} />)}
+                            </HistoryRouteContextProvider>
                         </SocketContextProvider>
                     </SubscriptionProvider>
                 </JotaiProvider>
