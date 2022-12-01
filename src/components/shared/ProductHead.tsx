@@ -56,19 +56,32 @@ function ProductHead({ product }: ProductHeadProps) {
     const { data: favoriteState, isValidating } = useSwr<{
         status: string;
         isSaved: boolean;
-    }>(product?.link, async () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const { id } = session?.user;
+    }>(
+        product?.link,
+        async () => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const { id } = session?.user;
 
-        const { data } = await axiosClient.post(`/users/${id}/get-favorite`, {
-            link: product?.link,
-        });
+            const { data } = await axiosClient.post(
+                `/users/${id}/get-favorite`,
+                {
+                    link: product?.link,
+                },
+            );
 
-        setFvState(data?.isSaved);
+            if (data) {
+                setFvState(data?.isSaved);
+            }
 
-        return data;
-    });
+            return data;
+        },
+        {
+            onError: () => {
+                setFvState(false);
+            },
+        },
+    );
 
     const handleRedirect = async () => {
         if (product?.market === 'lazada') {
